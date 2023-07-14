@@ -138,7 +138,7 @@ const RegistrationForm = ({ onRegister }) => {
             >
               Register
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid sx={{ mt: 1, mb: 2}} container justifyContent="center">
               <Grid item>
                 <Link href="/login" variant="body2">
                   Already have an account? Sign in
