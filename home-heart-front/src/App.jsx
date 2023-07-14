@@ -5,6 +5,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import RegistrationForm from './components/RegistrationForm/RegistrationForm'
+import NavBar from './components/NavBar/NavBar'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -12,9 +14,11 @@ function App() {
     <Router>
       <Routes>
       <Route path="/register" element={<RegistrationForm />}></Route>
-
+      <Route path="/" element={<NavBar />}></Route>
       </Routes>
      </Router>
+
+     <Footer />
     </>
   )
 }
