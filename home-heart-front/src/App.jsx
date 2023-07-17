@@ -147,8 +147,15 @@ function App() {
       </Router>
 
       <Footer />
-    </>
+    <Router>
+      <Routes>
+      <Route path="/register" element={<RegistrationForm />} /> 
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/" element={<NavBar />} />
+      </Routes>
+  </Router>
+     <Footer />
+</>
   );
 }
-
 export default App;
