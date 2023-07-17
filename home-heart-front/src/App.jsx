@@ -146,12 +146,6 @@ function App() {
           <Route path="/authenticated-page" element={<AuthenticatedPage />} />
         </Routes>
       </Router>
-      <Router>
-        <Routes>
-          <Route path="/" element={<NavBar />} />
-        </Routes>
-      </Router>
-    </>
      <Footer />
      <LandingPage /> 
   </>
