@@ -15,6 +15,8 @@ function App() {
       <Route path="/register" element={<RegistrationForm />} /> 
       <Route path="/login" element={<LoginForm />} />
       <Route path="/" element={<NavBar />} />
+
+
       </Routes>
      </Router>
 
