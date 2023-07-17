@@ -70,13 +70,13 @@ const LoginForm = ({ handleLoginSubmit }) => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Email or Username"
+              name="username"
+              autoComplete="username"
               autoFocus
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
