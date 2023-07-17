@@ -108,7 +108,7 @@ function App() {
         };
         localStorage.setItem("token", token);
         localStorage.setItem("userId", decodedToken.userId);
-        console.log("userData:", userData);
+        console.log("user Data:", userData);
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
 

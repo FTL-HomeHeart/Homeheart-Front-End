@@ -15,108 +15,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-// export default function RegistrationForm({ handleRegistrationSubmit }) {
-// const [username, setUsername] = useState("");
-// const [email, setEmail] = useState("");
-// const [firstName, setFirstName] = useState("");
-// const [lastName, setLastName] = useState("");
-// const [password, setPassword] = useState("");
-// const [confirmPassword, setConfirmPassword] = useState("");
-// const [passwordError, setpasswordError] = useState(false);
-
-// const handleSubmit = (e) => {
-//   e.preventDefault();
-//   if (password !== confirmPassword) {
-//     setpasswordError(true);
-//     return;
-//   } else {
-//     setpasswordError(false);
-//     handleRegistrationSubmit({
-//       username,
-//       email,
-//       firstName,
-//       lastName,
-//       password,
-//     });
-//   }
-//   // onRegister(firstName, lastName, username, password, confirmPassword, email);
-// };
-
-//   return (
-//     <>
-//       <div className="registration-form-container">
-//         <h2>CREATE AN ACCOUNT</h2>
-//         <form onSubmit={handleSubmit}>
-//           <label>First Name: </label>
-
-//           <input
-//             type="text"
-//             value={firstName}
-//             onChange={(e) => setFirstName(e.target.value)}
-//             required
-//           />
-
-//           <label>Last Name: </label>
-//           <input
-//             type="text"
-//             value={lastName}
-//             onChange={(e) => setLastName(e.target.value)}
-//             required
-//           />
-
-//           <label>Username: </label>
-//           <input
-//             type="text"
-//             value={username}
-//             onChange={(e) => setUsername(e.target.value)}
-//             required
-//           />
-
-//           <label>Password: </label>
-//           <input
-//             type="password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-
-//           <label>Confirm Password: </label>
-//           <input
-//             type="password"
-//             value={confirmPassword}
-//             onChange={(e) => setConfirmPassword(e.target.value)}
-//             required
-//           />
-
-//           <label>Email: </label>
-//           <input
-//             type="email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//           {passwordError && <p>Password does not match!</p>}
-//           <button type="submit">Sign Up</button>
-//         </form>
-//       </div>
-//     </>
-//   );
-// }
-
 const defaultTheme = createTheme();
-
-// const CopyRight = () => {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {"Copyright © "}
-//       <Link color="inherit" href="">
-//         HomeHeart
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// };
 
 export default function RegistrationForm({ handleRegistrationSubmit }) {
   const [username, setUsername] = useState("");
@@ -129,6 +28,8 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("firstName", firstName);
+    console.log("lastName", lastName);
     if (password !== confirmPassword) {
       setpasswordError(true);
       return;
@@ -161,12 +62,7 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
           <Typography component="h1" variant="h5">
             Create an Account
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -269,7 +165,6 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
               </Grid>
             </Grid>
           </Box>
-          {/* <CopyRight /> */}
         </Box>
       </Container>
     </ThemeProvider>

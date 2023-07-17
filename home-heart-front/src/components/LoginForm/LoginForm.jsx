@@ -17,20 +17,6 @@ import { useState } from "react";
 
 const defaultTheme = createTheme();
 
-// this should be in the footer component
-// const CopyRight = () => {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {"Copyright © "}
-//       <Link color="inherit" href="">
-//         HomeHeart
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// };
-
 const LoginForm = ({ handleLoginSubmit }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
