@@ -7,32 +7,31 @@ import {
   IconButton,
   makeStyles,
   Avatar,
-} from '@material-ui/core';
-import { Link } from 'react-router-dom'; 
-
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     marginBottom: theme.spacing(2),
-    backgroundColor: '#fff',
-    color: '#333',
+    backgroundColor: "#fff",
+    color: "#333",
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   navLinks: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(0, 2),
-      fontWeight: 'bold',
-      color: '#666',
+      fontWeight: "bold",
+      color: "#666",
     },
   },
   avatar: {
-    backgroundColor: '#f50057',
+    backgroundColor: "#f50057",
   },
 }));
 
@@ -64,4 +63,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar; 
+export default NavBar;
