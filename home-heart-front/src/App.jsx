@@ -1,6 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -9,7 +14,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
-import AuthenticatedPage from "./components/AuthenticatedTemp/AuthenticatedTemp";
+import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,7 +32,7 @@ function App() {
   }, []);
 
   // Login User when login button is clicked
-  const handleLoginSubmit = async ({ identifier, password }) => {
+  const handleLoginSubmit = async ({ identifier, password, navigate }) => {
     try {
       const response = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
@@ -60,7 +65,7 @@ function App() {
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
-        // navigate("/");
+        navigate("/");
         console.log("data message", data.message);
         console.log(loggedIn);
       } else {
@@ -80,6 +85,7 @@ function App() {
     password,
     firstName,
     lastName,
+    navigate,
   }) => {
     try {
       const response = await fetch(`${BASE_URL}/api/auth/register`, {
@@ -109,13 +115,13 @@ function App() {
         };
         localStorage.setItem("token", token);
         localStorage.setItem("userId", decodedToken.userId);
-        console.log("userData:", userData);
+        console.log("user Data:", userData);
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
 
         setLoggedIn(true);
         setLoginError("");
-        // navigate("/");
+        navigate("/");
         console.log(data.message);
       } else {
         setLoginError(data.message);
@@ -126,29 +132,56 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLoggedIn(false);
+    setUser(null);
+    setLoginError("");
+    navigate("/login");
+  };
+
   return (
     <>
       <Router>
+        {/* Have to be outside of Routes as it should render regardless */}
+        <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
         <Routes>
-          <Route path="/" element={<NavBar />} />
+          <Route path="/" element={<LandingPage />} />
           <Route
             path="/register"
             element={
-              <RegistrationForm
-                handleRegistrationSubmit={handleRegistrationSubmit}
-              />
+              loggedIn ? (
+                <Navigate to="/home" />
+              ) : (
+                <RegistrationForm
+                  handleRegistrationSubmit={handleRegistrationSubmit}
+                />
+              )
             }
           />
           <Route
             path="/login"
-            element={<LoginForm handleLoginSubmit={handleLoginSubmit} />}
+            element={
+              loggedIn ? (
+                <Navigate to="/home" />
+              ) : (
+                <LoginForm handleLoginSubmit={handleLoginSubmit} />
+              )
+            }
           />
+          {/* for google authentication */}
           <Route path="/authenticated-page" element={<AuthenticatedPage />} />
+          {loggedIn ? (
+            <Route path="/home" element={<LandingPage />} />
+          ) : (
+            <Route path="/login" element={<LoginForm />} />
+          )}
         </Routes>
       </Router>
-     <Footer />
-     <LandingPage /> 
-  </>
+      <Footer />
+      {/* <LandingPage /> */}
+    </>
   );
 }
 export default App;

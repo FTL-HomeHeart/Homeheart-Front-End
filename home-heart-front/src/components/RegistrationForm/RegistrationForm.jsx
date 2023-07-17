@@ -31,18 +31,20 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
   const CopyRight = () => {
     return (
       <Typography variant="body2" color="text.secondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="">HomeHeart</Link>
-        {' '}
+        {"Copyright © "}
+        <Link color="inherit" href="">
+          HomeHeart
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
     );
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("firstName", firstName);
+    console.log("lastName", lastName);
     if (password !== confirmPassword) {
       setpasswordError(true);
       return;
@@ -75,12 +77,7 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
           <Typography component="h1" variant="h5">
             Create an Account
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -187,4 +184,4 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
       </Container>
     </ThemeProvider>
   );
-}  
+}
