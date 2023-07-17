@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = () => {
+const NavBar = ({ loggedIn, handleLogout, user }) => {
   const classes = useStyles();
 
   return (
@@ -45,19 +45,41 @@ const NavBar = () => {
           HomeHeart
         </Typography>
         <div className={classes.navLinks}>
-          <Button color="inherit" component={Link} to="/Home">Home</Button>
-          <Button color="inherit" component={Link} to="/AboutUs">About Us</Button>
-          <Button color="inherit" component={Link} to="/ContactUs">Contact Us</Button>
-          <Button color="inherit" component={Link} to="/Appointments">Appointments</Button>
-          <Button color="inherit" component={Link} to="/Resources">Resources</Button>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
+          <Button color="inherit" component={Link} to="/AboutUs">
+            About Us
+          </Button>
+          <Button color="inherit" component={Link} to="/ContactUs">
+            Contact Us
+          </Button>
+          <Button color="inherit" component={Link} to="/Appointments">
+            Appointments
+          </Button>
+          <Button color="inherit" component={Link} to="/Resources">
+            Resources
+          </Button>
         </div>
-        <IconButton color="inherit" aria-label="Sign In">
-          {/* <AccountCircleIcon /> */}
-        </IconButton>
-        <Button color="inherit" component={Link} to="/register">Register</Button>
-        <IconButton className={classes.avatar} aria-label="User Account">
-          <Avatar></Avatar>
-        </IconButton>
+        {loggedIn ? (
+          <>
+            <IconButton color="inherit" aria-label="User Account">
+              <Avatar></Avatar>
+            </IconButton>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={Link} to="/register">
+              Register
+            </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );

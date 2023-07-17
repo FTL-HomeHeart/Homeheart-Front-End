@@ -26,6 +26,21 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
   const [email, setEmail] = useState("");
   const [passwordError, setpasswordError] = useState(false);
 
+  const defaultTheme = createTheme();
+
+  const CopyRight = () => {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="">
+          HomeHeart
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("firstName", firstName);

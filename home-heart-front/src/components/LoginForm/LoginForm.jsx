@@ -56,8 +56,8 @@ const LoginForm = ({ handleLoginSubmit }) => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
+              id="username"
+              label="Email or Username"
               name="email"
               autoComplete="email"
               autoFocus
