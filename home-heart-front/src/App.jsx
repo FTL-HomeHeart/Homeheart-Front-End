@@ -130,6 +130,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<NavBar />} />
           <Route
             path="/register"
             element={
@@ -145,13 +146,12 @@ function App() {
           <Route path="/authenticated-page" element={<AuthenticatedPage />} />
         </Routes>
       </Router>
-    <Router>
-      <Routes>
-      <Route path="/register" element={<RegistrationForm />} /> 
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/" element={<NavBar />} />
-      </Routes>
-  </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<NavBar />} />
+        </Routes>
+      </Router>
+    </>
      <Footer />
      <LandingPage /> 
   </>
