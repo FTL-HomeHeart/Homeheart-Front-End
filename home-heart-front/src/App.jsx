@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
+import LandingPage from "./components/LandingPage/LandingPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
@@ -129,6 +130,7 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<NavBar />} />
           <Route
             path="/register"
             element={
@@ -141,18 +143,18 @@ function App() {
             path="/login"
             element={<LoginForm handleLoginSubmit={handleLoginSubmit} />}
           />
-          <Route path="/" element={<NavBar />} />
           <Route path="/authenticated-page" element={<AuthenticatedPage />} />
         </Routes>
       </Router>
-
       <Router>
         <Routes>
           <Route path="/" element={<NavBar />} />
         </Routes>
       </Router>
-      <Footer />
     </>
+     <Footer />
+     <LandingPage /> 
+  </>
   );
 }
 export default App;
