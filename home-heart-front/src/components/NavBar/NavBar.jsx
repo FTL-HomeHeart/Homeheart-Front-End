@@ -46,16 +46,16 @@ const NavBar = () => {
           HomeHeart
         </Typography>
         <div className={classes.navLinks}>
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">About Us</Button>
-          <Button color="inherit">Contact Us</Button>
-          <Button color="inherit">Appointments</Button>
-          <Button color="inherit">Resources</Button>
+          <Button color="inherit" component={Link} to="/Home">Home</Button>
+          <Button color="inherit" component={Link} to="/AboutUs">About Us</Button>
+          <Button color="inherit" component={Link} to="/ContactUs">Contact Us</Button>
+          <Button color="inherit" component={Link} to="/Appointments">Appointments</Button>
+          <Button color="inherit" component={Link} to="/Resources">Resources</Button>
         </div>
         <IconButton color="inherit" aria-label="Sign In">
           {/* <AccountCircleIcon /> */}
         </IconButton>
-        <Button color="inherit">Register</Button>
+        <Button color="inherit" component={Link} to="/register">Register</Button>
         <IconButton className={classes.avatar} aria-label="User Account">
           <Avatar></Avatar>
         </IconButton>
