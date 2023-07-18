@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'space-between',
     height: '100%',
     // backgroundColor: "blue",
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
     marginRight: theme.spacing(1),
     listStyleType: 'disc', 
-    paddingLeft: 0,  
+    paddingLeft: 0, 
   },
   featureItem: {
     marginBottom: theme.spacing(2),
