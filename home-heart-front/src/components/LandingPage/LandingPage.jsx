@@ -1,16 +1,16 @@
-import React from "react"; 
+import React from "react";
 import Features from "./Features";
 import Testimonials from "./Testimonials";
+import ImageCard from "./Hero";
 const LandingPage = () => {
-    
-
-    return (
-        <div>
-            LandingPage
-            <Features /> 
-            <Testimonials /> 
-        </div>
-    );
+  return (
+    <div>
+      LandingPage
+      <ImageCard />
+      <Features />
+      <Testimonials />
+    </div>
+  );
 };
 
-export default LandingPage; 
+export default LandingPage;
