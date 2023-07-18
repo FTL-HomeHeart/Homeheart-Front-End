@@ -20,16 +20,42 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: "blue",
   },
   featureList: {
-    width: '100%',
-    marginRight: theme.spacing(4),
+    width: '70%',
+    marginRight: theme.spacing(1),
+    listStyleType: 'disc', 
+    paddingLeft: 0,  
   },
   featureItem: {
     marginBottom: theme.spacing(2),
+    display: 'list-item', 
+    listStylePosition: 'inside',
   },
   featureImage: {
     width: '35%', 
     height: '100%',
   },
+  interFont: {
+    fontFamily: 'Inter, sans-serif',
+    fontSize: "18px", 
+    color: "#616161", 
+    paddingTop: theme.spacing(2),
+    fontWeight: 400,
+    lineHeight: "28px",
+    listStyleType: "disc",
+  }, 
+  SectionHeading: {
+    fontFamily: 'Inter, sans-serif',
+    fontSize: "36px",
+    color: "#7693B0",
+    paddingBottom: theme.spacing(2),
+  }, 
+  SectionSubHeading: {
+    fontFamily: 'Inter, sans-serif',
+    fontSize: "18px",
+    color: "#616161",
+    paddingBottom: theme.spacing(2),
+    fontWeight: 400,
+  }
 }));
 
 
@@ -41,20 +67,63 @@ const Features = () => {
       <Container className={classes.container2}>
         <div className={classes.content}>
         <List className={classes.featureList}>
+                <Typography 
+                  className={classes.SectionHeading}
+                  component="h2"
+                  >
+                  Features
+                </Typography>
+                <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.SectionSubHeading}
+                >
+                  HomeHeart is designed with you in mind. Here are some features that make us unique. 
+                </Typography>
             <ListItem className={classes.featureItem}>
-              <Typography variant="h6" component="span">Language and Cultural Matching: Connect with mental health professionals from your home country, for therapy in your native language and cultural context.</Typography>
+              <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.interFont}
+                >
+                  Language and Cultural Matching: Connect with mental health professionals from your home country, for therapy in your native language and cultural context.
+                </Typography>
             </ListItem>
             <ListItem className={classes.featureItem}>
-              <Typography variant="h6" component="span">Affordable Pricing: We leverage economic disparities to offer you affordable prices, making mental health care more accessible.</Typography>
+              <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.interFont}
+                >
+                  Affordable Pricing: We leverage economic disparities to offer you affordable prices, making mental health care more accessible.
+                </Typography>
             </ListItem>
             <ListItem className={classes.featureItem}>
-              <Typography variant="h6" component="span">Verified Professionals: All professionals on our platform are thoroughly verified to ensure you receive reliable and quality care.</Typography>
+              <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.interFont}
+                >
+                  Verified Professionals: All professionals on our platform are thoroughly verified to ensure you receive reliable and quality care.
+              </Typography>
             </ListItem>
             <ListItem className={classes.featureItem}>
-              <Typography variant="h6" component="span">Secure and Confidential: Your privacy is our top priority. We provide secure communication channels and protect your personal information.</Typography>
+              <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.interFont}
+                >
+                  Secure and Confidential: Your privacy is our top priority. We provide secure communication channels and protect your personal information.
+              </Typography>
             </ListItem>
             <ListItem className={classes.featureItem}>
-              <Typography variant="h6" component="span">Rich Resource Library: Access a wide range of resources related to mental health and the immigrant experience, to enhance your understanding and provide additional support.</Typography>
+              <Typography 
+                variant="h6" 
+                component="span" 
+                className={classes.interFont}
+                >
+                  Rich Resource Library: Access a wide range of resources related to mental health and the immigrant experience, to enhance your understanding and provide additional support.
+                  </Typography>
             </ListItem>
         </List>
           <img

@@ -1,4 +1,5 @@
 import React from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -16,10 +17,16 @@ const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
 import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
 
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
+
+  const theme = createTheme({
+    direction: "rtl", 
+  })
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -143,7 +150,8 @@ function App() {
 
   return (
     <>
-      <Router>
+    <ThemeProvider theme={theme}>
+    <Router>
         {/* Have to be outside of Routes as it should render regardless */}
         <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
         <Routes>
@@ -170,17 +178,17 @@ function App() {
               )
             }
           />
-          {/* for google authentication */}
+          {/* for google authentication trials*/}
           <Route path="/authenticated-page" element={<AuthenticatedPage />} />
           {loggedIn ? (
-            <Route path="/home" element={<LandingPage />} />
+            <Route path="/home" element={<AuthenticatedLandingPage />} />
           ) : (
             <Route path="/login" element={<LoginForm />} />
           )}
         </Routes>
       </Router>
-      <Footer />
-      {/* <LandingPage /> */}
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
