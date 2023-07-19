@@ -16,9 +16,12 @@ import Footer from "./components/Footer/Footer";
 const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
 import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
+import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLandingPage";
+import UserForm from "./components/GetStartedPage/UserForm";
+import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 
 
-function App() {
+function App(handleUserFormSubmit) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
@@ -150,43 +153,47 @@ function App() {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-    <Router>
-        {/* Have to be outside of Routes as it should render regardless */}
-        <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/register"
-            element={
-              loggedIn ? (
-                <Navigate to="/home" />
-              ) : (
-                <RegistrationForm
-                  handleRegistrationSubmit={handleRegistrationSubmit}
-                />
-              )
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              loggedIn ? (
-                <Navigate to="/home" />
-              ) : (
-                <LoginForm handleLoginSubmit={handleLoginSubmit} />
-              )
-            }
-          />
-          {/* for google authentication trials*/}
-          <Route path="/authenticated-page" element={<AuthenticatedPage />} />
-          {loggedIn ? (
-            <Route path="/home" element={<AuthenticatedLandingPage />} />
-          ) : (
-            <Route path="/login" element={<LoginForm />} />
-          )}
-        </Routes>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          {/* Have to be outside of Routes as it should render regardless */}
+          <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/register"
+              element={
+                loggedIn ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <RegistrationForm
+                    handleRegistrationSubmit={handleRegistrationSubmit}
+                  />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                loggedIn ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <LoginForm handleLoginSubmit={handleLoginSubmit} />
+                )
+              }
+            />
+            {/* for google authentication trials*/}
+            <Route path="/authenticated-page" element={<AuthenticatedPage />} />
+            {loggedIn ? (
+              <Route path="/home" element={<AuthenticatedLandingPage />} />
+            ) : (
+              <Route path="/login" element={<LoginForm />} />
+            )}
+
+            <Route path="/user-form" element={<UserForm />} />
+            <Route path="/current-location" element={<CurrentLocationForm />} />
+            
+          </Routes>
+        </Router>
         <Footer />
       </ThemeProvider>
     </>
