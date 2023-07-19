@@ -147,8 +147,6 @@ function App(handleUserFormSubmit) {
     localStorage.removeItem("user");
     setLoggedIn(false);
     setUser(null);
-    setLoginError("");
-    navigate("/login");
   };
 
   return (
@@ -181,7 +179,6 @@ function App(handleUserFormSubmit) {
                 )
               }
             />
-            {/* for google authentication trials*/}
             <Route path="/authenticated-page" element={<AuthenticatedPage />} />
             {loggedIn ? (
               <Route path="/home" element={<AuthenticatedLandingPage />} />
