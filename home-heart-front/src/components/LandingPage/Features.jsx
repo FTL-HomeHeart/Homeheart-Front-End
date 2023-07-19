@@ -36,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   interFont: {
     fontFamily: 'Inter, sans-serif',
-    fontSize: "18px", 
+    fontSize: "16px", 
     color: "#616161", 
     paddingTop: theme.spacing(2),
     fontWeight: 400,
     lineHeight: "28px",
     listStyleType: "disc",
+    letterSpacing: 0.5
   }, 
   SectionHeading: {
     fontFamily: 'Inter, sans-serif',
@@ -51,10 +52,11 @@ const useStyles = makeStyles((theme) => ({
   }, 
   SectionSubHeading: {
     fontFamily: 'Inter, sans-serif',
-    fontSize: "18px",
+    fontSize: "16px",
     color: "#616161",
     paddingBottom: theme.spacing(2),
     fontWeight: 400,
+    letterSpacing: 0.5
   }
 }));
 
