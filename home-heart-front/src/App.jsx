@@ -20,16 +20,14 @@ import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLand
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 
-
-function App(handleUserFormSubmit) {
+function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
 
   const theme = createTheme({
-    direction: "rtl", 
-  })
-
+    direction: "rtl",
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -75,7 +73,7 @@ function App(handleUserFormSubmit) {
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
-        navigate("/");
+        navigate("/home");
         console.log("data message", data.message);
         console.log(loggedIn);
       } else {
@@ -142,11 +140,13 @@ function App(handleUserFormSubmit) {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = (navigate) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setLoggedIn(false);
     setUser(null);
+    setLoginError("");
+    navigate("/");
   };
 
   return (
@@ -156,7 +156,12 @@ function App(handleUserFormSubmit) {
           {/* Have to be outside of Routes as it should render regardless */}
           <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/"
+              element={
+                loggedIn ? <AuthenticatedLandingPage /> : <LandingPage />
+              }
+            />
             <Route
               path="/register"
               element={
@@ -173,13 +178,13 @@ function App(handleUserFormSubmit) {
               path="/login"
               element={
                 loggedIn ? (
-                  <Navigate to="/home" />
+                  <Navigate to="/" />
                 ) : (
                   <LoginForm handleLoginSubmit={handleLoginSubmit} />
                 )
               }
             />
-            <Route path="/authenticated-page" element={<AuthenticatedPage />} />
+
             {loggedIn ? (
               <Route path="/home" element={<AuthenticatedLandingPage />} />
             ) : (
@@ -188,7 +193,6 @@ function App(handleUserFormSubmit) {
 
             <Route path="/user-form" element={<UserForm />} />
             <Route path="/current-location" element={<CurrentLocationForm />} />
-            
           </Routes>
         </Router>
         <Footer />

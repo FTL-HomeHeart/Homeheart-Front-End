@@ -9,18 +9,16 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import Text from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import ImageCard from "../LandingPage/Hero";
 import { useState } from "react";
 
-
 const LoginForm = ({ handleLoginSubmit }) => {
-
   const defaultTheme = createTheme();
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
