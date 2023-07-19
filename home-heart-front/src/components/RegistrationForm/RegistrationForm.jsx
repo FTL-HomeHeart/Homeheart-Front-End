@@ -168,6 +168,7 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
               type="submit"
               fullWidth
               variant="contained"
+              style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mt: 3, mb: 2 }}
             >
               Register

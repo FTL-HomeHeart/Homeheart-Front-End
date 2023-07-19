@@ -79,7 +79,7 @@ const HowItWorks = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
-          <img src="https://cdn.thewirecutter.com/wp-content/media/2020/11/notebooks-2048px-1981-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024" alt="Your Image" className={classes.image} />
+          <img src="https://images.unsplash.com/photo-1521321205814-9d673c65c167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2374&q=80" alt="Get stated Image" className={classes.image} />
         </Grid>
       </Grid>
     </Container>
