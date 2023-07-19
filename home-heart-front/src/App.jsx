@@ -20,6 +20,7 @@ import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLand
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
+import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 
 
 function App(handleUserFormSubmit) {
@@ -157,7 +158,7 @@ function App(handleUserFormSubmit) {
           {/* Have to be outside of Routes as it should render regardless */}
           <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={loggedIn ? <AuthenticatedLandingPage /> : <LandingPage />} />
             <Route
               path="/register"
               element={
@@ -189,7 +190,8 @@ function App(handleUserFormSubmit) {
 
             <Route path="/user-form" element={<UserForm />} />
             <Route path="/current-location" element={<CurrentLocationForm />} />
-            
+            <Route path="/profile-photo" element={<ProfilePhoto />} />
+
           </Routes>
         </Router>
         <Footer />
