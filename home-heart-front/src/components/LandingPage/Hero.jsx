@@ -37,8 +37,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     alignSelf: "start",
+    marginTop: theme.spacing(2),
   },
+  h1: {
+    textAlign: "left",
+    fontSize: "2.5em",
+    marginBottom: theme.spacing(3),
+  }
   // add blurry effect on the overlay
+
 }));
 
 export default function ImageCard() {
@@ -52,6 +59,13 @@ export default function ImageCard() {
         title="Contemplative Reptile"
       />
       <div className={classes.overlay}>
+      <Typography
+          variant="body1"
+          component="h1"
+          className={classes.h1}
+        >
+          Feels like home!
+        </Typography>
         <Typography
           variant="body1"
           component="p"
@@ -69,7 +83,7 @@ export default function ImageCard() {
           native language, and find comfort in familiarity. We're here to help
           every step of the way.
         </Typography>
-        <Button variant="contained" color="primary" className={classes.button}>
+        <Button variant="contained" style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }} className={classes.button}>
           Learn More
         </Button>
       </div>

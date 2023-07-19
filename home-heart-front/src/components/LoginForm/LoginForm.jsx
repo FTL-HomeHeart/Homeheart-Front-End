@@ -82,6 +82,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               type="submit"
               fullWidth
               variant="contained"
+              style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
@@ -90,7 +91,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               type="button"
               fullWidth
               variant="contained"
-              color="primary"
+              style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mt: 3, mb: 2 }}
               onClick={handleGoogleLogin}
             >

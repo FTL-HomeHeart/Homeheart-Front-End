@@ -35,7 +35,7 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -79,12 +79,14 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
                   required
                   fullWidth
                   id="birthdate"
-                  label="Birthdate"
+                  label="Birthdate" // Provide the "Birthdate" label here
                   name="birthdate"
                   type="date"
                   value={birthdate}
                   onChange={(e) => setBirthdate(e.target.value)}
-                  
+                  InputLabelProps={{
+                    shrink: true, // Label will always float above the input field
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,9 +103,15 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
             </Grid>
 
             <Link to="/current-location" style={{ textDecoration: "none" }}>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} >
+              <Button
+                type="submit"
+                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
                 Next
-            </Button>
+              </Button>
             </Link>
           </Box>
         </Box>

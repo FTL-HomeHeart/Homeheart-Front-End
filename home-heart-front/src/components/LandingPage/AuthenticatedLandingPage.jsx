@@ -5,7 +5,9 @@ import ImageCardGetStarted from "../GetStartedPage/GetStartedPage";
 export default function AuthenticatedLandingPage() {
   return (
     <div>
+
       <ImageCardGetStarted />
+
       <Features />
     </div>
   );

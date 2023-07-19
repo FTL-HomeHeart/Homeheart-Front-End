@@ -4,6 +4,7 @@ import Vision from "./Vision";
 import Features from "./Features";
 import Testimonials from "./Testimonials";
 import ImageCard from "./Hero";
+import MedicalProfessionalsGrid from "../MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 const LandingPage = () => {
   return (
     <div>
@@ -12,6 +13,7 @@ const LandingPage = () => {
       <Vision />
       <Features />
       <Testimonials />
+      <MedicalProfessionalsGrid />
     </div>
   );
 };
