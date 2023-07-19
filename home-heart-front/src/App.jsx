@@ -14,7 +14,6 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
-import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -137,8 +136,6 @@ function App() {
     localStorage.removeItem("user");
     setLoggedIn(false);
     setUser(null);
-    setLoginError("");
-    navigate("/login");
   };
 
   return (
@@ -170,8 +167,7 @@ function App() {
               )
             }
           />
-          {/* for google authentication */}
-          <Route path="/authenticated-page" element={<AuthenticatedPage />} />
+
           {loggedIn ? (
             <Route path="/home" element={<LandingPage />} />
           ) : (
@@ -180,7 +176,6 @@ function App() {
         </Routes>
       </Router>
       <Footer />
-      {/* <LandingPage /> */}
     </>
   );
 }
