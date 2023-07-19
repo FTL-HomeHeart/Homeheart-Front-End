@@ -1,13 +1,14 @@
 import React from "react";
-import Box from "@mui/material/Box";
+import { Box } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { Link } from "@material-ui/core"
 
 const CopyRight = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="#FFFFFF" align="center">
       {"Copyright © "}
       <Link color="inherit" href="">
         HomeHeart
@@ -202,9 +203,10 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: "primary.main",
+        backgroundColor: "#768599",
         py: { xs: 6, md: 10 },
         color: "primary.contrastText",
+        fontFamily: 'Poppins, sans-serif', // Set the Poppins font for the entire footer/ Set the Poppins font for the entire footer
       }}
     >
       <Container>
@@ -215,7 +217,7 @@ const Footer = () => {
                 HomeHeart
               </Typography>
               <Typography variant="subtitle1" sx={{ letterSpacing: 1, mb: 2 }}>
-                Some information about HomeHeart would go here
+                <CopyRight /> 
               </Typography>
               <SocialLinks />
             </Box>

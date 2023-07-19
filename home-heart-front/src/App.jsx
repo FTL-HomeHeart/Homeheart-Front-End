@@ -1,4 +1,5 @@
 import React from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -14,11 +15,21 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
+import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
+import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLandingPage";
+import UserForm from "./components/GetStartedPage/UserForm";
+import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 
-function App() {
+
+function App(handleUserFormSubmit) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
+
+  const theme = createTheme({
+    direction: "rtl", 
+  })
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -140,42 +151,48 @@ function App() {
 
   return (
     <>
-      <Router>
-        {/* Have to be outside of Routes as it should render regardless */}
-        <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/register"
-            element={
-              loggedIn ? (
-                <Navigate to="/home" />
-              ) : (
-                <RegistrationForm
-                  handleRegistrationSubmit={handleRegistrationSubmit}
-                />
-              )
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              loggedIn ? (
-                <Navigate to="/home" />
-              ) : (
-                <LoginForm handleLoginSubmit={handleLoginSubmit} />
-              )
-            }
-          />
+      <ThemeProvider theme={theme}>
+        <Router>
+          {/* Have to be outside of Routes as it should render regardless */}
+          <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/register"
+              element={
+                loggedIn ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <RegistrationForm
+                    handleRegistrationSubmit={handleRegistrationSubmit}
+                  />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                loggedIn ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <LoginForm handleLoginSubmit={handleLoginSubmit} />
+                )
+              }
+            />
+            <Route path="/authenticated-page" element={<AuthenticatedPage />} />
+            {loggedIn ? (
+              <Route path="/home" element={<AuthenticatedLandingPage />} />
+            ) : (
+              <Route path="/login" element={<LoginForm />} />
+            )}
 
-          {loggedIn ? (
-            <Route path="/home" element={<LandingPage />} />
-          ) : (
-            <Route path="/login" element={<LoginForm />} />
-          )}
-        </Routes>
-      </Router>
-      <Footer />
+            <Route path="/user-form" element={<UserForm />} />
+            <Route path="/current-location" element={<CurrentLocationForm />} />
+            
+          </Routes>
+        </Router>
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }
