@@ -19,6 +19,7 @@ import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage
 import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLandingPage";
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
+import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 
 
 function App(handleUserFormSubmit) {
