@@ -1,31 +1,41 @@
-import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Bookmark from '@mui/icons-material/Bookmark';
-import ShareIcon from '@mui/icons-material/Share';
-import Button from '@mui/material/Button';
-import { Link as RouterLink } from "react-router-dom"; 
-
-
-const useStyles = makeStyles((theme) => ({
-    learnMore: {
-        backgroundColor: "#7693B0",
-        fontFamily: 'Inter, sans-serif',
-    }, 
-    onHover: {
-        backgroundColor: "#506d8a",
-    }
-})); 
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import { useState } from "react";
 
 export default function MedicalProfessionalCard({ professional }) {
+  const [expanded, setExpanded] = useState(false);
+  const {
+    first_name,
+    last_name,
+    country,
+    language_proficiency,
+    rating,
+    specialization,
+    years_of_experience,
+  } = professional;
 
+  const useStyles = makeStyles((theme) => ({
+      learnMore: {
+          backgroundColor: "#7693B0",
+          fontFamily: 'Inter, sans-serif',
+      }, 
+      onHover: {
+          backgroundColor: "#506d8a",
+      }
+  })); 
+
+export default function MedicalProfessionalCard({ professional }) {
 
     const classes = useStyles();
 
@@ -42,21 +52,23 @@ export default function MedicalProfessionalCard({ professional }) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "#768599" }} aria-label="recipe">
-            E
+            {first_name?.charAt(0)}
           </Avatar>
         }
-        title={name}
-        subheader={`${country} | ${language} | ${modality}`}
+        title={first_name + " " + last_name}
+        subheader={`${country} `}
       />
       <CardMedia
         component="img"
         height="194"
         image="https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_fYxB1SnrzgJ9AOkcT0hoe7IEFtsPiHAD.jpg"
-        alt={`A picture of ${name}`}
+        alt={`A picture of ${first_name} ${last_name}`}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-            {bio}
+          {specialization} <br />
+          Years of experience {years_of_experience} <br />
+          Language: {language_proficiency}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -64,16 +76,21 @@ export default function MedicalProfessionalCard({ professional }) {
             <Bookmark 
             />
         </IconButton>
-        <IconButton aria-label="share"  onClick={handleMedicalProfessionalBookmarked}>
-          <ShareIcon />
+        <IconButton
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
         </IconButton>
-        {/* TODO: Add the correct Route here */}
-        <RouterLink to="">
-            <Button variant='contained' size="small" className={classes.learnMore}>
-                Learn More
-            </Button>
-        </RouterLink>
       </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            Rating {rating}
+          </Typography>
+        </CardContent>
+      </Collapse>
     </Card>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, MenuItem } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -12,8 +12,16 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Select from "react-select";
+import { getNames } from "country-list";
 
 const defaultTheme = createTheme();
+const countryNames = getNames();
+const options = getNames().map((name) => ({ value: name, label: name }));
+
+function CountrySelect() {
+  return <Select options={options} />;
+}
 
 const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
   const [country, setCountry] = useState("");
@@ -55,15 +63,24 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <Select
                   required
                   fullWidth
                   id="country"
+                  placeholder="Select a Country"
                   label="Country"
                   name="country"
+                  options={options}
                   value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                />
+                  onChange={(e) => setCountry(e)}
+                >
+                  <MenuItem value="">Select a Country</MenuItem>
+                  {countryNames.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -74,6 +91,12 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                   name="state"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
+                  styles={{
+                    menu: (provided) => ({
+                      ...provided,
+                      backgroundColor: "white",
+                    }),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
