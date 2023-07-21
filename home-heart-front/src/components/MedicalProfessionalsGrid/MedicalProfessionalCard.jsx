@@ -1,4 +1,5 @@
 import * as React from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
 
 export default function MedicalProfessionalCard({ professional }) {
@@ -35,11 +37,8 @@ export default function MedicalProfessionalCard({ professional }) {
       }
   })); 
 
-export default function MedicalProfessionalCard({ professional }) {
-
     const classes = useStyles();
 
-    const { name, image, country, language, modality, bio } = professional;
 
     // TODO: Implement this
     const handleMedicalProfessionalBookmarked = () => {
@@ -77,7 +76,7 @@ export default function MedicalProfessionalCard({ professional }) {
             />
         </IconButton>
         <IconButton
-          onClick={handleExpandClick}
+        //   onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -93,4 +92,4 @@ export default function MedicalProfessionalCard({ professional }) {
       </Collapse>
     </Card>
   );
-}
+    }
