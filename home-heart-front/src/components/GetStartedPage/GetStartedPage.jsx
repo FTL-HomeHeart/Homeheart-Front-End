@@ -64,7 +64,7 @@ export default function ImageCardGetStarted() {
         </Typography>
          <RouterLink to="/user-form">
             {/* <Link style={{ textDecoration: "none" }}> */}
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }} className={classes.button}>
                 Get Started
             </Button>
 

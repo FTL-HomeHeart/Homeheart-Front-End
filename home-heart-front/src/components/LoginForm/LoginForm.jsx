@@ -9,18 +9,16 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import Text from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import ImageCard from "../LandingPage/Hero";
 import { useState } from "react";
 
-
 const LoginForm = ({ handleLoginSubmit }) => {
-
   const defaultTheme = createTheme();
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -84,6 +82,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               type="submit"
               fullWidth
               variant="contained"
+              style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
@@ -92,7 +91,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               type="button"
               fullWidth
               variant="contained"
-              color="primary"
+              style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mt: 3, mb: 2 }}
               onClick={handleGoogleLogin}
             >

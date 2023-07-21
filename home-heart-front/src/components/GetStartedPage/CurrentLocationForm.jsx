@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {Link} from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -20,6 +21,7 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
   const [state, setState] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
   const [timezone, setTimezone] = useState("");
+  const [postalCode, setPostalCode] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
       state,
       streetAddress,
       timezone,
+      postalCode,
     });
   };
 
@@ -66,22 +69,22 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 <TextField
                   required
                   fullWidth
-                  id="city"
-                  label="City"
-                  name="city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  id="state"
+                  label="State"
+                  name="state"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="state"
-                  label="State"
-                  name="state"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
+                  id="city"
+                  label="City"
+                  name="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -99,6 +102,17 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 <TextField
                   required
                   fullWidth
+                  id="postalCode"
+                  label="Postal Code"
+                  name="postalCode"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="timezone"
                   label="Timezone"
                   name="timezone"
@@ -107,14 +121,17 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Submit
-            </Button>
+            <Link to="/profile-photo" style={{ textDecoration: "none" }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Next
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Container>
