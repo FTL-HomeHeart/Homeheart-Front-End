@@ -15,7 +15,6 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 const BASE_URL = "http://localhost:3001";
 import jwtDecode from "jwt-decode";
-import AuthenticatedPage from "./components/LandingPage/AuthenticatedLandingPage";
 import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLandingPage";
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
@@ -26,6 +25,7 @@ function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
+  const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
 
   const theme = createTheme({
     direction: "rtl",
@@ -69,6 +69,7 @@ function App({ handleUserFormSubmit }) {
           fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
         };
         console.log("userData:", userData);
+
         localStorage.setItem("user", JSON.stringify(userData));
         setUser(userData);
 
@@ -158,7 +159,6 @@ function App({ handleUserFormSubmit }) {
           {/* Have to be outside of Routes as it should render regardless */}
           <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
           <Routes>
-
             <Route
               path="/"
               element={
@@ -199,8 +199,10 @@ function App({ handleUserFormSubmit }) {
             <Route path="/current-location" element={<CurrentLocationForm />} />
 
             <Route path="/profile-photo" element={<ProfilePhoto />} />
-
-
+            <Route
+              path="/recommended_professionals"
+              element={<MedicalProfessionalsGrid />}
+            />
           </Routes>
         </Router>
         <Footer />

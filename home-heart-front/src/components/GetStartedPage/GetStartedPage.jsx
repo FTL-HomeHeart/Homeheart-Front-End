@@ -60,15 +60,18 @@ export default function ImageCardGetStarted() {
           className={classes.overlayText}
           fontSize="20px"
         >
-          Welcome User !
+          Welcome user!
         </Typography>
-         <RouterLink to="/user-form">
-            {/* <Link style={{ textDecoration: "none" }}> */}
-            <Button variant="contained" style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }} className={classes.button}>
-                Get Started
-            </Button>
-
-         </RouterLink>
+        <RouterLink to="/user-form">
+          {/* <Link style={{ textDecoration: "none" }}> */}
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+            className={classes.button}
+          >
+            Get Started
+          </Button>
+        </RouterLink>
       </div>
     </Card>
   );
