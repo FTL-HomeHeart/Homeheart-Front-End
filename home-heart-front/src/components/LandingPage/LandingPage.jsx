@@ -17,7 +17,7 @@ const LandingPage = () => {
       <Testimonials />
       <MedicalProfessionalsGrid />
       <MedicalProfessionalDetailedView /> 
-      <AppointmetConfirmedPage />
+      {/* <AppointmetConfirmedPage /> */}
     </div>
   );
 };

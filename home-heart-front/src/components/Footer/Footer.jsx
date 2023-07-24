@@ -206,7 +206,7 @@ const Footer = () => {
         backgroundColor: "#768599",
         py: { xs: 6, md: 10 },
         color: "primary.contrastText",
-        fontFamily: 'Poppins, sans-serif', // Set the Poppins font for the entire footer/ Set the Poppins font for the entire footer
+        fontFamily: 'Poppins, sans-serif',
       }}
     >
       <Container>
