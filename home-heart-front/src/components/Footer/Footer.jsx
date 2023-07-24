@@ -207,7 +207,6 @@ export default function Footer() {
         py: { xs: 6, md: 10 },
         color: "primary.contrastText",
         fontFamily: "Poppins, sans-serif", // Set the Poppins font for the entire footer/ Set the Poppins font for the entire footer
-        // position: "fixed",
         bottom: 0,
         left: 0,
         width: "100%",

@@ -6,7 +6,10 @@ import Testimonials from "./Testimonials";
 import ImageCard from "./Hero";
 import MedicalProfessionalsGrid from "../MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import MedicalProfessionalDetailedView from "../MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
+
+
 export default function LandingPage() {
+
   return (
     <div>
       <ImageCard />
@@ -14,8 +17,10 @@ export default function LandingPage() {
       <Vision />
       <Features />
       <Testimonials />
+      {/* <AppointmetConfirmedPage /> */}
       {/* <MedicalProfessionalsGrid />
       <MedicalProfessionalDetailedView />  */}
+
     </div>
   );
 }
