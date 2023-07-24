@@ -20,7 +20,8 @@ import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
-
+import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
+import { Box } from "@mui/material";
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -158,52 +159,71 @@ function App({ handleUserFormSubmit }) {
         <Router>
           {/* Have to be outside of Routes as it should render regardless */}
           <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                loggedIn ? <AuthenticatedLandingPage /> : <LandingPage />
-              }
-            />
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  loggedIn ? <AuthenticatedLandingPage /> : <LandingPage />
+                }
+              />
 
-            <Route
-              path="/register"
-              element={
-                loggedIn ? (
-                  <Navigate to="/home" />
-                ) : (
-                  <RegistrationForm
-                    handleRegistrationSubmit={handleRegistrationSubmit}
-                  />
-                )
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                loggedIn ? (
-                  <Navigate to="/" />
-                ) : (
-                  <LoginForm handleLoginSubmit={handleLoginSubmit} />
-                )
-              }
-            />
+              <Route
+                path="/register"
+                element={
+                  loggedIn ? (
+                    <Navigate to="/home" />
+                  ) : (
+                    <RegistrationForm
+                      handleRegistrationSubmit={handleRegistrationSubmit}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  loggedIn ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <LoginForm handleLoginSubmit={handleLoginSubmit} />
+                  )
+                }
+              />
 
-            {loggedIn ? (
-              <Route path="/home" element={<AuthenticatedLandingPage />} />
-            ) : (
-              <Route path="/login" element={<LoginForm />} />
-            )}
+              {loggedIn ? (
+                <Route path="/home" element={<AuthenticatedLandingPage />} />
+              ) : (
+                <Route path="/login" element={<LoginForm />} />
+              )}
 
-            <Route path="/user-form" element={<UserForm />} />
-            <Route path="/current-location" element={<CurrentLocationForm />} />
+              <Route path="/user-form" element={<UserForm />} />
+              <Route
+                path="/current-location"
+                element={<CurrentLocationForm />}
+              />
 
-            <Route path="/profile-photo" element={<ProfilePhoto />} />
-            <Route
-              path="/recommended_professionals"
-              element={<MedicalProfessionalsGrid />}
-            />
-          </Routes>
+              <Route path="/profile-photo" element={<ProfilePhoto />} />
+              {/* <Route
+                path="/recommended_professionals"
+                element={<MedicalProfessionalsGrid />}
+              /> */}
+              <Route
+                path="/professional_details"
+                element={<MedicalProfessionalDetailedView />}
+              />
+              <Route
+                path="/recommendations"
+                element={<MedicalProfessionalsGrid />}
+              />
+            </Routes>
+          </Box>
         </Router>
         <Footer />
       </ThemeProvider>

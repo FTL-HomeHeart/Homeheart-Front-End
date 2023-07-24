@@ -6,7 +6,7 @@ import Testimonials from "./Testimonials";
 import ImageCard from "./Hero";
 import MedicalProfessionalsGrid from "../MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import MedicalProfessionalDetailedView from "../MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
-const LandingPage = () => {
+export default function LandingPage() {
   return (
     <div>
       <ImageCard />
@@ -14,10 +14,8 @@ const LandingPage = () => {
       <Vision />
       <Features />
       <Testimonials />
-      <MedicalProfessionalsGrid />
-      <MedicalProfessionalDetailedView /> 
+      {/* <MedicalProfessionalsGrid />
+      <MedicalProfessionalDetailedView />  */}
     </div>
   );
-};
-
-export default LandingPage;
+}
