@@ -27,6 +27,8 @@ function App({ handleUserFormSubmit }) {
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
+  const id = localStorage.getItem("userId");
+  // console.log("id", id);
 
   const theme = createTheme({
     direction: "rtl",
@@ -210,16 +212,16 @@ function App({ handleUserFormSubmit }) {
               />
 
               <Route path="/profile-photo" element={<ProfilePhoto />} />
-              {/* <Route
+              <Route
                 path="/recommended_professionals"
                 element={<MedicalProfessionalsGrid />}
-              /> */}
+              />
               <Route
                 path="/professional_details"
                 element={<MedicalProfessionalDetailedView />}
               />
               <Route
-                path="/recommendations"
+                path="/recommendations/:id"
                 element={<MedicalProfessionalsGrid />}
               />
             </Routes>
