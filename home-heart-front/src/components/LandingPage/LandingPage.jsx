@@ -6,6 +6,7 @@ import Testimonials from "./Testimonials";
 import ImageCard from "./Hero";
 import MedicalProfessionalsGrid from "../MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import MedicalProfessionalDetailedView from "../MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
+import AppointmetConfirmedPage from "../AppointmentConfirmed/AppointmetConfirmed";
 const LandingPage = () => {
   return (
     <div>
@@ -16,6 +17,7 @@ const LandingPage = () => {
       <Testimonials />
       <MedicalProfessionalsGrid />
       <MedicalProfessionalDetailedView /> 
+      <AppointmetConfirmedPage />
     </div>
   );
 };
