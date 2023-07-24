@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Features = () => {
+export default function Features() {
   const classes = useStyles();
 
   return (
@@ -140,9 +140,10 @@ const Features = () => {
             mental health and the immigrant experience, to enhance your
             understanding and provide additional support.
           </Typography>
+
         </ListItem>
       </List>
-      {/* Add the <img> element to display the image */}
+
       <img
         src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
         alt="Feature Image"
@@ -153,4 +154,3 @@ const Features = () => {
   );
 };
 
-export default Features;
