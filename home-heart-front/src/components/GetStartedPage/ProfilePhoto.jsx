@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -54,7 +54,10 @@ const ProfilePhoto = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
             </Grid>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link
+              to="/recommended_professionals"
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 type="submit"
                 fullWidth

@@ -19,10 +19,6 @@ const defaultTheme = createTheme();
 const countryNames = getNames();
 const options = getNames().map((name) => ({ value: name, label: name }));
 
-function CountrySelect() {
-  return <Select options={options} />;
-}
-
 const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");

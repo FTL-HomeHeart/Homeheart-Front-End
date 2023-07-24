@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default function MedicalProfessionalCard({ professional }) {
   const [expanded, setExpanded] = useState(false);
@@ -26,6 +27,7 @@ export default function MedicalProfessionalCard({ professional }) {
     specialization,
     years_of_experience,
   } = professional;
+
 
   const useStyles = makeStyles((theme) => ({
       learnMore: {
@@ -45,6 +47,19 @@ export default function MedicalProfessionalCard({ professional }) {
         console.log("Medical professional bookmarked");
     }
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    learnMore: {
+      backgroundColor: "#7693B0",
+      fontFamily: "Inter, sans-serif",
+    },
+    onHover: {
+      backgroundColor: "#506d8a",
+    },
+  }));
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -72,8 +87,7 @@ export default function MedicalProfessionalCard({ professional }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-            <Bookmark 
-            />
+          <FavoriteIcon />
         </IconButton>
         <IconButton
         //   onClick={handleExpandClick}

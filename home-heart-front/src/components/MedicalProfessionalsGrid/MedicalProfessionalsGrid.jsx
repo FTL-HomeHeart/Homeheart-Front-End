@@ -4,22 +4,36 @@ import { Container } from "@mui/material";
 import MedicalProfessionalCard from "./MedicalProfessionalCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 const BASE_URL = "http://localhost:3001";
+const FLASK_URL = "http://localhost:5000";
 const MedicalProfessionalsGrid = () => {
   const [professionals, setProfessionals] = useState([]);
+  const { id } = useParams(); // Extract id from the route parameters
   //fetch the professionals data from the database through the API /recommended_professionals
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/api/recommended_professionals`)
+  //     .then((response) => {
+  //       // console.log("response data", response.data);
+  //       setProfessionals(response.data);
+  //       // console.log(professionals);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/recommended_professionals`)
+      .get(`${FLASK_URL}/api/recommendations/${id}`)
       .then((response) => {
-        console.log("response data", response.data);
         setProfessionals(response.data);
-        // console.log(professionals);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <Container>

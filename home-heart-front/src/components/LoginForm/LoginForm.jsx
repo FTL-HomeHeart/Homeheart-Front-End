@@ -83,7 +83,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               fullWidth
               variant="contained"
               style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 6 }}
             >
               Sign In
             </Button>
@@ -92,7 +92,7 @@ const LoginForm = ({ handleLoginSubmit }) => {
               fullWidth
               variant="contained"
               style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 16, mb: 4 }}
               onClick={handleGoogleLogin}
             >
               Sign In with Google
