@@ -11,6 +11,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
+const id = localStorage.getItem("userId");
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const defaultTheme = createTheme();
@@ -54,10 +55,7 @@ const ProfilePhoto = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
             </Grid>
-            <Link
-              to="/recommended_professionals"
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="/recommendations/" style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 fullWidth

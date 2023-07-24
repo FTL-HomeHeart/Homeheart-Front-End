@@ -141,14 +141,14 @@ const Features = () => {
             </Typography>
           </ListItem>
         </List>
-        <video
+        {/* <video
           src="https://designerapp.officeapps.live.com/designerapp/Media.ashx/?id=dd3feaae-7d3b-4cee-bf71-acfd1b4579ee.mp4&fileToken=7851f972-3839-4e99-960f-2118f60722f3&dcHint=WestUS"
           alt="Feature Image"
           className={classes.featureImage}
           autoPlay
           loop
           muted
-        />
+        /> */}
       </div>
     </Container>
   );
