@@ -44,6 +44,7 @@ function App({ handleUserFormSubmit }) {
     }
   }, []);
 
+  console.log(user)
   // Login User when login button is clicked
   const handleLoginSubmit = async ({ identifier, password, navigate }) => {
     try {
@@ -172,7 +173,7 @@ function App({ handleUserFormSubmit }) {
               <Route
                 path="/"
                 element={
-                  loggedIn ? <AuthenticatedLandingPage /> : <LandingPage />
+                  loggedIn ? <AuthenticatedLandingPage user={user} /> : <LandingPage />
                 }
               />
 
@@ -200,7 +201,7 @@ function App({ handleUserFormSubmit }) {
               />
 
               {loggedIn ? (
-                <Route path="/home" element={<AuthenticatedLandingPage />} />
+                <Route path="/home" element={<AuthenticatedLandingPage user={user} />} />
               ) : (
                 <Route path="/login" element={<LoginForm />} />
               )}
