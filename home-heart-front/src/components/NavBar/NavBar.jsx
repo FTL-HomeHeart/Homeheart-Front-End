@@ -89,12 +89,12 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
         </div>
         {loggedIn ? (
           <>
-            <IconButton color="inherit" aria-label="User Account">
-              <Avatar></Avatar>
-            </IconButton>
             <Button className={classes.navBarButtons}  color="inherit" onClick={handleLogout}>
               Logout
             </Button>
+            <IconButton color="inherit" aria-label="User Account">
+              <Avatar></Avatar>
+            </IconButton>
           </>
         ) : (
           <div className={classes.navBarButtonsContainer}>
