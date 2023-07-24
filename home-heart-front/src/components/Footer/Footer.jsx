@@ -1,10 +1,10 @@
 import React from "react";
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { Link } from "@material-ui/core"
+import { Link } from "@material-ui/core";
 
 const CopyRight = () => {
   return (
@@ -198,7 +198,7 @@ const FooterNavigation = () => {
   );
 };
 
-const Footer = () => {
+export default function Footer() {
   return (
     <Box
       component="footer"
@@ -206,7 +206,11 @@ const Footer = () => {
         backgroundColor: "#768599",
         py: { xs: 6, md: 10 },
         color: "primary.contrastText",
-        fontFamily: 'Poppins, sans-serif', // Set the Poppins font for the entire footer/ Set the Poppins font for the entire footer
+        fontFamily: "Poppins, sans-serif", // Set the Poppins font for the entire footer/ Set the Poppins font for the entire footer
+        // position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
       }}
     >
       <Container>
@@ -217,7 +221,7 @@ const Footer = () => {
                 HomeHeart
               </Typography>
               <Typography variant="subtitle1" sx={{ letterSpacing: 1, mb: 2 }}>
-                <CopyRight /> 
+                <CopyRight />
               </Typography>
               <SocialLinks />
             </Box>
@@ -229,6 +233,4 @@ const Footer = () => {
       </Container>
     </Box>
   );
-};
-
-export default Footer;
+}

@@ -60,7 +60,7 @@ export default function ImageCardGetStarted() {
           className={classes.overlayText}
           fontSize="20px"
         >
-          Welcome user!
+          Welcome!
         </Typography>
         <RouterLink to="/user-form">
           {/* <Link style={{ textDecoration: "none" }}> */}
