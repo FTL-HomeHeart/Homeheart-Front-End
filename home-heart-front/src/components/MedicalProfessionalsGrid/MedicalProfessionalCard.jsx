@@ -14,7 +14,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 
 export default function MedicalProfessionalCard({ professional }) {
   const [expanded, setExpanded] = useState(false);
@@ -27,17 +26,6 @@ export default function MedicalProfessionalCard({ professional }) {
     specialization,
     years_of_experience,
   } = professional;
-
-
-  const useStyles = makeStyles((theme) => ({
-      learnMore: {
-          backgroundColor: "#7693B0",
-          fontFamily: 'Inter, sans-serif',
-      }, 
-      onHover: {
-          backgroundColor: "#506d8a",
-      }
-  })); 
 
     const classes = useStyles();
 

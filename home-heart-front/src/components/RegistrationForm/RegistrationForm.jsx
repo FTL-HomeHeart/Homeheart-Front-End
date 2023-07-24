@@ -24,7 +24,10 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [passwordError, setpasswordError] = useState(false);
+  const [errors, setErrors] = useState({});
+  // const [passwordError, setPasswordError] = useState(false);
+  // const [emailError, setEmailError] = useState(false);
+  // const [numericError, setNumericError] = useState(false);
 
   const defaultTheme = createTheme();
 
@@ -43,22 +46,57 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("firstName", firstName);
-    console.log("lastName", lastName);
-    if (password !== confirmPassword) {
-      setpasswordError(true);
+
+    // Reset errors before validation
+    setErrors({});
+
+    // Validate email format using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrors((prevState) => ({
+        ...prevState,
+        email: "Invalid email format!",
+      }));
       return;
-    } else {
-      setpasswordError(false);
-      handleRegistrationSubmit({
-        username,
-        email,
-        firstName,
-        lastName,
-        password,
-      });
     }
+
+    // Checks password length
+    if (password.length < 8) {
+      setErrors((prevState) => ({
+        ...prevState,
+        password: "Password must be at least 8 characters long.",
+      }));
+      return;
+    }
+
+    // Checks if first name, last name, and username contain numbers
+    if (/\d/.test(firstName) || /\d/.test(lastName) || /\d/.test(username)) {
+      setErrors((prevState) => ({
+        ...prevState,
+        numeric: "First name, last name, and username cannot contain numbers.",
+      }));
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrors((prevState) => ({
+        ...prevState,
+        confirmPassword: "Passwords do not match.",
+      }));
+      return;
+    }
+    
+    // Perform registration logic
+    handleRegistrationSubmit({
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
+    });
+    setErrors({});
   };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -153,17 +191,34 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
-                  label="I want to receive inspiration, marketing promotions, and updates via email."
+                  label="I want to receive updates about appointments and articles via email."
                 />
               </Grid>
             </Grid>
-            {passwordError && <p>Password does not match!</p>}
+
+            {errors.email && (
+              <Typography color="error">{errors.email}</Typography>
+            )}
+
+            {errors.password && (
+              <Typography color="error">{errors.password}</Typography>
+            )}
+
+            {errors.numeric && (
+              <Typography color="error">{errors.numeric}</Typography>
+            )}
+
+            {errors.confirmPassword && (
+              <Typography color="error">{errors.confirmPassword}</Typography>
+            )}
+
             <Button
               type="submit"
               fullWidth

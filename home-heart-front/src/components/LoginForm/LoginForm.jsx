@@ -23,6 +23,8 @@ const LoginForm = ({ handleLoginSubmit }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
   const handleSignIn = (e) => {
     e.preventDefault();
     handleLoginSubmit({
@@ -30,7 +32,16 @@ const LoginForm = ({ handleLoginSubmit }) => {
       identifier: email,
       password,
     });
+ 
+        if (password !== "correctPassword") {
+          setPasswordError(true);
+          return;
+        } else {
+          setPasswordError(false);
+          handleSignIn({ email, password });
+        }
   };
+
   const handleGoogleLogin = () => {
     // Redirect the user to the Google login page
     window.location.href = "http://localhost:3001/auth/google";
@@ -78,6 +89,9 @@ const LoginForm = ({ handleLoginSubmit }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && (
+              <Typography color="error">Incorrect password!</Typography>
+            )}
             <Button
               type="submit"
               fullWidth
