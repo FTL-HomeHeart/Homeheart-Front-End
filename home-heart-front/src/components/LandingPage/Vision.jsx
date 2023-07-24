@@ -43,7 +43,7 @@ const Vision = () => {
     <Container className={classes.container}>
       <Grid container spacing={10} alignItems="center">
         <Grid item xs={12} md={6}>
-          <img src="https://d3qyu496o2hwvq.cloudfront.net/wp-content/uploads/2022/08/DDP_2445-565x475.jpg" alt="Square Image" className={classes.image} />
+          <img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80" alt="Square Image" className={classes.image} />
         </Grid>
         <Grid item xs={12} md={6} className={classes.contentContainer}>
           <Typography variant="h4" className={classes.heading}>
