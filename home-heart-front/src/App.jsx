@@ -28,11 +28,12 @@ function App({ handleUserFormSubmit }) {
   const [logginError, setLoginError] = useState("");
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
-  // console.log("id", id);
+  const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] = useState([]);
 
   const theme = createTheme({
     direction: "rtl",
   });
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,7 +45,6 @@ function App({ handleUserFormSubmit }) {
     }
   }, []);
 
-  console.log(user)
   // Login User when login button is clicked
   const handleLoginSubmit = async ({ identifier, password, navigate }) => {
     try {
@@ -155,6 +155,7 @@ function App({ handleUserFormSubmit }) {
     setLoginError("");
     navigate("/");
   };
+  
 
   return (
     <>
@@ -214,16 +215,16 @@ function App({ handleUserFormSubmit }) {
 
               <Route path="/profile-photo" element={<ProfilePhoto />} />
               <Route
-                path="/recommended_professionals"
-                element={<MedicalProfessionalsGrid />}
+                path="/recommended_professionals/:id"
+                element={<MedicalProfessionalsGrid userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
               />
               <Route
                 path="/professional_details"
-                element={<MedicalProfessionalDetailedView />}
+                element={<MedicalProfessionalDetailedView  userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
               />
               <Route
                 path="/recommendations/:id"
-                element={<MedicalProfessionalsGrid />}
+                element={<MedicalProfessionalsGrid  userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} />}
               />
             </Routes>
           </Box>

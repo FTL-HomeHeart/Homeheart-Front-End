@@ -15,7 +15,20 @@ import ShareIcon from "@mui/icons-material/Share";
 import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
 
-export default function MedicalProfessionalCard({ professional }) {
+import axios from "axios";
+
+
+const useStyles = makeStyles((theme) => ({
+  learnMore: {
+      backgroundColor: "#7693B0",
+      fontFamily: 'Inter, sans-serif',
+  }, 
+  onHover: {
+      backgroundColor: "#506d8a",
+  }
+})); 
+
+export default function MedicalProfessionalCard({ professional, userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, userID, handleGetAllSavedMedicalProfessionals }) {
   const [expanded, setExpanded] = useState(false);
   const {
     first_name,
@@ -27,27 +40,37 @@ export default function MedicalProfessionalCard({ professional }) {
     years_of_experience,
   } = professional;
 
+
     const classes = useStyles();
 
 
     // TODO: Implement this
     const handleMedicalProfessionalBookmarked = () => {
-        console.log("Medical professional bookmarked");
-    }
+      // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
+      // console.log("userID", user.userId)
+
+      console.log("professional", professional)
+      axios.post("http://localhost:3001/api/saved_professionals/addSavedProfessional", {
+        professional: professional, 
+        user_id: userID
+      }).then((response) => {
+        console.log("RESPONSE IN MED PROF CARD", response.data.result);
+        // copy over the previous medical professionals and add the new one
+        setUserSavedMedicalProfessionals((prev) => [...prev, response.data.result]);
+        handleGetAllSavedMedicalProfessionals(); 
+      }).catch((error) => {
+        console.log(error);
+        console.log("error");
+      }
+      )
+    }; 
+
+    
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const useStyles = makeStyles((theme) => ({
-    learnMore: {
-      backgroundColor: "#7693B0",
-      fontFamily: "Inter, sans-serif",
-    },
-    onHover: {
-      backgroundColor: "#506d8a",
-    },
-  }));
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -74,7 +97,7 @@ export default function MedicalProfessionalCard({ professional }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={handleMedicalProfessionalBookmarked}>
           <FavoriteIcon />
         </IconButton>
         <IconButton

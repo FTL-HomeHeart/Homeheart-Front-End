@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
-
+import MedicalProfessionalCommentSection from "./MedicalProfessionalCommentSection";
 
 const useStyles = makeStyles((theme) => ({
     doctorName: {
@@ -53,9 +53,15 @@ const useStyles = makeStyles((theme) => ({
     similarProfessionalsHeader: {
         fontWeight: "bold",
         marginBottom: theme.spacing(1),
-        fontFamily: "Poppins, sans-serif !important",
+        fontFamily: "Poppins, sans-serif",
         fontSize: "30px", 
         fontWeight: 500
+    },
+    commentSectionContainer: {
+        marginTop: "5rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
     },
 }));
 
@@ -165,7 +171,13 @@ const MedicalProfessionalDetailedView = () => {
                     <MedicalProfessionalCard professional={professionals[0]} />
                 </Grid>
                 </Grid>
-          </div>
+            </div>
+            <div className={classes.commentSectionContainer}>
+                <Typography variant="h5" className={classes.similarProfessionalsHeader}>
+                    Hear from other patients
+                </Typography>
+                <MedicalProfessionalCommentSection />
+            </div>
         </Container>
     );
 };
