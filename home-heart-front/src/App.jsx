@@ -217,7 +217,7 @@ function App({ handleUserFormSubmit }) {
 
               <Route path="/profile-photo" element={<ProfilePhoto />} />
               <Route
-                path="/recommended_professionals"
+                path="/recommended_professionals/:id"
                 element={<MedicalProfessionalsGrid userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
               />
               <Route

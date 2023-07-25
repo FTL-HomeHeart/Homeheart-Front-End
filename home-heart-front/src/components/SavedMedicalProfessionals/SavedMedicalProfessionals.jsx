@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SavedMedicalProfessionals = ({userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, user, handleGetAllSavedMedicalProfessionals,  }) => {
+const SavedMedicalProfessionals = ({userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals, userID  }) => {
 
     const classes = useStyles(); 
 
@@ -36,7 +36,7 @@ const SavedMedicalProfessionals = ({userSavedMedicalProfessionals, setUserSavedM
                     <SavedMedicalProfessionalsCard
                         key={professional.professional_id}
                         professional={professional}
-                        user={user}
+                        userID={userID}
                         setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals}
                         handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals} 
                     />

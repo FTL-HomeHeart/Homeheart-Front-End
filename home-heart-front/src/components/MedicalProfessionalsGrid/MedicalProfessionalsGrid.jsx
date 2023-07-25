@@ -50,6 +50,8 @@ export default function MedicalProfessionalsGrid({setUserSavedMedicalProfessiona
   //     });
   // }, [id]);
 
+  const { id } = useParams();
+
 
   const professionals = [
     {
@@ -85,10 +87,11 @@ export default function MedicalProfessionalsGrid({setUserSavedMedicalProfessiona
 ];
 
 const handleGetAllSavedMedicalProfessionals = () => {
-  console.log("user", user);
-  axios.get(`http://localhost:3001/api/saved_professionals/getAllSaved/5`)
+  console.log("user in med prof GRID:", user);
+  console.log("id in med prof GRID:", id);
+  axios.get(`http://localhost:3001/api/saved_professionals/getAllSaved/${id}`)
     .then((response) => {
-      console.log("RESPONSE", response.data.result);
+      console.log("RESPONSE in GRID", response.data.result);
       setUserSavedMedicalProfessionals(response.data.result);
     })
     .catch((error) => {
@@ -96,7 +99,6 @@ const handleGetAllSavedMedicalProfessionals = () => {
       console.log("error");
     });
 };
-
 
 useEffect(() => {
 
@@ -116,11 +118,11 @@ useEffect(() => {
       >
         {professionals.map((professional) => (
           <Grid item xs={12} sm={6} md={4} key={professional.professional_id}>
-            <MedicalProfessionalCard professional={professional} user={user} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals} />
+            <MedicalProfessionalCard professional={professional} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals} userID={id}/>
           </Grid>
         ))}
       </Grid>
-      <SavedMedicalProfessionals userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals}  /> 
+      <SavedMedicalProfessionals userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} userID={id} handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals}  /> 
     </Container>
   );
 }

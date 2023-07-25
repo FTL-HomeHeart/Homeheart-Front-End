@@ -50,9 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SavedMedicalProfessionalsCard = ({ professional, user, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals }) => {
+const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals }) => {
     console.log("IM HERE"); 
-    console.log("professional", professional)
+    console.log("professionals in SAVED MED PROF CARD", professional)
   const classes = useStyles();
   
 
@@ -61,7 +61,7 @@ const SavedMedicalProfessionalsCard = ({ professional, user, setUserSavedMedical
     axios.delete("http://localhost:3001/api/saved_professionals/deleteSavedProfessional", {
         data: {
             professional: professional, 
-            user_id: user.userId
+            user_id: userID
         }
     }).then((response) => {
         console.log("RESPONSE IN MED PROF CARD", response.data.result.professional);

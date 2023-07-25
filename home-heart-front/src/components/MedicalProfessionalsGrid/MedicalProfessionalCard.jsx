@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 })); 
 
-export default function MedicalProfessionalCard({ professional, userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, user, handleGetAllSavedMedicalProfessionals }) {
+export default function MedicalProfessionalCard({ professional, userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, userID, handleGetAllSavedMedicalProfessionals }) {
   const [expanded, setExpanded] = useState(false);
   const {
     first_name,
@@ -45,16 +45,16 @@ export default function MedicalProfessionalCard({ professional, userSavedMedical
     // TODO: Implement this
     const handleMedicalProfessionalBookmarked = () => {
       // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
-      console.log("user", user)
-      console.log("userID", user.userId)
+      // console.log("userID", user.userId)
+
       console.log("professional", professional)
       axios.post("http://localhost:3001/api/saved_professionals/addSavedProfessional", {
         professional: professional, 
-        user_id: user.userId
+        user_id: userID
       }).then((response) => {
-        console.log("RESPONSE IN MED PROF CARD", response.data.result.professional);
+        console.log("RESPONSE IN MED PROF CARD", response.data.result);
         // copy over the previous medical professionals and add the new one
-        setUserSavedMedicalProfessionals([(prev) => [...prev, response.data.result.professional]])
+        setUserSavedMedicalProfessionals((prev) => [...prev, response.data.result]);
         handleGetAllSavedMedicalProfessionals(); 
       }).catch((error) => {
         console.log(error);
