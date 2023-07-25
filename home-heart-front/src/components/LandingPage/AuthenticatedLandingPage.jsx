@@ -3,12 +3,13 @@ import Features from "./Features";
 import ImageCard from "./Hero";
 import ImageCardGetStarted from "../GetStartedPage/GetStartedPage";
 import HowItWorks from "./HowItWorks";
+import HowItWorksAuth from "./HowItWorksAuth";
 export default function AuthenticatedLandingPage() {
   return (
     <div>
       <ImageCardGetStarted />
       {/*  to be replaced by modified HowItWorks for auth-ed users later on */}
-      <HowItWorks />
+      <HowItWorksAuth />
       <Features />
     </div>
   );
