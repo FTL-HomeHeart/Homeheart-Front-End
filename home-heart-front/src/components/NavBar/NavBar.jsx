@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
     color: "#333",
   },
   title: {
-    fontWeight: "bold",
-    fontFamily: 'Poppins, sans-serif',
+    // fontWeight: "bold",
+    fontFamily: "Poppins, sans-serif",
     color: "#7693B0",
     fontSize: "40px",
-    fontWeight: 600, 
-    textDecoration: "none", 
+    fontWeight: 600,
+    textDecoration: "none",
   },
   navLinksContainer: {
     display: "flex",
@@ -36,28 +36,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   navLinks: {
-    color: "#7693B0", 
-    fontFamily: "Inter, sans-serif", 
-    fontSize: "16px", 
+    color: "#7693B0",
+    fontFamily: "Inter, sans-serif",
+    fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "28px",
-    textTransform: "uppercase"
- },
+    textTransform: "uppercase",
+  },
   avatar: {
     backgroundColor: "#f50057",
   },
-  navBarButtonsContainer: {
-
-  },
+  navBarButtonsContainer: {},
   navBarButtons: {
-    backgroundColor: "#7693B0", 
-    color: "#FFF", 
+    backgroundColor: "#7693B0",
+    color: "#FFF",
     fontFamily: "Intern, sans-serif",
     marginLeft: theme.spacing(2),
     "&:hover": {
       backgroundColor: "#4777b8",
-    }
+    },
   },
 }));
 
@@ -67,7 +65,12 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
   return (
     <AppBar position="static" className={classes.appBar} elevation={0}>
       <Toolbar>
-        <Typography variant="h6" className={classes.title} component={Link} to="/">
+        <Typography
+          variant="h6"
+          className={classes.title}
+          component={Link}
+          to="/"
+        >
           HomeHeart
         </Typography>
         <div className={classes.navLinksContainer}>
@@ -80,16 +83,24 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
           <Button className={classes.navLinks} component={Link} to="/ContactUs">
             Contact Us
           </Button>
-          <Button  className={classes.navLinks} component={Link} to="/Appointments">
+          <Button
+            className={classes.navLinks}
+            component={Link}
+            to="/Appointments"
+          >
             Appointments
           </Button>
-          <Button  className={classes.navLinks}  component={Link} to="/Resources">
+          <Button className={classes.navLinks} component={Link} to="/Resources">
             Resources
           </Button>
         </div>
         {loggedIn ? (
           <>
-            <Button className={classes.navBarButtons}  color="inherit" onClick={handleLogout}>
+            <Button
+              className={classes.navBarButtons}
+              color="inherit"
+              onClick={handleLogout}
+            >
               Logout
             </Button>
             <IconButton color="inherit" aria-label="User Account">
@@ -98,10 +109,20 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
           </>
         ) : (
           <div className={classes.navBarButtonsContainer}>
-             <Button className={classes.navBarButtons}  color="inherit" component={Link} to="/login">
+            <Button
+              className={classes.navBarButtons}
+              color="inherit"
+              component={Link}
+              to="/login"
+            >
               Login
             </Button>
-            <Button className={classes.navBarButtons}  color="inherit" component={Link} to="/register">
+            <Button
+              className={classes.navBarButtons}
+              color="inherit"
+              component={Link}
+              to="/register"
+            >
               Register
             </Button>
           </div>
