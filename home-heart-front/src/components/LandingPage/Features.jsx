@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
     listStylePosition: "inside",
   },
   featureImage: {
+    marginTop: "90px",
     flex: 1,
-    height: "100%",
-    objectFit: "cover", //making sure it covers the aspect ratio
+    height: "70%",
+    width: "50%", //making sure it covers the aspect ratio
     marginLeft: theme.spacing(5),
   },
   interFont: {
@@ -68,90 +69,88 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Features = () => {
+export default function Features() {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container2}>
-      <div className={classes.content}>
-        <List className={classes.featureList}>
-          <Typography className={classes.SectionHeading} component="h2">
-            Features
-          </Typography>
+  <Container className={classes.container2}>
+    <div className={classes.content}>
+      <List className={classes.featureList}>
+        <Typography className={classes.SectionHeading} component="h2">
+          Features
+        </Typography>
+        <Typography
+          variant="h6"
+          component="span"
+          className={classes.SectionSubHeading}
+        >
+          HomeHeart is designed with you in mind. Here are some features that
+          make us unique.
+        </Typography>
+        <ListItem className={classes.featureItem}>
           <Typography
             variant="h6"
             component="span"
-            className={classes.SectionSubHeading}
+            className={classes.interFont}
           >
-            HomeHeart is designed with you in mind. Here are some features that
-            make us unique.
+            Language and Cultural Matching: Connect with mental health
+            professionals from your home country, for therapy in your native
+            language and cultural context.
           </Typography>
-          <ListItem className={classes.featureItem}>
-            <Typography
-              variant="h6"
-              component="span"
-              className={classes.interFont}
-            >
-              Language and Cultural Matching: Connect with mental health
-              professionals from your home country, for therapy in your native
-              language and cultural context.
-            </Typography>
-          </ListItem>
-          <ListItem className={classes.featureItem}>
-            <Typography
-              variant="h6"
-              component="span"
-              className={classes.interFont}
-            >
-              Affordable Pricing: We leverage economic disparities to offer you
-              affordable prices, making mental health care more accessible.
-            </Typography>
-          </ListItem>
-          <ListItem className={classes.featureItem}>
-            <Typography
-              variant="h6"
-              component="span"
-              className={classes.interFont}
-            >
-              Verified Professionals: All professionals on our platform are
-              thoroughly verified to ensure you receive reliable and quality
-              care.
-            </Typography>
-          </ListItem>
-          <ListItem className={classes.featureItem}>
-            <Typography
-              variant="h6"
-              component="span"
-              className={classes.interFont}
-            >
-              Secure and Confidential: Your privacy is our top priority. We
-              provide secure communication channels and protect your personal
-              information.
-            </Typography>
-          </ListItem>
-          <ListItem className={classes.featureItem}>
-            <Typography
-              variant="h6"
-              component="span"
-              className={classes.interFont}
-            >
-              Rich Resource Library: Access a wide range of resources related to
-              mental health and the immigrant experience, to enhance your
-              understanding and provide additional support.
-            </Typography>
-          </ListItem>
-        </List>
-        {/* <video
-          src="https://designerapp.officeapps.live.com/designerapp/Media.ashx/?id=dd3feaae-7d3b-4cee-bf71-acfd1b4579ee.mp4&fileToken=7851f972-3839-4e99-960f-2118f60722f3&dcHint=WestUS"
-          alt="Feature Image"
-          className={classes.featureImage}
-          autoPlay
-          loop
-          muted
-        /> */}
-      </div>
-    </Container>
+        </ListItem>
+        <ListItem className={classes.featureItem}>
+          <Typography
+            variant="h6"
+            component="span"
+            className={classes.interFont}
+          >
+            Affordable Pricing: We leverage economic disparities to offer you
+            affordable prices, making mental health care more accessible.
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.featureItem}>
+          <Typography
+            variant="h6"
+            component="span"
+            className={classes.interFont}
+          >
+            Verified Professionals: All professionals on our platform are
+            thoroughly verified to ensure you receive reliable and quality
+            care.
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.featureItem}>
+          <Typography
+            variant="h6"
+            component="span"
+            className={classes.interFont}
+          >
+            Secure and Confidential: Your privacy is our top priority. We
+            provide secure communication channels and protect your personal
+            information.
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.featureItem}>
+          <Typography
+            variant="h6"
+            component="span"
+            className={classes.interFont}
+          >
+            Rich Resource Library: Access a wide range of resources related to
+            mental health and the immigrant experience, to enhance your
+            understanding and provide additional support.
+          </Typography>
+
+        </ListItem>
+      </List>
+
+      <img
+        src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+        alt="Feature Image"
+        className={classes.featureImage}
+      />
+    </div>
+  </Container>
   );
 };
 
-export default Features;
