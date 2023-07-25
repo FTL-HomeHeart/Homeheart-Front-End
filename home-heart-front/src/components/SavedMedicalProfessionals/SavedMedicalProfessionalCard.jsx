@@ -48,6 +48,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: theme.spacing(2),
   },
+  bookAppointmentButton: {
+    backgroundColor: "#7693B0",
+    color: "#FFF",
+    fontFamily: 'Inter, sans-serif',
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    }, 
+    textTransform: "none",
+  },
 }));
 
 const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals }) => {
@@ -103,7 +112,7 @@ const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedic
           </Typography>
         </div>
         <div className={classes.buttons}>
-          <Button variant="contained" color="primary" size="small">
+          <Button variant="contained" size="small" className={classes.bookAppointmentButton}>
             Book Appointment
           </Button>
           <Button variant="contained" color="secondary" size="small" onClick={handleRemoveMedicalProfessional}>
