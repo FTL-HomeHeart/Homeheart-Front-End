@@ -67,7 +67,25 @@ export default function MedicalProfessionalsGrid({setUserSavedMedicalProfessiona
         language_proficiency: "English",
         modality: "In-Person",
         image: "https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_fYxB1SnrzgJ9AOkcT0hoe7IEFtsPiHAD.jpg", 
-        bio: "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being."
+        bio: "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being.",
+        comments: [
+          {
+              id: 1,
+              name: "John Doe",
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae eros quis nisl aliquam ultrices. Sed vitae eros quis nisl aliquam ultrices.",
+              rating: 4.5,
+              date: "2021-10-10",
+              profile_image: "https://images.unsplash.com/photo-1533108344127-a586d2b02479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmlnZXJpYW4lMjBtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80", // Replace with the actual image URL
+          },
+          {
+              id: 2,
+              name: "Mary Jane",
+              comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae eros quis nisl aliquam ultrices. Sed vitae eros quis nisl aliquam ultrices.",
+              rating: 1,
+              date: "2023-07-24",
+              profile_image: "https://media.istockphoto.com/id/914835632/photo/mexican-latin-woman-with-mayan-dress.jpg?s=612x612&w=0&k=20&c=bftiKHuDh73LQTwv8uVaGHqV9YsjDPfkFjpVIkxuzgY=", // Replace with the actual image URL
+          }
+      ], 
     },
     {
       professional_id: 2,
@@ -82,7 +100,25 @@ export default function MedicalProfessionalsGrid({setUserSavedMedicalProfessiona
       language_proficiency: "English",
       modality: "In-Person",
       image: "https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_fYxB1SnrzgJ9AOkcT0hoe7IEFtsPiHAD.jpg", 
-      bio: "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being."
+      bio: "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being.",
+      comments: [
+        {
+            id: 1,
+            name: "John Doe",
+            comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae eros quis nisl aliquam ultrices. Sed vitae eros quis nisl aliquam ultrices.",
+            rating: 4.5,
+            date: "2021-10-10",
+            profile_image: "https://images.unsplash.com/photo-1533108344127-a586d2b02479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmlnZXJpYW4lMjBtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80", // Replace with the actual image URL
+        },
+        {
+            id: 2,
+            name: "Mary Jane",
+            comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae eros quis nisl aliquam ultrices. Sed vitae eros quis nisl aliquam ultrices.",
+            rating: 1,
+            date: "2023-07-24",
+            profile_image: "https://media.istockphoto.com/id/914835632/photo/mexican-latin-woman-with-mayan-dress.jpg?s=612x612&w=0&k=20&c=bftiKHuDh73LQTwv8uVaGHqV9YsjDPfkFjpVIkxuzgY=", // Replace with the actual image URL
+        }
+    ], 
   },
 ];
 

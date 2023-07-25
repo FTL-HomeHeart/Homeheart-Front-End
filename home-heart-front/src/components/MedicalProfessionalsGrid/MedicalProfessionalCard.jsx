@@ -15,15 +15,19 @@ import ShareIcon from "@mui/icons-material/Share";
 import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; 
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   learnMore: {
-      backgroundColor: "#7693B0",
+      background:'#7693B0',
       fontFamily: 'Inter, sans-serif',
+      color: "#FFFFFF",
+      textTransform: "none",
+      "&:hover": {
+        backgroundColor: "#4777b8",
+      }
   }, 
-  onHover: {
-      backgroundColor: "#506d8a",
-  }
 })); 
 
 export default function MedicalProfessionalCard({ professional, userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, userID, handleGetAllSavedMedicalProfessionals }) {
@@ -98,13 +102,11 @@ export default function MedicalProfessionalCard({ professional, userSavedMedical
         <IconButton aria-label="add to favorites" onClick={handleMedicalProfessionalBookmarked}>
           <FavoriteIcon />
         </IconButton>
-        <IconButton
-        //   onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        <Button component={Link} to={`/professional_details/${professional.professional_id}`} variant="contained" size="small" className={classes.learnMore}>
+            <Typography variant="body2">
+              Learn more
+            </Typography>
+        </Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

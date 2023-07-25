@@ -28,6 +28,7 @@ function App({ handleUserFormSubmit }) {
   const [logginError, setLoginError] = useState("");
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
+  console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] = useState([]);
 
   const theme = createTheme({
@@ -221,7 +222,7 @@ function App({ handleUserFormSubmit }) {
                 element={<MedicalProfessionalsGrid userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
               />
               <Route
-                path="/professional_details"
+                path="/professional_details/:id"
                 element={<MedicalProfessionalDetailedView  userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
               />
               <Route
