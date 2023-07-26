@@ -2,12 +2,16 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid, Typography, Button } from "@material-ui/core";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
 import MedicalProfessionalCommentSection from "./MedicalProfessionalCommentSection";
 import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+
+
 const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
   doctorName: {
@@ -93,7 +97,8 @@ export default function MedicalProfessionalDetailedView() {
   const { id } = useParams();
   const [professionals, setProfessionals] = useState([]);
   const [similarProfessionals, setSimilarProfessionals] = useState([]);
-  //   const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   const fetchSimilarProfessionals = () => {
     axios
@@ -120,13 +125,30 @@ export default function MedicalProfessionalDetailedView() {
         }
       })
       .catch((error) => {
+        // This is just so that I can still view the detailed view page without the backend running -Ethan
+        setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log(error);
       });
   };
 
+  const handleFetchMedicalProfessionalComments = () => {
+    axios.get(`http://localhost:3001/api/medical_professional/comments/${id}`).then((response) => {
+      console.log("response", response.data.result)
+      setComments(response.data.result);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
   useEffect(() => {
     handleFetchMedicalProfessionalData();
     fetchSimilarProfessionals();
+    handleFetchMedicalProfessionalComments(); 
+    const user = localStorage.getItem("user");
+    if (user) {
+      const userData2 = user ? JSON.parse(user) : null; 
+      setUserData(userData2.userId);
+    }
   }, [id]);
 
   // This is just a placeholder, we can update this to make a GET request to the backend for the reccomend medical professionals
@@ -149,7 +171,7 @@ export default function MedicalProfessionalDetailedView() {
     price,
     timezone,
   } = professionals;
-  console.log("professional is ", professionals);
+  console.log("professional is ", professionals.comments);
 
   return (
     <Container>
@@ -167,7 +189,7 @@ export default function MedicalProfessionalDetailedView() {
             <Typography variant="h4" className={classes.doctorName}>
               {first_name} {last_name}
             </Typography>
-            <BookmarkIcon className={classes.bookmark} />
+            <FavoriteIcon className={classes.bookmark} />
           </div>
           <Typography variant="h6" gutterBottom className={classes.pricing}>
             {"$5"} per session
@@ -229,15 +251,19 @@ export default function MedicalProfessionalDetailedView() {
 
       <MedicalProfessionalSimilar similarProfessionals={similarProfessionals} />
 
-      {/* <div className={classes.commentSectionContainer}>
+      <div className={classes.commentSectionContainer}>
         <Typography variant="h5" className={classes.similarProfessionalsHeader}>
           Hear from other patients who have worked with Dr.{" "}
-          {professional?.last_name}
+          {last_name ? last_name : "Smith"}
         </Typography>
         <MedicalProfessionalCommentSection
-          comments={professional[0].comments}
-        /> */}
-      {/* </div> */}
+          comments={comments}
+          setComments={setComments}
+          userData={userData}
+          medicalProfessionalId={id}
+          handleFetchMedicalProfessionalComments={handleFetchMedicalProfessionalComments}
+        />
+      </div>
     </Container>
   );
 }
