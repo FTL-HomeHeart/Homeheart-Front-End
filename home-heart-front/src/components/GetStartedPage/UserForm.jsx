@@ -12,6 +12,8 @@ import {
   Box,
   Typography,
   Container,
+  FormControl,
+  MenuItem,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Select from "react-select";
@@ -105,30 +107,54 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="gender"
-                  label="Gender"
-                  name="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                />
+              <Grid item xs={12} zIndex="100">
+                <FormControl fullWidth>
+                  <TextField
+                    select
+                    required
+                    id="gender"
+                    label="Gender"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </TextField>
+                </FormControl>
               </Grid>
+
             </Grid>
 
-            <Link to="/current-location" style={{ textDecoration: "none" }}>
-              <Button
-                type="submit"
-                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Next
-              </Button>
-            </Link>
+            <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Link to="/" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Previous
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6}>
+              <Link to="/current-location" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Next
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
           </Box>
         </Box>
       </Container>

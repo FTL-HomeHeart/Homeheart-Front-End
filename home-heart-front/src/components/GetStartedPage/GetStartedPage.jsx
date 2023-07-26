@@ -10,6 +10,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+import MovingComponent from "react-moving-text";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
@@ -24,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(25),
     top: theme.spacing(10),
     bottom: theme.spacing(10),
-
     width: "35%",
     display: "flex",
     flexDirection: "column",
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   // add blurry effect on the overlay
 }));
 
-export default function ImageCardGetStarted({user}) {
+export default function ImageCardGetStarted({ user }) {
   const classes = useStyles();
 
   return (
@@ -54,16 +55,20 @@ export default function ImageCardGetStarted({user}) {
         title="Contemplative Reptile"
       />
       <div className={classes.overlay}>
-        <Typography
-          variant="body1"
-          component="p"
-          className={classes.overlayText}
-          fontSize="20px"
-        >
-          Welcome {user.firstName}!
+        <Typography variant="body1" component="p" className={classes.overlayText}>
+          <MovingComponent
+            type="fadeInFromTop"
+            duration="1200ms"
+            delay="0s"
+            direction="normal"
+            timing="ease"
+            iteration="1"
+            fillMode="none"
+          >
+            Welcome {user.firstName}!
+          </MovingComponent>
         </Typography>
         <RouterLink to="/user-form">
-          {/* <Link style={{ textDecoration: "none" }}> */}
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}

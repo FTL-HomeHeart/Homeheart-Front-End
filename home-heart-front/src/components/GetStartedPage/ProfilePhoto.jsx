@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
   Button,
@@ -10,20 +10,24 @@ import {
   Box,
   Typography,
   Container,
-} from "@mui/material";
-const userId = localStorage.getItem("userId");
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+  Card,
+} from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const defaultTheme = createTheme();
 
-const ProfilePhoto = ({ handleLocationFormSubmit }) => {
+const ProfilePhoto = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLocationFormSubmit({
-      profilePhoto,
-    });
+    // handleLocationFormSubmit({
+    //   profilePhoto,
+    // });
+  };
+
+  const handleAvatarClick = () => {
+    document.getElementById('profilePhotoInput').click();
   };
 
   return (
@@ -33,43 +37,92 @@ const ProfilePhoto = ({ handleLocationFormSubmit }) => {
         <Box
           sx={{
             marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
-          onSubmit={handleSubmit}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
-          <Typography component="h1" variant="h5">
-            Profile Photo 🙂
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <input
-                  type="file"
-                  id="profilePhoto"
-                  name="profilePhoto"
-                  accept="image/*"
-                  onChange={(e) => setProfilePhoto(e.target.files[0])} // Updating state with the selected image
-                />
-              </Grid>
-            </Grid>
-            <Link
-              to={`/recommendations/${userId}`}
-              style={{ textDecoration: "none" }}
+          <Card
+            variant="outlined"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: 3,
+              backgroundColor: 'grey',
+              borderRadius: 3,
+              height: 500,
+              width: 400,
+              '&:hover': {
+                cursor: 'pointer',
+                backgroundColor: '#D4D4D4', // Hover color
+              },
+            }}
+          >
+            <Avatar
+              onClick={handleAvatarClick}
+              src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+              alt="Avatar"
+              sx={{
+                m: 1,
+                bgcolor: '#7E9BB6',
+                width: 130,
+                height: 130,
+                fontSize: '60px',
+              }}
             >
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Skip, and finish later.
-              </Button>
-            </Link>
-          </Box>
+              <AccountCircleIcon sx={{ fontSize: '60px' }} />
+            </Avatar>
+            <Typography component="h1" variant="h5" color="white">
+              Profile Photo
+            </Typography>
+
+            <Typography component="h1" variant="h6" color="white" style={{ marginTop: '40px', fontStyle: 'italic' }}  >
+            Click the icon to add a profile photo, and personalize your account to help others recognize you!
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <input
+                    type="file"
+                    id="profilePhotoInput"
+                    name="profilePhoto"
+                    accept="image/*"
+                    onChange={(e) => setProfilePhoto(e.target.files[0])}
+                    style={{ display: 'none' }}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </Card>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Link to="/current-location" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Previous
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6}>
+              <Link to="/recommendations" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {profilePhoto ? 'Submit and Finish' : 'Skip'}
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Container>
     </ThemeProvider>

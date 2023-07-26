@@ -148,17 +148,34 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
             </Grid>
-            <Link to="/profile-photo" style={{ textDecoration: "none" }}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Next
-              </Button>
-            </Link>
+            <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Link to="/user-form" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Previous
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6}>
+              <Link to="/profile-photo" style={{ textDecoration: 'none' }}>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Next
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
           </Box>
         </Box>
       </Container>

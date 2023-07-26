@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import MovingComponent from "react-moving-text";
 import {
   Card,
   CardContent,
@@ -64,7 +65,17 @@ export default function ImageCard() {
           component="h1"
           className={classes.h1}
         >
-          Feels like home!
+            <MovingComponent
+            type="fadeInFromTop"
+            duration="1200ms"
+            delay="0s"
+            direction="normal"
+            timing="ease"
+            iteration="1"
+            fillMode="none"
+          >
+            Feels Like Home!
+          </MovingComponent>
         </Typography>
         <Typography
           variant="body1"
