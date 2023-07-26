@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between", // Align the date to the right
     alignItems: "center",
     marginBottom: theme.spacing(1),
-    // fontFamily: "Inter, sans-serif",
+    fontFamily: "Inter, sans-serif",
   },
   commentContainer: {
     marginTop: theme.spacing(2),
@@ -65,19 +65,21 @@ const formatDateDifference = (commentDate) => {
 const MedicalProfessionalCommentCard = ({ comment }) => {
   const classes = useStyles();
 
+  const { date_posted, review_text, rating, first_name, last_name } = comment;
+
   return (
     <Card className={classes.root}>
       <Avatar className={classes.avatar} src={comment.profile_image} alt={comment.name} />
       <div className={classes.content}>
         <div className={classes.header}>
-          <Typography variant="h6">{comment.name}</Typography>
+          <Typography variant="h6">{first_name} {last_name}</Typography>
           <Typography color="textSecondary">
-          {formatDateDifference(comment.date)} {/* Use the formatted date here */}
+          {formatDateDifference(date_posted)} {/* Use the formatted date here */}
           </Typography>
         </div>
         <Rating className={classes.rating} name="rating" value={comment.rating} precision={0.5} readOnly size="small"/>
         <Typography variant="body1" gutterBottom className={classes.commentContainer}>
-          {comment.comment}
+          {review_text}
         </Typography>
       </div>
     </Card>

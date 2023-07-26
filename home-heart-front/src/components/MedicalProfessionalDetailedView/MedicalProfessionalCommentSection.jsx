@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import MedicalProfessionalCommentCard from "./MedicalProfessionalCommentCard";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useEffect } from "react"; 
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   commentSectionContainer: {
@@ -42,18 +44,42 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#4777b8",
     }
   },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
+  },
 }));
 
-const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
+const MedicalProfessionalCommentSection = ({ comments, setComments, userData, medicalProfessionalId, handleFetchMedicalProfessionalComments }) => {
+
+  const date = new Date();
+
+  let currentDay= String(date.getDate()).padStart(2, '0');
+  let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+  let currentYear = date.getFullYear();
+  let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+  console.log("currentDate", currentDate);
+
+  console.log("userData in comment section", userData);
+  console.log("medicalProfessionalId in comment section", medicalProfessionalId)
   const classes = useStyles();
-  const [comments, setComments] = useState(initialComments);
+  const [commentsList, setCommentsList] = useState(comments || []);
   const [newComment, setNewComment] = useState({
-    name: "",
+    first_name: "",
+    last_name: "", 
     comment: "",
     rating: 0,
     date: new Date().toISOString().slice(0, 10),
     profile_image: "",
   });
+
+  useEffect(() => {
+    setCommentsList(comments);
+  })
+
   const [showForm, setShowForm] = useState(false); // State to control form visibility
 
   const handleInputChange = (event) => {
@@ -62,13 +88,24 @@ const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
       ...prevComment,
       [name]: value,
     }));
+    console.log("newComment", newComment);
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (newComment.name && newComment.comment && newComment.rating > 0) {
-      const newCommentWithId = { ...newComment, id: Date.now() };
-      setComments((prevComments) => [...prevComments, newCommentWithId]);
+    if (newComment.first_name && newComment.last_name && newComment.comment && newComment.rating > 0) {
+      const newCommentWithId = { ...newComment, user_id: userData, professional_id: medicalProfessionalId, date_post: currentDate};
+      console.log("newCommentWithId", newCommentWithId);
+      axios.post(`http://localhost:3001/api/auth/createUserComment` , newCommentWithId)
+      .then((response) => {
+        console.log("RESPONSE", response);
+        handleFetchMedicalProfessionalComments(); 
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
       setNewComment({
         name: "",
         comment: "",
@@ -87,7 +124,7 @@ const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
 
   return (
     <div className={classes.commentSectionContainer}>
-      {comments.map((comment) => (
+      {commentsList?.map((comment) => (
         <MedicalProfessionalCommentCard key={comment.id} comment={comment} />
       ))}
       {!showForm && (
@@ -112,9 +149,17 @@ const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
           <form onSubmit={handleFormSubmit}>
           <TextField
             className={classes.textField}
-            label="Name"
-            name="name"
-            value={newComment.name}
+            label="First name"
+            name="first_name"
+            value={newComment.first_name}
+            onChange={handleInputChange}
+            required
+          />
+          <TextField
+            className={classes.textField}
+            label="Last name"
+            name="last_name"
+            value={newComment.last_name}
             onChange={handleInputChange}
             required
           />
@@ -122,7 +167,7 @@ const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
             className={classes.textField}
             label="Comment"
             name="comment"
-            value={newComment.comment}
+            value={newComment.review_text}
             onChange={handleInputChange}
             required
             multiline
@@ -142,12 +187,14 @@ const MedicalProfessionalCommentSection = ({ comments: initialComments }) => {
             }}
             required
           />
-          <Button variant="contained" color="secondary" onClick={toggleFormVisibility}>
-            Cancel
-          </Button>
-          <Button variant="contained" color="primary" type="submit">
-            Submit Comment
-          </Button>
+          <div className={classes.buttonContainer}>
+            <Button variant="contained" color="secondary" onClick={toggleFormVisibility} size="small">
+              Cancel
+            </Button>
+            <Button variant="contained" color="primary" type="submit" size="small">
+              Submit Comment
+            </Button>
+          </div>
         </form>
         </div>
       )}
