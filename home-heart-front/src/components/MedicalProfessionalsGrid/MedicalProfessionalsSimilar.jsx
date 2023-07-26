@@ -3,24 +3,38 @@ import Grid from "@material-ui/core/Grid";
 import { Container } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
 
-export default function MedicalProfessionalsSimilar({
-  professionals,
-  currentProfessionalID,
-}) {
-  console.log("Professionals:", professionals);
-  console.log("Current Professional ID:", currentProfessionalID);
-  let filteredProfessionals = [];
+export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
+  const [professionals, setProfessionals] = useState([]);
+  const [filteredProfessionals, setFilteredProfessionals] = useState([]);
+  const BASE_URL = "http://localhost:3001"; // replace with your base URL
 
-  if (professionals) {
-    filteredProfessionals = professionals.filter(
-      (professional) => professional.professional_id !== currentProfessionalID
-    );
-  }
+  // Fetch the recommendations using the user's ID from local storage
+  useEffect(() => {
+    const id = localStorage.getItem("userId");
+    console.log("USER ID in similar comp", id);
+    if (id) {
+      axios
+        .get(`${BASE_URL}/api/recommendations/${id}`)
+        .then((response) => {
+          setProfessionals(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
 
-  console.log("filteredProfessionals", filteredProfessionals);
+  // Update the filtered professionals whenever professionals or currentProfessionalID changes
+  useEffect(() => {
+    if (professionals) {
+      const filtered = professionals.filter(
+        (professional) => professional.professional_id !== currentProfessionalID
+      );
+      setFilteredProfessionals(filtered);
+    }
+  }, [professionals, currentProfessionalID]);
 
   return (
     <Container>
