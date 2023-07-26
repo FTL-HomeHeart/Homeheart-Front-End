@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: "4rem",
-    // marginTop: "5rem",
+
   },
 
   similarProfessionalsHeader: {
-    // fontWeight: "bold",
+
     marginBottom: theme.spacing(10),
     fontFamily: "Poppins, sans-serif",
     fontSize: "30px",
@@ -99,17 +99,21 @@ export default function MedicalProfessionalDetailedView() {
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/recommendations/${id}`)
-      .then((response) => {
-        setSimilarProfessionals(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
+// fetching function for the dummy data 
+//   useEffect(() => {
+//     axios
+//       .get(`${BASE_URL}/api/recommendations/${id}`)
+//       .then((response) => {
+//         setSimilarProfessionals(response.data);
+//       })
+//       .catch((error) => {
+//         setProfessionals(MedicalProfessionalsDummyData[0]);
+//         console.log(error);
+//       });
+//   }, [id]);
 
+  
+  // the fetching function from the backend medical professionals table 
   const handleFetchMedicalProfessionalData = () => {
     axios
       .get(`http://localhost:3001/api/professional_details/${id}`)
@@ -119,16 +123,18 @@ export default function MedicalProfessionalDetailedView() {
           (professional) => professional.professional_id === parseInt(id)
         );
 
+
         if (foundProfessional) {
           setProfessionals(foundProfessional);
         }
       })
       .catch((error) => {
         // This is just so that I can still view the detailed view page without the backend running -Ethan
-        // setProfessionals(MedicalProfessionalsDummyData[0]);
+        setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log(error);
       });
   };
+
 
   const handleFetchMedicalProfessionalComments = () => {
     axios
@@ -146,6 +152,7 @@ export default function MedicalProfessionalDetailedView() {
     handleFetchMedicalProfessionalData();
     // fetchSimilarProfessionals();
     handleFetchMedicalProfessionalComments();
+
     const user = localStorage.getItem("user");
     if (user) {
       const userData2 = user ? JSON.parse(user) : null;
@@ -190,7 +197,7 @@ export default function MedicalProfessionalDetailedView() {
             <FavoriteIcon className={classes.bookmark} />
           </div>
           <Typography variant="h6" gutterBottom className={classes.pricing}>
-            {"$5"} per session
+            {(price/8).toFixed(2)} per session
           </Typography>
         </Grid>
         {/* Right Half: Bio and details5 */}
