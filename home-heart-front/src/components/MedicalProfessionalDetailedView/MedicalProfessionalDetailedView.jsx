@@ -194,6 +194,20 @@ export default function MedicalProfessionalDetailedView() {
           <Typography variant="h6" gutterBottom className={classes.pricing}>
             {(price / 8).toFixed(2)} per session
           </Typography>
+          <Button
+            variant="contained"
+            size="medium"
+            className={classes.bookAppointmentButton}
+          >
+            Book Appointment
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            className={classes.sendMessageButton}
+          >
+            Send Message
+          </Button>
         </Grid>
         {/* Right Half: Bio and details5 */}
         <Grid item xs={12} md={6}>
@@ -231,20 +245,6 @@ export default function MedicalProfessionalDetailedView() {
               Rating: {rating}
             </Typography>
           </div>
-          <Button
-            variant="contained"
-            size="medium"
-            className={classes.bookAppointmentButton}
-          >
-            Book Appointment
-          </Button>
-          <Button
-            variant="contained"
-            size="medium"
-            className={classes.sendMessageButton}
-          >
-            Send Message
-          </Button>
         </Grid>
       </Grid>
       {/* get rid of this and replace it with recommended professionals */}

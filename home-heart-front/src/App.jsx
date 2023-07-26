@@ -21,6 +21,7 @@ import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
+import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
 import { Box } from "@mui/material";
 import MedicalProfessionalsSimilar from "./components/MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
 function App({ handleUserFormSubmit }) {
@@ -235,6 +236,10 @@ function App({ handleUserFormSubmit }) {
                     user={user}
                   />
                 }
+              />
+              <Route 
+                path="/saved_medical_professionals/:id"
+                element={<SavedMedicalProfessionals />}
               />
               <Route
                 path="/professional_details/:id"
