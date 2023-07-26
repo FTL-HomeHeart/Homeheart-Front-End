@@ -68,8 +68,7 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
   const classes = useStyles();
   const [commentsList, setCommentsList] = useState(comments || []);
   const [newComment, setNewComment] = useState({
-    first_name: "",
-    last_name: "", 
+    heading: "", 
     comment: "",
     rating: 0,
     date: new Date().toISOString().slice(0, 10),
@@ -93,10 +92,10 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (newComment.first_name && newComment.last_name && newComment.comment && newComment.rating > 0) {
+    if (newComment.heading && newComment.comment && newComment.rating > 0) {
       const newCommentWithId = { ...newComment, user_id: userData, professional_id: medicalProfessionalId, date_post: currentDate};
       console.log("newCommentWithId", newCommentWithId);
-      axios.post(`http://localhost:3001/api/auth/createUserComment` , newCommentWithId)
+      axios.post(`http://localhost:3001/api/post_comment/createUserComment` , newCommentWithId)
       .then((response) => {
         console.log("RESPONSE", response);
         handleFetchMedicalProfessionalComments(); 
@@ -149,17 +148,9 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
           <form onSubmit={handleFormSubmit}>
           <TextField
             className={classes.textField}
-            label="First name"
-            name="first_name"
-            value={newComment.first_name}
-            onChange={handleInputChange}
-            required
-          />
-          <TextField
-            className={classes.textField}
-            label="Last name"
-            name="last_name"
-            value={newComment.last_name}
+            label="Subject"
+            name="heading"
+            value={newComment.heading}
             onChange={handleInputChange}
             required
           />

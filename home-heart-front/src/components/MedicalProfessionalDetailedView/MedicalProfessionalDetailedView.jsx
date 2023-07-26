@@ -107,29 +107,31 @@ export default function MedicalProfessionalDetailedView() {
         setSimilarProfessionals(response.data);
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleFetchMedicalProfessionalData = () => {
-    axios
-      .get(`http://localhost:3001/api/professional_details/${id}`)
-      .then((response) => {
-        // Assuming that the API response data is an array of professionals
-        const foundProfessional = response.data.find(
-          (professional) => professional.professional_id === parseInt(id)
-        );
-
-        if (foundProfessional) {
-          setProfessionals(foundProfessional);
-        }
-      })
-      .catch((error) => {
-        // This is just so that I can still view the detailed view page without the backend running -Ethan
         setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log(error);
       });
   };
+
+  // old fetch function to be removed @Nate
+  // const handleFetchMedicalProfessionalData = () => {
+  //   axios
+  //     .get(`http://localhost:3001/api/professional_details/${id}`)
+  //     .then((response) => {
+  //       // Assuming that the API response data is an array of professionals
+  //       const foundProfessional = response.data.find(
+  //         (professional) => professional.professional_id === parseInt(id)
+  //       );
+
+  //       if (foundProfessional) {
+  //         setProfessionals(foundProfessional);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // This is just so that I can still view the detailed view page without the backend running -Ethan
+  //       setProfessionals(MedicalProfessionalsDummyData[0]);
+  //       console.log(error);
+  //     });
+  // };
 
   const handleFetchMedicalProfessionalComments = () => {
     axios.get(`http://localhost:3001/api/medical_professional/comments/${id}`).then((response) => {
@@ -141,7 +143,7 @@ export default function MedicalProfessionalDetailedView() {
   }
 
   useEffect(() => {
-    handleFetchMedicalProfessionalData();
+    fetchSimilarProfessionals();
     fetchSimilarProfessionals();
     handleFetchMedicalProfessionalComments(); 
     const user = localStorage.getItem("user");
