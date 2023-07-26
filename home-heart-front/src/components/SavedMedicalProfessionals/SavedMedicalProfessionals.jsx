@@ -2,7 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Typography } from "@material-ui/core";
 import SavedMedicalProfessionalsCard from "./SavedMedicalProfessionalCard";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,27 +20,41 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SavedMedicalProfessionals = ({userSavedMedicalProfessionals, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals, userID  }) => {
+const SavedMedicalProfessionals = () => {
 
-    const classes = useStyles(); 
+    const classes = useStyles();
+    const [savedMedicalProfessionals, setSavedMedicalProfessionals] = useState([]); // [{}
+    const { id } = useParams(); 
+
+    const handleFetchAllSavedMedicalProfessionals = () => {
+        axios
+            .get(`http://localhost:3001/api/saved_professionals/getAllSaved/${id}`)
+            .then((response) => {
+                console.log("response.data:", response.data.result);
+                setSavedMedicalProfessionals(response.data.result);
+            })
+            .catch((error) => {
+                console.log("error:", error);
+            });
+    }
+
 
     useEffect(() => {
-        console.log("userSavedMedicalProfessionals updated:", userSavedMedicalProfessionals);
-    }, [userSavedMedicalProfessionals]);
+        handleFetchAllSavedMedicalProfessionals(); 
+    }, []);
 
     return (
         <Container className={classes.container}>
             <Typography variant="h4" gutterBottom className={classes.heading}>
                 Saved Medical Professionals
             </Typography>
-            {userSavedMedicalProfessionals?.length > 0 ? (
-                userSavedMedicalProfessionals.map((professional) => (
+            {savedMedicalProfessionals?.length > 0 ? (
+                savedMedicalProfessionals.map((professional) => (
                     <SavedMedicalProfessionalsCard
                         key={professional.professional_id}
                         professional={professional}
-                        userID={userID}
-                        setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals}
-                        handleGetAllSavedMedicalProfessionals={handleGetAllSavedMedicalProfessionals} 
+                        id={id}
+                        handleFetchAllSavedMedicalProfessionals={handleFetchAllSavedMedicalProfessionals}
                     />
                 ))
             ) 
