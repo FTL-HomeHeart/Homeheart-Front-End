@@ -49,7 +49,7 @@ export default function MedicalProfessionalCard({
     image,
     professional_id, 
   } = professional;
-  console.log("professional in card", professional);
+  // console.log("professional in card", professional);
 
   const classes = useStyles();
   const id = localStorage.getItem("userId");

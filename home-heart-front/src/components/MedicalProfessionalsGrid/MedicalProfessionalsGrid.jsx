@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const BASE_URL = "http://localhost:3001";
 const FLASK_URL = "http://127.0.0.1:5000";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
-import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json"
+// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json"
 
 export default function MedicalProfessionalsGrid({
   setUserSavedMedicalProfessionals,
@@ -25,9 +25,8 @@ export default function MedicalProfessionalsGrid({
         setProfessionals(response.data);
       })
       .catch((error) => {
-        
         // This is just so that I can still view the page without the backend running -Ethan
-        setProfessionals(MedicalProfessionalsDummyData);
+        // setProfessionals(MedicalProfessionalsDummyData);
         if (error.response) {
           // The request was made and the server responded with a status code
           console.log(error.response.data);
@@ -74,21 +73,29 @@ export default function MedicalProfessionalsGrid({
         style={{ display: "flex" }}
       >
         {/* The index is so that I don't have to render all 200+ entries with the dummy data - Ethan */}
-        {professionals.map((professional, index) => ( index < 6 &&
-          <Grid item xs={12} sm={6} md={4} key={professional.professional_id}>
-            
-            <MedicalProfessionalCard
-              professional={professional}
-              setUserSavedMedicalProfessionals={
-                setUserSavedMedicalProfessionals
-              }
-              handleGetAllSavedMedicalProfessionals={
-                handleGetAllSavedMedicalProfessionals
-              }
-              userID={id}
-            />
-          </Grid>
-        ))}
+        {professionals.map(
+          (professional, index) =>
+            index < 6 && (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={professional.professional_id}
+              >
+                <MedicalProfessionalCard
+                  professional={professional}
+                  setUserSavedMedicalProfessionals={
+                    setUserSavedMedicalProfessionals
+                  }
+                  handleGetAllSavedMedicalProfessionals={
+                    handleGetAllSavedMedicalProfessionals
+                  }
+                  userID={id}
+                />
+              </Grid>
+            )
+        )}
       </Grid>
     </Container>
   );
