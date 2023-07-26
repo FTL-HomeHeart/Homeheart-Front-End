@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedicalProfessionals, handleGetAllSavedMedicalProfessionals }) => {
+const SavedMedicalProfessionalsCard = ({ professional, id,  handleFetchAllSavedMedicalProfessionals }) => {
     console.log("IM HERE"); 
     console.log("professionals in SAVED MED PROF CARD", professional)
   const classes = useStyles();
@@ -69,13 +69,12 @@ const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedic
   const handleRemoveMedicalProfessional = () => {
     axios.delete("http://localhost:3001/api/saved_professionals/deleteSavedProfessional", {
         data: {
-            professional: professional, 
-            user_id: userID
+            professional_id: professional.professional_id, 
+            user_id: id, 
         }
     }).then((response) => {
         console.log("RESPONSE IN MED PROF CARD", response.data.result.professional);
-        setUserSavedMedicalProfessionals(response.data.result.professional);
-        handleGetAllSavedMedicalProfessionals(); 
+        handleFetchAllSavedMedicalProfessionals(); 
     }).catch((error) => {
         console.log(error);
     })
@@ -85,7 +84,7 @@ const SavedMedicalProfessionalsCard = ({ professional, userID, setUserSavedMedic
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={professional.image}
+        image={professional.image || "https://img.freepik.com/free-photo/smiling-asian-doctor-female-nurse-holding-clipboard-pen-wearing-uniform-with-gloves-writing-pati_1258-83340.jpg?size=626&ext=jpg"}
         title={professional.first_name}
       />
       <CardContent className={classes.content}>

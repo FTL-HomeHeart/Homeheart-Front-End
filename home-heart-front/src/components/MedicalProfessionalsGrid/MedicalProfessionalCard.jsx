@@ -47,22 +47,23 @@ export default function MedicalProfessionalCard({
     specialization,
     years_of_experience,
     image,
+    professional_id, 
   } = professional;
   console.log("professional in card", professional);
 
   const classes = useStyles();
-
+  const id = localStorage.getItem("userId");
   // TODO: Implement this
   const handleMedicalProfessionalBookmarked = () => {
     // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
     // console.log("userID", user.userId)
-
     axios
       .post(
         "http://localhost:3001/api/saved_professionals/addSavedProfessional",
         {
-          professional: professional,
-          user_id: userID,
+          professional_id: professional_id,
+          user_id: id,
+          saved_status: "saved", 
         }
       )
       .then((response) => {

@@ -21,7 +21,9 @@ import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
+import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
 import { Box } from "@mui/material";
+
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -218,6 +220,10 @@ function App({ handleUserFormSubmit }) {
               <Route
                 path="/recommended_professionals/:id"
                 element={<MedicalProfessionalsGrid userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
+              />
+              <Route 
+                path="/saved_medical_professionals/:id"
+                element={<SavedMedicalProfessionals />}
               />
               <Route
                 path="/professional_details/:id"

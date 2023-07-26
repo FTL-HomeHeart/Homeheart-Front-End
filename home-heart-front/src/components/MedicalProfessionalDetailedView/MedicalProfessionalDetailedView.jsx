@@ -100,6 +100,8 @@ export default function MedicalProfessionalDetailedView() {
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
 
+
+  // fetching from the json file
   const fetchSimilarProfessionals = () => {
     axios
       .get(`${BASE_URL}/api/recommendations/${id}`)
@@ -111,8 +113,9 @@ export default function MedicalProfessionalDetailedView() {
         console.log(error);
       });
   };
-
-  // old fetch function to be removed @Nate
+  
+  
+  // fetching from the backend relation
   // const handleFetchMedicalProfessionalData = () => {
   //   axios
   //     .get(`http://localhost:3001/api/professional_details/${id}`)
@@ -196,6 +199,20 @@ export default function MedicalProfessionalDetailedView() {
           <Typography variant="h6" gutterBottom className={classes.pricing}>
             {"$5"} per session
           </Typography>
+          <Button
+            variant="contained"
+            size="medium"
+            className={classes.bookAppointmentButton}
+          >
+            Book Appointment
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            className={classes.sendMessageButton}
+          >
+            Send Message
+          </Button>
         </Grid>
         {/* Right Half: Bio and details5 */}
         <Grid item xs={12} md={6}>
@@ -233,20 +250,6 @@ export default function MedicalProfessionalDetailedView() {
               Rating: {rating}
             </Typography>
           </div>
-          <Button
-            variant="contained"
-            size="medium"
-            className={classes.bookAppointmentButton}
-          >
-            Book Appointment
-          </Button>
-          <Button
-            variant="contained"
-            size="medium"
-            className={classes.sendMessageButton}
-          >
-            Send Message
-          </Button>
         </Grid>
       </Grid>
       {/* get rid of this and replace it with recommended professionals */}
