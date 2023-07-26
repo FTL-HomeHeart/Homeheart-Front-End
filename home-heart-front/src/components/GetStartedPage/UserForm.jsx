@@ -55,8 +55,8 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <div style={{ backgroundColor: "white" }}>
+              <Grid item xs={12} zIndex="100">
+                <div style={{ backgroundColor: "white", zIndex: 100 }}>
                   <Select
                     required
                     fullWidth
@@ -66,13 +66,16 @@ const UserForm = ({ onClick, handleUserFormSubmit }) => {
                     name="countryOfOrigin"
                     options={options}
                     value={countryOfOrigin}
-                    onChange={(e) => setCountryOfOrigin(e.target.value)}
+                    onChange={(e) => setCountryOfOrigin(e)}
                     styles={{
-                      option: (provided) => ({
+                      option: (provided, state) => ({
                         ...provided,
-                        backgroundColor: "white !important",
-                      }),
-                    }}
+                        backgroundColor: state.isFocused ? "#f0f0f0" : "white",
+                        "&:hover": {
+                          backgroundColor: "#f0f0f0",
+                        },
+                    })
+                  }}
                   />
                 </div>
               </Grid>

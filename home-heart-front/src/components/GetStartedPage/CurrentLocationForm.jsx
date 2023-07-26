@@ -56,9 +56,9 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
           <Typography component="h1" variant="h5">
             Current Location
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3, zIndex:100 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} zIndex="100">
                 <Select
                   required
                   fullWidth
@@ -69,6 +69,14 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                   options={options}
                   value={country}
                   onChange={(e) => setCountry(e)}
+                  styles={{
+                    option: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: state.isFocused ? "#f0f0f0" : "white",
+                      "&:hover": {
+                        backgroundColor: "#f0f0f0",
+                      },
+                  })}}
                 >
                   <MenuItem value="">Select a Country</MenuItem>
                   {countryNames.map((name) => (

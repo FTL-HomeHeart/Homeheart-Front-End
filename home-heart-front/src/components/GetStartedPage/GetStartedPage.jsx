@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   // add blurry effect on the overlay
 }));
 
-export default function ImageCardGetStarted() {
+export default function ImageCardGetStarted({user}) {
   const classes = useStyles();
 
   return (
@@ -60,7 +60,7 @@ export default function ImageCardGetStarted() {
           className={classes.overlayText}
           fontSize="20px"
         >
-          Welcome!
+          Welcome {user.firstName}!
         </Typography>
         <RouterLink to="/user-form">
           {/* <Link style={{ textDecoration: "none" }}> */}
@@ -69,7 +69,7 @@ export default function ImageCardGetStarted() {
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
             className={classes.button}
           >
-            Get Started
+            Get Started!
           </Button>
         </RouterLink>
       </div>

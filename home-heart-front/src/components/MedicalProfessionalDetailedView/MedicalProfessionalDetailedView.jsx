@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid, Typography, Button } from "@material-ui/core";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
-
+import MedicalProfessionalCommentSection from "./MedicalProfessionalCommentSection";
+import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
   doctorName: {
     fontFamily: "Inter, sans-serif",
@@ -50,36 +55,101 @@ const useStyles = makeStyles((theme) => ({
 
   similarProfessionalsHeader: {
     // fontWeight: "bold",
-    marginBottom: theme.spacing(1),
-    fontFamily: "Poppins, sans-serif !important",
+    marginBottom: theme.spacing(10),
+    fontFamily: "Poppins, sans-serif",
     fontSize: "30px",
     fontWeight: 500,
   },
+  commentSectionContainer: {
+    marginTop: "5rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: theme.spacing(5),
+  },
+  sendMessageButton: {
+    marginTop: "1rem",
+    backgroundColor: "#7693B0",
+    textTransform: "none",
+    color: "#FFF",
+    marginLeft: theme.spacing(2),
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    },
+  },
+  bookAppointmentButton: {
+    marginTop: "1rem",
+    backgroundColor: "#7693B0",
+    textTransform: "none",
+    color: "#FFF",
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    },
+  },
 }));
 
-const MedicalProfessionalDetailedView = () => {
+export default function MedicalProfessionalDetailedView() {
   const classes = useStyles();
+  const { id } = useParams();
+  const [professionals, setProfessionals] = useState([]);
+  const [similarProfessionals, setSimilarProfessionals] = useState([]);
+  //   const [comments, setComments] = useState([]);
 
-  // just for now
+  const fetchSimilarProfessionals = () => {
+    axios
+      .get(`${BASE_URL}/api/recommendations/${id}`)
+      .then((response) => {
+        setSimilarProfessionals(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  const professionals = [
-    {
-      id: 1,
-      name: "Dr. John Doe",
-      specialty: "Cardiologist",
-      location: "New York, NY",
-      rating: 4.5,
-      reviews: 100,
-      country: "United States",
-      language: "English",
-      modality: "In-Person",
-      image:
-        "https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_fYxB1SnrzgJ9AOkcT0hoe7IEFtsPiHAD.jpg",
-      bio: "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being.",
-    },
-  ];
+  const handleFetchMedicalProfessionalData = () => {
+    axios
+      .get(`http://localhost:3001/api/professional_details/${id}`)
+      .then((response) => {
+        // Assuming that the API response data is an array of professionals
+        const foundProfessional = response.data.find(
+          (professional) => professional.professional_id === parseInt(id)
+        );
 
-  // const { name, image, bio, country, languages, yearsOfExperience, specialization, education } = professional;
+        if (foundProfessional) {
+          setProfessionals(foundProfessional);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    handleFetchMedicalProfessionalData();
+    fetchSimilarProfessionals();
+  }, [id]);
+
+  // This is just a placeholder, we can update this to make a GET request to the backend for the reccomend medical professionals
+
+  //   setComments(professional.comments);
+
+  const {
+    first_name,
+    last_name,
+    bio,
+    country,
+    language_proficiency,
+    years_of_experience,
+    specialization,
+    image,
+    rating,
+    availability_start_time,
+    availability_end_time,
+    qualification,
+    price,
+    timezone,
+  } = professionals;
+  console.log("professional is ", professionals);
 
   return (
     <Container>
@@ -87,15 +157,15 @@ const MedicalProfessionalDetailedView = () => {
         {/* Left Half: Medical Professional Image and Name */}
         <Grid item xs={12} md={6}>
           <img
-            src="https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_fYxB1SnrzgJ9AOkcT0hoe7IEFtsPiHAD.jpg"
-            alt={name}
+            src={image}
+            alt={`A picture of ${first_name}`}
             style={{ width: "100%", height: "auto", borderRadius: "8px" }}
           />
           <div
             style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
           >
             <Typography variant="h4" className={classes.doctorName}>
-              {"Ethan Pineda"}
+              {first_name} {last_name}
             </Typography>
             <BookmarkIcon className={classes.bookmark} />
           </div>
@@ -106,70 +176,68 @@ const MedicalProfessionalDetailedView = () => {
         {/* Right Half: Bio and details5 */}
         <Grid item xs={12} md={6}>
           <Typography variant="body1" className={classes.autobiography}>
-            {
-              "Meet Dr. Emily, a compassionate mental health professional with a profound commitment to healing and supporting individuals. With extensive experience in therapy and research, she empowers her patients to embrace positive change and achieve lasting well-being."
-            }
+            {bio}
           </Typography>
           <div className={classes.details5Section}>
             <Typography variant="h6" className={classes.details5}>
-              Country: {"Kenya"}
+              Country: {country}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Languages: {"English, Swahili"}
+              Languages: {language_proficiency}
+            </Typography>
+            {/* @Nathnaelc I will work on this a bit more like time formatting and stuff */}
+            <Typography variant="h6" className={classes.details5}>
+              Availability: {availability_start_time} - {availability_end_time}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Availability: {"Weekends"}
+              Timezone: {timezone}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Years of Experience: {"2"}
+              Years of Experience: {years_of_experience} years
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Specialization: {"Clinical Psychology"}
+              Specialization: {specialization}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Education:{" "}
-              {"PhD in Clinical Psychology from University of Nairobi"}
+              Qualification: {qualification}
+            </Typography>
+            <Typography variant="h6" className={classes.details5}>
+              Monthly Price: {price}
+            </Typography>
+            {/* you may move the rating to the left underneath their name or next to the price */}
+            <Typography variant="h6" className={classes.details5}>
+              Rating: {rating}
             </Typography>
           </div>
           <Button
             variant="contained"
-            size="small"
-            color="primary"
-            style={{ marginTop: "1rem" }}
+            size="medium"
+            className={classes.bookAppointmentButton}
           >
             Book Appointment
           </Button>
           <Button
             variant="contained"
-            size="small"
-            color="primary"
-            style={{ marginTop: "1rem", marginLeft: "1rem" }}
+            size="medium"
+            className={classes.sendMessageButton}
           >
             Send Message
           </Button>
         </Grid>
       </Grid>
-      <div className={classes.similarProfessionalsSection}>
+      {/* get rid of this and replace it with recommended professionals */}
+
+      <MedicalProfessionalSimilar similarProfessionals={similarProfessionals} />
+
+      {/* <div className={classes.commentSectionContainer}>
         <Typography variant="h5" className={classes.similarProfessionalsHeader}>
-          Similar Professionals
+          Hear from other patients who have worked with Dr.{" "}
+          {professional?.last_name}
         </Typography>
-        <Grid container spacing={3} justifyContent="space-between">
-          <Grid item xs={3}>
-            <MedicalProfessionalCard professional={professionals[0]} />
-          </Grid>
-          <Grid item xs={3}>
-            <MedicalProfessionalCard professional={professionals[0]} />
-          </Grid>
-          <Grid item xs={3}>
-            <MedicalProfessionalCard professional={professionals[0]} />
-          </Grid>
-          <Grid item xs={3}>
-            <MedicalProfessionalCard professional={professionals[0]} />
-          </Grid>
-        </Grid>
-      </div>
+        <MedicalProfessionalCommentSection
+          comments={professional[0].comments}
+        /> */}
+      {/* </div> */}
     </Container>
   );
-};
-
-export default MedicalProfessionalDetailedView;
+}

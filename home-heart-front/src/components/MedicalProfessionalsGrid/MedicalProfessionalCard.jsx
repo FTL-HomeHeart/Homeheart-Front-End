@@ -1,4 +1,5 @@
 import * as React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,10 +12,31 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import Bookmark from "@mui/icons-material/Bookmark";
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
-export default function MedicalProfessionalCard({ professional }) {
+const useStyles = makeStyles((theme) => ({
+  learnMore: {
+    background: "#7693B0",
+    fontFamily: "Inter, sans-serif",
+    color: "#FFFFFF",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    },
+  },
+}));
+
+export default function MedicalProfessionalCard({
+  professional,
+  // userSavedMedicalProfessionals,
+  setUserSavedMedicalProfessionals,
+  userID,
+  handleGetAllSavedMedicalProfessionals,
+}) {
   const [expanded, setExpanded] = useState(false);
   const {
     first_name,
@@ -26,20 +48,41 @@ export default function MedicalProfessionalCard({ professional }) {
     years_of_experience,
     image,
   } = professional;
+  console.log("professional in card", professional);
+
+  const classes = useStyles();
+
+  // TODO: Implement this
+  const handleMedicalProfessionalBookmarked = () => {
+    // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
+    // console.log("userID", user.userId)
+
+    axios
+      .post(
+        "http://localhost:3001/api/saved_professionals/addSavedProfessional",
+        {
+          professional: professional,
+          user_id: userID,
+        }
+      )
+      .then((response) => {
+        console.log("RESPONSE IN MED PROF CARD", response.data.result);
+        // copy over the previous medical professionals and add the new one
+        setUserSavedMedicalProfessionals((prev) => [
+          ...prev,
+          response.data.result,
+        ]);
+        handleGetAllSavedMedicalProfessionals();
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const useStyles = makeStyles((theme) => ({
-    learnMore: {
-      backgroundColor: "#7693B0",
-      fontFamily: "Inter, sans-serif",
-    },
-    onHover: {
-      backgroundColor: "#506d8a",
-    },
-  }));
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -66,16 +109,21 @@ export default function MedicalProfessionalCard({ professional }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          onClick={handleMedicalProfessionalBookmarked}
+        >
           <FavoriteIcon />
         </IconButton>
-        <IconButton
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+        <Button
+          component={Link}
+          to={`/professional_details/${professional.professional_id}`}
+          variant="contained"
+          size="small"
+          className={classes.learnMore}
         >
-          <ExpandMoreIcon />
-        </IconButton>
+          <Typography variant="body2">Learn more</Typography>
+        </Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
