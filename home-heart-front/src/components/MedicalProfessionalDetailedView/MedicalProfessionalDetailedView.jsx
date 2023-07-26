@@ -53,11 +53,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: "4rem",
-
   },
 
   similarProfessionalsHeader: {
-
     marginBottom: theme.spacing(10),
     fontFamily: "Poppins, sans-serif",
     fontSize: "30px",
@@ -99,23 +97,20 @@ export default function MedicalProfessionalDetailedView() {
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
 
-  // fetching from the json file
-//   const fetchSimilarProfessionals = () => 
-// fetching function for the dummy data 
-//   useEffect(() => {
-//     axios
-//       .get(`${BASE_URL}/api/recommendations/${id}`)
-//       .then((response) => {
-//         setSimilarProfessionals(response.data);
-//       })
-//       .catch((error) => {
-//         setProfessionals(MedicalProfessionalsDummyData[0]);
-//         console.log(error);
-//       });
-//   }, [id]);
+  // fetching function for the dummy data
+  //   useEffect(() => {
+  //     axios
+  //       .get(`${BASE_URL}/api/recommendations/${id}`)
+  //       .then((response) => {
+  //         setSimilarProfessionals(response.data);
+  //       })
+  //       .catch((error) => {
+  //         setProfessionals(MedicalProfessionalsDummyData[0]);
+  //         console.log(error);
+  //       });
+  //   }, [id]);
 
-  
-  // the fetching function from the backend medical professionals table 
+  // the fetching function from the backend medical professionals table
   const handleFetchMedicalProfessionalData = () => {
     axios
       .get(`http://localhost:3001/api/professional_details/${id}`)
@@ -124,7 +119,6 @@ export default function MedicalProfessionalDetailedView() {
         const foundProfessional = response.data.find(
           (professional) => professional.professional_id === parseInt(id)
         );
-
 
         if (foundProfessional) {
           setProfessionals(foundProfessional);
@@ -136,7 +130,6 @@ export default function MedicalProfessionalDetailedView() {
         console.log(error);
       });
   };
-
 
   const handleFetchMedicalProfessionalComments = () => {
     axios
@@ -199,7 +192,7 @@ export default function MedicalProfessionalDetailedView() {
             <FavoriteIcon className={classes.bookmark} />
           </div>
           <Typography variant="h6" gutterBottom className={classes.pricing}>
-            {(price/8).toFixed(2)} per session
+            {(price / 8).toFixed(2)} per session
           </Typography>
           <Button
             variant="contained"
@@ -271,7 +264,6 @@ export default function MedicalProfessionalDetailedView() {
           }
         />
         <MedicalProfessionalSimilar
-          similarProfessionals={similarProfessionals}
           currentProfessionalID={professionals.professional_id}
         />
       </div>
