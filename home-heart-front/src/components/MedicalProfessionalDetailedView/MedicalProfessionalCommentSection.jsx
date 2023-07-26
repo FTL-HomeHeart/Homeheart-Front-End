@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MedicalProfessionalCommentCard from "./MedicalProfessionalCommentCard";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useEffect } from "react"; 
+import { useEffect } from "react";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     "&:hover": {
       backgroundColor: "#4777b8",
-    }
+    },
   },
   buttonContainer: {
     display: "flex",
@@ -53,21 +53,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MedicalProfessionalCommentSection = ({ comments, setComments, userData, medicalProfessionalId, handleFetchMedicalProfessionalComments }) => {
-
+const MedicalProfessionalCommentSection = ({
+  comments,
+  setComments,
+  userData,
+  medicalProfessionalId,
+  handleFetchMedicalProfessionalComments,
+}) => {
   const date = new Date();
 
-  let currentDay= String(date.getDate()).padStart(2, '0');
-  let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+  let currentDay = String(date.getDate()).padStart(2, "0");
+  let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
   let currentYear = date.getFullYear();
   let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
   console.log("currentDate", currentDate);
 
   console.log("userData in comment section", userData);
-  console.log("medicalProfessionalId in comment section", medicalProfessionalId)
+  console.log(
+    "medicalProfessionalId in comment section",
+    medicalProfessionalId
+  );
   const classes = useStyles();
   const [commentsList, setCommentsList] = useState(comments || []);
   const [newComment, setNewComment] = useState({
+
     heading: "", 
     comment: "",
     rating: 0,
@@ -77,7 +86,7 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
 
   useEffect(() => {
     setCommentsList(comments);
-  })
+  });
 
   const [showForm, setShowForm] = useState(false); // State to control form visibility
 
@@ -92,6 +101,7 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+
     if (newComment.heading && newComment.comment && newComment.rating > 0) {
       const newCommentWithId = { ...newComment, user_id: userData, professional_id: medicalProfessionalId, date_post: currentDate};
       console.log("newCommentWithId", newCommentWithId);
@@ -103,6 +113,7 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
       .catch((error) => {
         console.log(error);
       });
+
 
 
       setNewComment({
@@ -140,12 +151,14 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
             onClick={toggleFormVisibility}
           >
             Write a review
-        </Button>
+          </Button>
         </div>
       )}
       {showForm && (
         <div className={classes.formContainer}>
           <form onSubmit={handleFormSubmit}>
+
+
           <TextField
             className={classes.textField}
             label="Subject"
@@ -187,6 +200,7 @@ const MedicalProfessionalCommentSection = ({ comments, setComments, userData, me
             </Button>
           </div>
         </form>
+
         </div>
       )}
     </div>

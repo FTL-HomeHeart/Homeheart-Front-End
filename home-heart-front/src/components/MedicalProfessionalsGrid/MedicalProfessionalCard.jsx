@@ -48,7 +48,7 @@ export default function MedicalProfessionalCard({
     years_of_experience,
     image,
   } = professional;
-  console.log("professional in card", professional);
+  // console.log("professional in card", professional);
 
   const classes = useStyles();
 

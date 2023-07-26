@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { CssBaseline } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -11,23 +11,18 @@ import {
   Typography,
   Container,
   Card,
-} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const defaultTheme = createTheme();
 
 const ProfilePhoto = () => {
+  const id = localStorage.getItem("userId");
+  console.log("USER id FROM Profle photo", id);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // handleLocationFormSubmit({
-    //   profilePhoto,
-    // });
-  };
-
   const handleAvatarClick = () => {
-    document.getElementById('profilePhotoInput').click();
+    document.getElementById("profilePhotoInput").click();
   };
 
   return (
@@ -37,25 +32,25 @@ const ProfilePhoto = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Card
             variant="outlined"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
               padding: 3,
-              backgroundColor: 'grey',
+              backgroundColor: "grey",
               borderRadius: 3,
               height: 500,
               width: 400,
-              '&:hover': {
-                cursor: 'pointer',
-                backgroundColor: '#D4D4D4', // Hover color
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "#D4D4D4", // Hover color
               },
             }}
           >
@@ -65,20 +60,26 @@ const ProfilePhoto = () => {
               alt="Avatar"
               sx={{
                 m: 1,
-                bgcolor: '#7E9BB6',
+                bgcolor: "#7E9BB6",
                 width: 130,
                 height: 130,
-                fontSize: '60px',
+                fontSize: "60px",
               }}
             >
-              <AccountCircleIcon sx={{ fontSize: '60px' }} />
+              <AccountCircleIcon sx={{ fontSize: "60px" }} />
             </Avatar>
             <Typography component="h1" variant="h5" color="white">
               Profile Photo
             </Typography>
 
-            <Typography component="h1" variant="h6" color="white" style={{ marginTop: '40px', fontStyle: 'italic' }}  >
-            Click the icon to add a profile photo, and personalize your account to help others recognize you!
+            <Typography
+              component="h1"
+              variant="h6"
+              color="white"
+              style={{ marginTop: "40px", fontStyle: "italic" }}
+            >
+              Click the icon to add a profile photo, and personalize your
+              account to help others recognize you!
             </Typography>
             <Box component="form" noValidate sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -89,7 +90,7 @@ const ProfilePhoto = () => {
                     name="profilePhoto"
                     accept="image/*"
                     onChange={(e) => setProfilePhoto(e.target.files[0])}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </Grid>
               </Grid>
@@ -97,10 +98,10 @@ const ProfilePhoto = () => {
           </Card>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Link to="/current-location" style={{ textDecoration: 'none' }}>
+              <Link to="/current-location" style={{ textDecoration: "none" }}>
                 <Button
                   type="submit"
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
@@ -110,15 +111,18 @@ const ProfilePhoto = () => {
               </Link>
             </Grid>
             <Grid item xs={6}>
-              <Link to="/recommendations" style={{ textDecoration: 'none' }}>
+              <Link
+                to={`/recommendations/${id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Button
                   type="submit"
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  {profilePhoto ? 'Submit and Finish' : 'Skip'}
+                  {profilePhoto ? "Submit and Finish" : "Skip"}
                 </Button>
               </Link>
             </Grid>
