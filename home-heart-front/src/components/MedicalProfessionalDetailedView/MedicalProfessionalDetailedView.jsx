@@ -9,8 +9,7 @@ import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfe
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
-
+// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +99,7 @@ export default function MedicalProfessionalDetailedView() {
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
 
-  const fetchSimilarProfessionals = () => {
+  useEffect(() => {
     axios
       .get(`${BASE_URL}/api/recommendations/${id}`)
       .then((response) => {
@@ -109,7 +108,7 @@ export default function MedicalProfessionalDetailedView() {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [id]);
 
   const handleFetchMedicalProfessionalData = () => {
     axios
@@ -126,34 +125,33 @@ export default function MedicalProfessionalDetailedView() {
       })
       .catch((error) => {
         // This is just so that I can still view the detailed view page without the backend running -Ethan
-        setProfessionals(MedicalProfessionalsDummyData[0]);
+        // setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log(error);
       });
   };
 
   const handleFetchMedicalProfessionalComments = () => {
-    axios.get(`http://localhost:3001/api/medical_professional/comments/${id}`).then((response) => {
-      console.log("response", response.data.result)
-      setComments(response.data.result);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    axios
+      .get(`http://localhost:3001/api/medical_professional/comments/${id}`)
+      .then((response) => {
+        console.log("response", response.data.result);
+        setComments(response.data.result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     handleFetchMedicalProfessionalData();
-    fetchSimilarProfessionals();
-    handleFetchMedicalProfessionalComments(); 
+    // fetchSimilarProfessionals();
+    handleFetchMedicalProfessionalComments();
     const user = localStorage.getItem("user");
     if (user) {
-      const userData2 = user ? JSON.parse(user) : null; 
+      const userData2 = user ? JSON.parse(user) : null;
       setUserData(userData2.userId);
     }
   }, [id]);
-
-  // This is just a placeholder, we can update this to make a GET request to the backend for the reccomend medical professionals
-
-  //   setComments(professional.comments);
 
   const {
     first_name,
@@ -249,8 +247,6 @@ export default function MedicalProfessionalDetailedView() {
       </Grid>
       {/* get rid of this and replace it with recommended professionals */}
 
-      <MedicalProfessionalSimilar similarProfessionals={similarProfessionals} />
-
       <div className={classes.commentSectionContainer}>
         <Typography variant="h5" className={classes.similarProfessionalsHeader}>
           Hear from other patients who have worked with Dr.{" "}
@@ -261,7 +257,13 @@ export default function MedicalProfessionalDetailedView() {
           setComments={setComments}
           userData={userData}
           medicalProfessionalId={id}
-          handleFetchMedicalProfessionalComments={handleFetchMedicalProfessionalComments}
+          handleFetchMedicalProfessionalComments={
+            handleFetchMedicalProfessionalComments
+          }
+        />
+        <MedicalProfessionalSimilar
+          similarProfessionals={similarProfessionals}
+          currentProfessionalID={professionals.professional_id}
         />
       </div>
     </Container>

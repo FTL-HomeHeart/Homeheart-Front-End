@@ -22,6 +22,7 @@ import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/Medi
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
 import { Box } from "@mui/material";
+import MedicalProfessionalsSimilar from "./components/MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -29,12 +30,12 @@ function App({ handleUserFormSubmit }) {
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
   console.log("USER id FROM APP", id);
-  const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] = useState([]);
+  const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
+    useState([]);
 
   const theme = createTheme({
     direction: "rtl",
   });
-  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -156,7 +157,6 @@ function App({ handleUserFormSubmit }) {
     setLoginError("");
     navigate("/");
   };
-  
 
   return (
     <>
@@ -175,7 +175,11 @@ function App({ handleUserFormSubmit }) {
               <Route
                 path="/"
                 element={
-                  loggedIn ? <AuthenticatedLandingPage user={user} /> : <LandingPage />
+                  loggedIn ? (
+                    <AuthenticatedLandingPage user={user} />
+                  ) : (
+                    <LandingPage />
+                  )
                 }
               />
 
@@ -203,7 +207,10 @@ function App({ handleUserFormSubmit }) {
               />
 
               {loggedIn ? (
-                <Route path="/home" element={<AuthenticatedLandingPage user={user} />} />
+                <Route
+                  path="/home"
+                  element={<AuthenticatedLandingPage user={user} />}
+                />
               ) : (
                 <Route path="/login" element={<LoginForm />} />
               )}
@@ -217,15 +224,44 @@ function App({ handleUserFormSubmit }) {
               <Route path="/profile-photo" element={<ProfilePhoto />} />
               <Route
                 path="/recommended_professionals/:id"
-                element={<MedicalProfessionalsGrid userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
+                element={
+                  <MedicalProfessionalsGrid
+                    userSavedMedicalProfessionals={
+                      userSavedMedicalProfessionals
+                    }
+                    setUserSavedMedicalProfessionals={
+                      setUserSavedMedicalProfessionals
+                    }
+                    user={user}
+                  />
+                }
               />
               <Route
                 path="/professional_details/:id"
-                element={<MedicalProfessionalDetailedView  userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} user={user} />}
+                element={
+                  <MedicalProfessionalDetailedView
+                    userSavedMedicalProfessionals={
+                      userSavedMedicalProfessionals
+                    }
+                    setUserSavedMedicalProfessionals={
+                      setUserSavedMedicalProfessionals
+                    }
+                    user={user}
+                  />
+                }
               />
               <Route
                 path="/recommendations/:id"
-                element={<MedicalProfessionalsGrid  userSavedMedicalProfessionals={userSavedMedicalProfessionals} setUserSavedMedicalProfessionals={setUserSavedMedicalProfessionals} />}
+                element={
+                  <MedicalProfessionalsGrid
+                    userSavedMedicalProfessionals={
+                      userSavedMedicalProfessionals
+                    }
+                    setUserSavedMedicalProfessionals={
+                      setUserSavedMedicalProfessionals
+                    }
+                  />
+                }
               />
             </Routes>
           </Box>
