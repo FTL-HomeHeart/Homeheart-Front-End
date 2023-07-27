@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2),
     backgroundColor: "#fff",
     color: "#333",
   },
