@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CssBaseline, MenuItem } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import TimezoneSelect from "react-timezone-select"; // Import TimezoneSelect component
 import {
   Avatar,
   Button,
@@ -10,6 +11,7 @@ import {
   Box,
   Typography,
   Container,
+  FormControl,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Select from "react-select";
@@ -38,6 +40,14 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
       postalCode,
     });
   };
+
+  const timezoneOptions = [
+    { value: "UTC", label: "Coordinated Universal Time (UTC)" },
+    { value: "America/New_York", label: "Eastern Time (ET)" },
+    { value: "Europe/London", label: "London (GMT)" },
+    { value: "America/Chicago", label: "Central Time (CT)" },
+    { value: "America/Los_Angeles", label: "Pacific Time (PT)" },
+  ];
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -137,16 +147,14 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="timezone"
-                  label="Timezone"
-                  name="timezone"
-                  value={timezone}
-                  onChange={(e) => setTimezone(e.target.value)}
-                />
-              </Grid>
+            <FormControl fullWidth>
+              <TimezoneSelect
+                value={timezone}
+                onChange={(tz) => setTimezone(tz.value)}
+                placeholder="Select a Timezone"
+              />
+            </FormControl>
+          </Grid>
             </Grid>
             <Grid container spacing={2}>
             <Grid item xs={6}>
