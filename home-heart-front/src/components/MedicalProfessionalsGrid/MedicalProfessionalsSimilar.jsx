@@ -8,6 +8,9 @@ import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessi
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton, Typography } from "@material-ui/core";
 
 // Import react-slick styles and Slider
@@ -57,12 +60,6 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     zIndex: 1,
   },
-  // slickPrev: {
-  //   "&:before": {
-  //     color: "red",
-  //   },
-  //   color: "red",
-  // },
 }));
 
 export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
@@ -125,6 +122,22 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
       </IconButton>
     </div>
   );
+// Custom components for arrow buttons
+const PrevArrow = ({ onClick }) => (
+  <div style={{left: "0 !important", backgroundColor: 'red'}}>
+    <IconButton onClick={onClick} className={classes.arrowButton}>
+      <ArrowBackIosIcon />
+    </IconButton>
+  </div>
+);
+
+const NextArrow = ({ onClick }) => (
+  <div className={classes.nextArrow}>
+    <IconButton onClick={onClick} className={classes.arrowButton}>
+      <ArrowForwardIosIcon />
+    </IconButton>
+  </div>
+);
 
   // react-slick settings with navigation arrows
   const settings = {

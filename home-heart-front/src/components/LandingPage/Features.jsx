@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: "70%",
     marginRight: theme.spacing(1),
     listStyleType: "disc",
+    color: "#616161",
     paddingLeft: 0,
   },
   featureItem: {
@@ -67,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     letterSpacing: 0.5,
   },
+  boldedText: {
+    fontWeight: 500,
+    color: "#484848",
+  },
 }));
 
 export default function Features() {
@@ -93,7 +98,7 @@ export default function Features() {
             component="span"
             className={classes.interFont}
           >
-            Language and Cultural Matching: Connect with mental health
+            <strong className={classes.boldedText}>Language and Cultural Matching:</strong> Connect with mental health
             professionals from your home country, for therapy in your native
             language and cultural context.
           </Typography>
@@ -104,7 +109,7 @@ export default function Features() {
             component="span"
             className={classes.interFont}
           >
-            Affordable Pricing: We leverage economic disparities to offer you
+            <strong className={classes.boldedText}>Affordable Pricing:</strong> We leverage economic disparities to offer you
             affordable prices, making mental health care more accessible.
           </Typography>
         </ListItem>
@@ -114,7 +119,7 @@ export default function Features() {
             component="span"
             className={classes.interFont}
           >
-            Verified Professionals: All professionals on our platform are
+            <strong className={classes.boldedText}>Verified Professionals:</strong> All professionals on our platform are
             thoroughly verified to ensure you receive reliable and quality
             care.
           </Typography>
@@ -125,7 +130,7 @@ export default function Features() {
             component="span"
             className={classes.interFont}
           >
-            Secure and Confidential: Your privacy is our top priority. We
+            <strong className={classes.boldedText}>Secure and Confidential:</strong> Your privacy is our top priority. We
             provide secure communication channels and protect your personal
             information.
           </Typography>
@@ -136,7 +141,7 @@ export default function Features() {
             component="span"
             className={classes.interFont}
           >
-            Rich Resource Library: Access a wide range of resources related to
+            <strong className={classes.boldedText}>Rich Resource Library:</strong> Access a wide range of resources related to
             mental health and the immigrant experience, to enhance your
             understanding and provide additional support.
           </Typography>

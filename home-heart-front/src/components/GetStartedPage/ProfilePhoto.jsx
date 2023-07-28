@@ -13,6 +13,7 @@ import {
   Card,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MovingComponent from "react-moving-text";
 
 const defaultTheme = createTheme();
 
@@ -37,21 +38,32 @@ const ProfilePhoto = () => {
             alignItems: "center",
           }}
         >
+            <MovingComponent
+            type="spin"
+            duration="1200ms"
+            delay="0s"
+            direction="normal"
+            timing="ease"
+            iteration="1"
+            fillMode="none"
+          >
           <Card
             variant="outlined"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
               padding: 3,
-              backgroundColor: "grey",
-              borderRadius: 3,
+              backgroundColor: '#7E9BB6',
+              borderRadius: 2.5,
               height: 500,
               width: 400,
-              "&:hover": {
-                cursor: "pointer",
-                backgroundColor: "#D4D4D4", // Hover color
-              },
+              color: '#FFFFFF', // Text color
+              // '&:hover': {
+              //   cursor: 'pointer',
+              //   backgroundColor: 'grey', // Hover color
+              //   color: 'red', // Hover text color
+              // },
             }}
           >
             <Avatar
@@ -60,26 +72,20 @@ const ProfilePhoto = () => {
               alt="Avatar"
               sx={{
                 m: 1,
-                bgcolor: "#7E9BB6",
+                bgcolor: '#7E9BB6',
                 width: 130,
                 height: 130,
-                fontSize: "60px",
+                fontSize: '60px',
               }}
             >
-              <AccountCircleIcon sx={{ fontSize: "60px" }} />
+              <AccountCircleIcon sx={{ fontSize: '60px' }} />
             </Avatar>
             <Typography component="h1" variant="h5" color="white">
               Profile Photo
             </Typography>
 
-            <Typography
-              component="h1"
-              variant="h6"
-              color="white"
-              style={{ marginTop: "40px", fontStyle: "italic" }}
-            >
-              Click the icon to add a profile photo, and personalize your
-              account to help others recognize you!
+            <Typography component="h1" variant="h6" color="white" style={{ marginTop: '40px', fontStyle: 'italic' }}  >
+            Click the icon to add a profile photo, and personalize your account to help others recognize you!
             </Typography>
             <Box component="form" noValidate sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -90,12 +96,13 @@ const ProfilePhoto = () => {
                     name="profilePhoto"
                     accept="image/*"
                     onChange={(e) => setProfilePhoto(e.target.files[0])}
-                    style={{ display: "none" }}
+                    style={{ display: 'none' }}
                   />
                 </Grid>
               </Grid>
             </Box>
           </Card>
+          </MovingComponent>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Link to="/current-location" style={{ textDecoration: "none" }}>
@@ -134,3 +141,4 @@ const ProfilePhoto = () => {
 };
 
 export default ProfilePhoto;
+

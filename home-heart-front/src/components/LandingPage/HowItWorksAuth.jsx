@@ -44,6 +44,10 @@ const useStyles = makeStyles(theme => ({
     height: 5, 
     marginBottom: theme.spacing(4),
   }, 
+  boldedText: {
+    fontWeight: 500,
+    color: "#484848",
+  },
 }));
 
 const HowItWorks = () => {
@@ -61,17 +65,17 @@ const HowItWorks = () => {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md={6}>
           <Typography variant="body1" className={classes.text}>
-            Find a Therapist: Use our advanced search features to find mental health professionals who meet your needs. 
+            <strong className={classes.boldedText}>Find a Therapist:</strong> Use our advanced search features to find mental health professionals who meet your needs. 
             You can search based on language, cultural background, specialization, and more 
           </Typography>
           <Typography variant="body1" className={classes.text}>
-            Schedule your session: Once you've found your professional, use our platform to schedule a session at a time that works for you. 
+            <strong className={classes.boldedText}>Schedule your session:</strong> Once you've found your professional, use our platform to schedule a session at a time that works for you. 
           </Typography>
           <Typography variant="body1" className={classes.text}>
-            Begin your journey: Attend your session and begin your journey to towards mental wellness. Remember, we're here to support you every step of the way
+            <strong className={classes.boldedText}>Begin your journey:</strong> Attend your session and begin your journey to towards mental wellness. Remember, we're here to support you every step of the way
           </Typography>
           <Typography variant="body1" className={classes.text}>
-            Share your experience: After your session, provide feedback to help us improve and help other users find the right professional for them. 
+            <strong className={classes.boldedText}>Share your experience:</strong> After your session, provide feedback to help us improve and help other users find the right professional for them. 
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>

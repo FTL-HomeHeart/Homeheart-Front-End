@@ -9,7 +9,7 @@ import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfe
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
@@ -127,6 +127,7 @@ export default function MedicalProfessionalDetailedView() {
       .catch((error) => {
         // This is just so that I can still view the detailed view page without the backend running -Ethan
         setProfessionals(MedicalProfessionalsDummyData[0]);
+        console.log("PROFESSIONALS", professionals);
         console.log(error);
       });
   };
@@ -135,7 +136,7 @@ export default function MedicalProfessionalDetailedView() {
     axios
       .get(`http://localhost:3001/api/medical_professional/comments/${id}`)
       .then((response) => {
-        console.log("response", response.data.result);
+        console.log("response in fetching prof comments", response.data.result);
         setComments(response.data.result);
       })
       .catch((err) => {
@@ -178,7 +179,7 @@ export default function MedicalProfessionalDetailedView() {
         {/* Left Half: Medical Professional Image and Name */}
         <Grid item xs={12} md={6}>
           <img
-            src={image}
+            src={image || professionals.image}
             alt={`A picture of ${first_name}`}
             style={{ width: "100%", height: "auto", borderRadius: "8px" }}
           />
