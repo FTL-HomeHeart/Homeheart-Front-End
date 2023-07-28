@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useParams,
 } from "react-router-dom";
 import "./App.css";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
@@ -22,14 +23,16 @@ import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/Medi
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
 import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
+import BookAppointment from "./components/AppointmentScheduling/BookAppointment";
 import { Box } from "@mui/material";
-import MedicalProfessionalsSimilar from "./components/MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
+
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
+  const professionalId = useParams();
   console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
@@ -237,7 +240,7 @@ function App({ handleUserFormSubmit }) {
                   />
                 }
               />
-              <Route 
+              <Route
                 path="/saved_medical_professionals/:id"
                 element={<SavedMedicalProfessionals />}
               />
@@ -267,6 +270,10 @@ function App({ handleUserFormSubmit }) {
                     }
                   />
                 }
+              />
+              <Route
+                path="/book_appointment/:professionalId"
+                element={<BookAppointment />}
               />
             </Routes>
           </Box>

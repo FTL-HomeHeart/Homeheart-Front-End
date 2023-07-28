@@ -7,7 +7,7 @@ import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessi
 import MedicalProfessionalCommentSection from "./MedicalProfessionalCommentSection";
 import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfessionalsSimilar";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
@@ -93,9 +93,9 @@ export default function MedicalProfessionalDetailedView() {
   const classes = useStyles();
   const { id } = useParams();
   const [professionals, setProfessionals] = useState([]);
-  const [similarProfessionals, setSimilarProfessionals] = useState([]);
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   // fetching function for the dummy data
   //   useEffect(() => {
@@ -145,7 +145,6 @@ export default function MedicalProfessionalDetailedView() {
 
   useEffect(() => {
     handleFetchMedicalProfessionalData();
-    // fetchSimilarProfessionals();
     handleFetchMedicalProfessionalComments();
 
     const user = localStorage.getItem("user");
@@ -169,9 +168,9 @@ export default function MedicalProfessionalDetailedView() {
     availability_end_time,
     qualification,
     price,
-    timezone,
+    time_zone,
   } = professionals;
-  console.log("professional is ", professionals.comments);
+  // console.log("professional is ", professionals.comments);
 
   return (
     <Container>
@@ -192,12 +191,15 @@ export default function MedicalProfessionalDetailedView() {
             <FavoriteIcon className={classes.bookmark} />
           </div>
           <Typography variant="h6" gutterBottom className={classes.pricing}>
-            {(price / 8).toFixed(2)} per session
+            ${(price / 8).toFixed(2)} per session
           </Typography>
           <Button
             variant="contained"
             size="medium"
             className={classes.bookAppointmentButton}
+            onClick={() => {
+              navigate(`/book_appointment/${professionals.professional_id}`);
+            }}
           >
             Book Appointment
           </Button>
@@ -226,7 +228,7 @@ export default function MedicalProfessionalDetailedView() {
               Availability: {availability_start_time} - {availability_end_time}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Timezone: {timezone}
+              Timezone: {time_zone}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
               Years of Experience: {years_of_experience} years
@@ -238,7 +240,7 @@ export default function MedicalProfessionalDetailedView() {
               Qualification: {qualification}
             </Typography>
             <Typography variant="h6" className={classes.details5}>
-              Monthly Price: {price}
+              Monthly Price: ${price}
             </Typography>
             {/* you may move the rating to the left underneath their name or next to the price */}
             <Typography variant="h6" className={classes.details5}>
