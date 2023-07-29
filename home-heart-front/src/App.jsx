@@ -25,6 +25,7 @@ import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDet
 import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
 import BookAppointment from "./components/AppointmentScheduling/BookAppointment";
 import { Box } from "@mui/material";
+import UpcomingAppointments from "./components/AppointmentConfirmed/UpcomingAppointment";
 
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -274,6 +275,10 @@ function App({ handleUserFormSubmit }) {
               <Route
                 path="/book_appointment/:professionalId"
                 element={<BookAppointment />}
+              />
+              <Route
+                path="/upcoming_appointments/:id"
+                element={<UpcomingAppointments />}
               />
             </Routes>
           </Box>

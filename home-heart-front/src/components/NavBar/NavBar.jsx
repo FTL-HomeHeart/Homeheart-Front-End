@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#333",
   },
   title: {
-    // fontWeight: "bold",
     fontFamily: "Poppins, sans-serif",
     color: "#7693B0",
     fontSize: "40px",
@@ -61,6 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = ({ loggedIn, handleLogout, user }) => {
   const classes = useStyles();
+  const id = localStorage.getItem("userId");
+  console.log("user id in nav", id);
 
   return (
     <AppBar position="static" className={classes.appBar} elevation={0}>
@@ -86,10 +87,11 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
           <Button
             className={classes.navLinks}
             component={Link}
-            to="/Appointments"
+            to={`/upcoming_appointments`}
           >
             Appointments
           </Button>
+
           <Button className={classes.navLinks} component={Link} to="/Resources">
             Resources
           </Button>
