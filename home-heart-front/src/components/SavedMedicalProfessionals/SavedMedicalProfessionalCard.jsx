@@ -1,8 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardMedia, CardContent, Typography, Button } from "@material-ui/core";
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+} from "@material-ui/core";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -15,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: 180,
     height: 180,
     borderRadius: "8px",
-    objectFit: "cover", 
+    objectFit: "cover",
     marginLeft: theme.spacing(2),
   },
   content: {
@@ -28,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   doctorHeading: {
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: "Inter, sans-serif",
   },
   labels: {
     display: "flex",
@@ -38,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     color: theme.palette.text.secondary,
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: "Inter, sans-serif",
     "&:not(:last-child)": {
       marginRight: theme.spacing(2), // Add margin between labels
     },
@@ -51,52 +58,69 @@ const useStyles = makeStyles((theme) => ({
   bookAppointmentButton: {
     backgroundColor: "#7693B0",
     color: "#FFF",
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: "Inter, sans-serif",
     "&:hover": {
       backgroundColor: "#4777b8",
-    }, 
+    },
     textTransform: "none",
   },
 }));
 
-const SavedMedicalProfessionalsCard = ({ professional, id,  handleFetchAllSavedMedicalProfessionals }) => {
-    console.log("IM HERE"); 
-    console.log("professionals in SAVED MED PROF CARD", professional)
+const SavedMedicalProfessionalsCard = ({
+  professional,
+  id,
+  handleFetchAllSavedMedicalProfessionals,
+}) => {
+  // console.log("IM HERE");
+  // console.log("professionals in SAVED MED PROF CARD", professional)
   const classes = useStyles();
-  
+  const navigate = useNavigate();
 
   // TODO: Implement this
   const handleRemoveMedicalProfessional = () => {
-    axios.delete("http://localhost:3001/api/saved_professionals/deleteSavedProfessional", {
-        data: {
-            professional_id: professional.professional_id, 
-            user_id: id, 
+    axios
+      .delete(
+        "http://localhost:3001/api/saved_professionals/deleteSavedProfessional",
+        {
+          data: {
+            professional_id: professional.professional_id,
+            user_id: id,
+          },
         }
-    }).then((response) => {
-        console.log("RESPONSE IN MED PROF CARD", response.data.result.professional);
-        handleFetchAllSavedMedicalProfessionals(); 
-    }).catch((error) => {
+      )
+      .then((response) => {
+        console.log(
+          "RESPONSE IN MED PROF CARD",
+          response.data.result.professional
+        );
+        handleFetchAllSavedMedicalProfessionals();
+      })
+      .catch((error) => {
         console.log(error);
-    })
-  }
+      });
+  };
 
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={professional.image || "https://img.freepik.com/free-photo/smiling-asian-doctor-female-nurse-holding-clipboard-pen-wearing-uniform-with-gloves-writing-pati_1258-83340.jpg?size=626&ext=jpg"}
+        image={
+          professional.image ||
+          "https://img.freepik.com/free-photo/smiling-asian-doctor-female-nurse-holding-clipboard-pen-wearing-uniform-with-gloves-writing-pati_1258-83340.jpg?size=626&ext=jpg"
+        }
         title={professional.first_name}
       />
       <CardContent className={classes.content}>
         <Typography variant="h6" gutterBottom className={classes.doctorHeading}>
-          Dr. {professional?.first_name} {professional.last_name}
+          {professional?.first_name} {professional.last_name}
         </Typography>
         <div className={classes.labels}>
           <Typography variant="body2" className={classes.label}>
             Specialization: <br /> {professional.specialization}
           </Typography>
           <Typography variant="body2" className={classes.label}>
-            Country of Origin: <br />{professional.country}
+            Country of Origin: <br />
+            {professional.country}
           </Typography>
         </div>
         <div className={classes.labels}>
@@ -111,11 +135,23 @@ const SavedMedicalProfessionalsCard = ({ professional, id,  handleFetchAllSavedM
           </Typography>
         </div>
         <div className={classes.buttons}>
-          <Button variant="contained" size="small" className={classes.bookAppointmentButton}>
+          <Button
+            variant="contained"
+            size="small"
+            className={classes.bookAppointmentButton}
+            onClick={() => {
+              navigate(`/book_appointment/${professional.professional_id}`);
+            }}
+          >
             Book Appointment
           </Button>
-          <Button variant="contained" color="secondary" size="small" onClick={handleRemoveMedicalProfessional}>
-            <PersonRemoveIcon /> 
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={handleRemoveMedicalProfessional}
+          >
+            <PersonRemoveIcon />
           </Button>
         </div>
       </CardContent>

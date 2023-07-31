@@ -9,7 +9,7 @@ import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfe
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
@@ -126,7 +126,7 @@ export default function MedicalProfessionalDetailedView() {
       })
       .catch((error) => {
         // This is just so that I can still view the detailed view page without the backend running -Ethan
-        setProfessionals(MedicalProfessionalsDummyData[0]);
+        // setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log("PROFESSIONALS", professionals);
         console.log(error);
       });
