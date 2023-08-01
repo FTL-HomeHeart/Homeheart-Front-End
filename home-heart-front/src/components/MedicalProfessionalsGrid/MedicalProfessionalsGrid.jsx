@@ -44,8 +44,8 @@ const BannerComponent = () => {
 
 
 export default function MedicalProfessionalsGrid({
+  userSavedMedicalProfessionals, 
   setUserSavedMedicalProfessionals,
-  userSavedMedicalProfessionals,
   user,
 }) {
   const [professionals, setProfessionals] = useState([]);
@@ -123,6 +123,11 @@ export default function MedicalProfessionalsGrid({
                     setUserSavedMedicalProfessionals={
                       setUserSavedMedicalProfessionals
                     }
+
+                    userSavedMedicalProfessionals={
+                      userSavedMedicalProfessionals
+                    }
+                    
                     handleGetAllSavedMedicalProfessionals={
                       handleGetAllSavedMedicalProfessionals
                     }
