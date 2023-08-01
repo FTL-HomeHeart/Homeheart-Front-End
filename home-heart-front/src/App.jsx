@@ -27,6 +27,7 @@ import BookAppointment from "./components/AppointmentScheduling/BookAppointment"
 import { Box } from "@mui/material";
 import UpcomingAppointments from "./components/AppointmentConfirmed/UpcomingAppointment";
 import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentConfirmed";
+import AdditionalResourcesPage from "./components/AdditionalResouorcesPage/AdditionalResourcesPage";
 
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -214,7 +215,7 @@ function App({ handleUserFormSubmit }) {
 
               {loggedIn ? (
                 <Route
-                  path="/home"
+                  ath="/home"
                   element={<AuthenticatedLandingPage user={user} />}
                 />
               ) : (
@@ -284,6 +285,10 @@ function App({ handleUserFormSubmit }) {
               <Route
                 path="/appointment_confirmed"
                 element={<AppointmentConfirmed />}
+              />
+              <Route
+              path="/additional_resources"
+              element={<AdditionalResourcesPage />}
               />
             </Routes>
           </Box>
