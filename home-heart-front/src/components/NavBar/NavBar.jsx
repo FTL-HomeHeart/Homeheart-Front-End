@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = ({ loggedIn, handleLogout, user }) => {
   const classes = useStyles();
   const id = localStorage.getItem("userId");
-  console.log("user id in nav", id);
+  // console.log("user id in nav", id);
 
   return (
     <AppBar position="static" className={classes.appBar} elevation={0}>
@@ -87,7 +87,7 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
           <Button
             className={classes.navLinks}
             component={Link}
-            to={`/upcoming_appointments`}
+            to={`/upcoming_appointments/${id}`}
           >
             Appointments
           </Button>
