@@ -99,14 +99,6 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
     }
   }, [professionals, currentProfessionalID]);
 
-  const handlePrevious = () => {
-    sliderRef.current.slickPrev();
-  };
-
-  const handleNext = () => {
-    sliderRef.current.slickNext();
-  };
-
   // Custom components for arrow buttons
   const PrevArrow = ({ onClick }) => (
     <div className={classes.prevArrow}>
