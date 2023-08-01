@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Button } from "@material-ui/core"; 
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -53,8 +56,64 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppointmetConfirmedPage = ({props}) => {
+const AppointmetConfirmedPage = ({appointmentData}) => {
 
+    // get the appointment data from the previous page
+    const { state } = useLocation();
+    const { professional_id, appointment_start, appointment_end } = state;
+
+    const [medProfFirstName, setMedProfFirstName] = useState("");
+    const [medProfLastName, setMedProfLastName] = useState("");
+
+    // Appointment booked successfully: {
+    //   appointment_id: 16,
+    //   user_id: 8,
+    //   professional_id: 76,
+    //   appointment_start: 2023-08-04T02:00:00.000Z,
+    //   appointment_end: 2023-08-04T02:30:00.000Z,
+    //   status: 'pending'
+    // }
+
+    // Function to format date and time
+  function formatDateTime(dateTimeString) {
+    const options = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+
+    return new Date(dateTimeString).toLocaleString(undefined, options);
+  }
+
+// Function to format the appointment range
+  function formatAppointmentRange(startDateTime, endDateTime) {
+    const formattedStartTime = formatDateTime(startDateTime);
+    const formattedEndTime = formatDateTime(endDateTime);
+
+    return `${formattedStartTime} - ${formattedEndTime}`;
+  }
+
+  // Format the appointment start_time and end_time
+  const formattedAppointmentTime = formatAppointmentRange(
+    appointment_start, appointment_end
+  );
+
+  console.log("appointmentData", appointmentData)
+  console.log(formattedAppointmentTime);
+
+    // I don't like how I have to do this, def should refactor
+    useEffect(() => {
+      axios.get(`http://localhost:3001/api/medical_professional/getMedicalProfessionalById/${professional_id}`)
+      .then((response) => {
+        setMedProfFirstName(response.data.result.first_name);
+        setMedProfLastName(response.data.result.last_name);
+      })
+
+    })
+    const userData = localStorage.getItem("user");
+    const user = JSON.parse(userData);
     const navigate = useNavigate();
 
     const classes = useStyles();
@@ -62,29 +121,23 @@ const AppointmetConfirmedPage = ({props}) => {
   return (
     <Container className={classes.container}>
         <div className={classes.iconContainer}>
-             <CheckCircleOutlineIcon className={classes.icon} />
+          <CheckCircleOutlineIcon className={classes.icon} />
         </div>
       <Typography variant="h4" className={classes.title}>
         Appointment Confirmed!
       </Typography>
       <div className={classes.messageContainer}>
         <Typography variant="body1" className={classes.message}>
-        Dear {props?.patientName || "NOT FOUND"},
+        Dear {user.fullName || "NOT FOUND"},
         </Typography>
         <Typography className={classes.message}>
-            We are pleased to inform you that your appointment has been successfully scheduled with {props?.doctorName || "NOT FOUND"} at {props?.doctorLocation || "NOT FOUND"} 
+            We are pleased to inform you that your appointment has been successfully scheduled with Dr. {medProfFirstName + " " +  medProfLastName || "NOT FOUND"}.
         </Typography>
         <Typography className={classes.message}>
             We appreciate your trust in our services and look forward to supporting you on your journey towards a healthier life and better mental well-being
         </Typography>
         <Typography className={classes.message}>
-            Appointment Details: {props?.appointmentDate || "NOT FOUND"} at {props?.appointmentTime || "NOT FOUND"}
-        </Typography>
-        <Typography className={classes.message}>
-            Location: {props?.doctorLocation || "NOT FOUND"}
-        </Typography>
-        <Typography className={classes.message}>
-            Doctor: {props?.doctorName || "NOT FOUND"}
+            Appointment Details: {formattedAppointmentTime || "NOT FOUND"}
         </Typography>
       </div>
       <div className={classes.buttonContainer}>
