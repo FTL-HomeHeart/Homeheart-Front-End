@@ -93,20 +93,20 @@ export default function BookAppointment() {
           </TableHead>
           <TableBody>
             {availability.map((avail, index) => {
-              const startTimeInLocalTimezone = moment
-                .utc(avail.start_time, "HH:mm:ss")
-                .tz("America/Los_Angeles")
-                .format("HH:mm:ss");
-              const endTimeInLocalTimezone = moment
-                .utc(avail.end_time, "HH:mm:ss")
-                .tz("America/Los_Angeles")
-                .format("HH:mm:ss");
+              const startTimeFormatted = moment(
+                avail.start_time,
+                "HH:mm:ss"
+              ).format("hh:mm A");
+              const endTimeFormatted = moment(
+                avail.end_time,
+                "HH:mm:ss"
+              ).format("hh:mm A");
 
               return (
                 <TableRow key={index}>
                   <TableCell>{daysOfWeek[avail.day_of_week]}</TableCell>
-                  <TableCell>{startTimeInLocalTimezone}</TableCell>
-                  <TableCell>{endTimeInLocalTimezone}</TableCell>
+                  <TableCell>{startTimeFormatted}</TableCell>
+                  <TableCell>{endTimeFormatted}</TableCell>
                 </TableRow>
               );
             })}

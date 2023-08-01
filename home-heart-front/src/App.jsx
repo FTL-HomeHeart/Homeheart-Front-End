@@ -34,7 +34,7 @@ function App({ handleUserFormSubmit }) {
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
   const professionalId = useParams();
-  console.log("USER id FROM APP", id);
+  // console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
 

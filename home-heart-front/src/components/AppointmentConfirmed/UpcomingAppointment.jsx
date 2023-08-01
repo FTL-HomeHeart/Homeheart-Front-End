@@ -69,54 +69,43 @@ export default function UpcomingAppointments() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>
-              {moment
-                .utc(appointments.appointment_start)
-                .tz("America/Los_Angeles")
-                .format("YYYY-MM-DD HH:mm:ss")}
-            </TableCell>
-            <TableCell>
-              {moment
-                .utc(appointments.appointment_end)
-                .tz("America/Los_Angeles")
-                .format("YYYY-MM-DD HH:mm:ss")}
-            </TableCell>
-
+            <TableCell>Appointment Start</TableCell>
+            <TableCell>Appointment End</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map((appointment) => (
-            <TableRow key={appointment.appointment_id}>
-              <TableCell>
-                {moment
-                  .utc(appointment.appointment_start)
-                  .tz("America/Los_Angeles")
-                  .format("YYYY-MM-DD HH:mm:ss")}
-              </TableCell>
-              <TableCell>
-                {moment
-                  .utc(appointment.appointment_end)
-                  .tz("America/Los_Angeles")
-                  .format("YYYY-MM-DD HH:mm:ss")}
-              </TableCell>
-              <TableCell>{appointment.status}</TableCell>
-              <TableCell>
-                <UpdateAppointmentDialog
-                  appointment={appointment}
-                  onUpdate={handleUpdate}
-                />
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => cancelAppointment(appointment.appointment_id)}
-                >
-                  Cancel
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {appointments.map((appointment) => {
+            const appointmentStart = moment(appointment.appointment_start)
+              .tz("America/Los_Angeles")
+              .format("YYYY-MM-DD HH:mm:ss");
+            const appointmentEnd = moment(appointment.appointment_end)
+              .tz("America/Los_Angeles")
+              .format("YYYY-MM-DD HH:mm:ss");
+            return (
+              <TableRow key={appointment.appointment_id}>
+                <TableCell>{appointmentStart}</TableCell>
+                <TableCell>{appointmentEnd}</TableCell>
+                <TableCell>{appointment.status}</TableCell>
+                <TableCell>
+                  <UpdateAppointmentDialog
+                    appointment={appointment}
+                    onUpdate={handleUpdate}
+                  />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() =>
+                      cancelAppointment(appointment.appointment_id)
+                    }
+                  >
+                    Cancel
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
       <Button
