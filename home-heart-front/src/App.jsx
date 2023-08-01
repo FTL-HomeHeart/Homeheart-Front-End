@@ -31,7 +31,8 @@ function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
-  const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
+  // const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
+
   const id = localStorage.getItem("userId");
   const professionalId = useParams();
   // console.log("USER id FROM APP", id);
