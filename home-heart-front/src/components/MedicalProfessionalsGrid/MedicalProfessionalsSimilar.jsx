@@ -5,7 +5,7 @@ import { Container, Button } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
-// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
