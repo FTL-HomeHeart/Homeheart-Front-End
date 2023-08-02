@@ -51,10 +51,12 @@ function App({ handleUserFormSubmit }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
+    const userData = localStorage.getItem("userData");
     if (token && user) {
       setLoggedIn(true);
-      const userData = user ? JSON.parse(user) : null;
-      setUser(userData);
+      const userDataFromStorage = userData ? JSON.parse(userData) : null;
+      setUser(JSON.parse(user));
+      setUserData(userDataFromStorage);
       localStorage.setItem("userLoggedInBefore", "true");
     }
   }, []);
@@ -95,8 +97,10 @@ function App({ handleUserFormSubmit }) {
         console.log("userData:", userData);
 
         localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", decodedToken.userId);
+        localStorage.setItem("userData", JSON.stringify(userData)); // Save userData to local storage
         setUser(userData);
-
         //Successful Login
         setLoggedIn(true);
         setLoginError("");

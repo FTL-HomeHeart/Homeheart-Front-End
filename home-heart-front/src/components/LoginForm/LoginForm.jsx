@@ -15,7 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ImageCard from "../LandingPage/Hero";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const LoginForm = ({ handleLoginSubmit }) => {
   const defaultTheme = createTheme();
@@ -33,13 +33,15 @@ const LoginForm = ({ handleLoginSubmit }) => {
       password,
     });
  
-        if (password !== "correctPassword") {
-          setPasswordError(true);
-          return;
-        } else {
-          setPasswordError(false);
-          handleSignIn({ email, password });
-        }
+    useEffect(()=>{
+      if (password !== "correctPassword") {
+        setPasswordError(true);
+        return;
+      } else {
+        setPasswordError(false);
+        handleSignIn({ email, password });
+      }
+    })
   };
 
   const handleGoogleLogin = () => {
