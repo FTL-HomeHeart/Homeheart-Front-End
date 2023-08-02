@@ -92,7 +92,7 @@ const NavBar = ({ loggedIn, handleLogout, user }) => {
             Appointments
           </Button>
 
-          <Button className={classes.navLinks} component={Link} to="/Resources">
+          <Button className={classes.navLinks} component={Link} to="/additional_resources">
             Resources
           </Button>
         </div>

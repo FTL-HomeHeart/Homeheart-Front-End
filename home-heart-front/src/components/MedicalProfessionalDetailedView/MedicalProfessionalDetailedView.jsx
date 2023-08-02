@@ -177,7 +177,7 @@ export default function MedicalProfessionalDetailedView() {
     price,
     time_zone,
   } = professionals;
-  // console.log("professional is ", professionals.comments);
+  console.log("professional is ", professionals);
 
   return (
     <Container>
