@@ -32,11 +32,15 @@ import AdditionalResourcesPage from "./components/AdditionalResouorcesPage/Addit
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+
+
+  const [userData, setUserData] = useState({});
+
   const [logginError, setLoginError] = useState("");
   const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
   const id = localStorage.getItem("userId");
   const professionalId = useParams();
-  // console.log("USER id FROM APP", id);
+  console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
 
@@ -51,8 +55,15 @@ function App({ handleUserFormSubmit }) {
       setLoggedIn(true);
       const userData = user ? JSON.parse(user) : null;
       setUser(userData);
+      localStorage.setItem("userLoggedInBefore", "true");
     }
   }, []);
+
+
+  const handleLocationFormSubmit = (data) => {
+    setUserData(data);
+  };
+
 
   // Login User when login button is clicked
   const handleLoginSubmit = async ({ identifier, password, navigate }) => {
@@ -159,9 +170,11 @@ function App({ handleUserFormSubmit }) {
   const handleLogout = (navigate) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("userData");
     setLoggedIn(false);
     setUser(null);
     setLoginError("");
+    setUserData(null);
     navigate("/");
   };
 
@@ -183,7 +196,7 @@ function App({ handleUserFormSubmit }) {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} />
+                    <AuthenticatedLandingPage user={user} userData={userData}/>
                   ) : (
                     <LandingPage />
                   )
@@ -194,7 +207,7 @@ function App({ handleUserFormSubmit }) {
                 path="/register"
                 element={
                   loggedIn ? (
-                    <Navigate to="/home" />
+                    <Navigate to="/" />
                   ) : (
                     <RegistrationForm
                       handleRegistrationSubmit={handleRegistrationSubmit}
@@ -215,8 +228,8 @@ function App({ handleUserFormSubmit }) {
 
               {loggedIn ? (
                 <Route
-                  ath="/home"
-                  element={<AuthenticatedLandingPage user={user} />}
+                  path="/home"
+                  element={<AuthenticatedLandingPage user={user} userData={userData}/>}
                 />
               ) : (
                 <Route path="/login" element={<LoginForm />} />
@@ -225,7 +238,7 @@ function App({ handleUserFormSubmit }) {
               <Route path="/user-form" element={<UserForm />} />
               <Route
                 path="/current-location"
-                element={<CurrentLocationForm />}
+                element={<CurrentLocationForm handleLocationFormSubmit={handleLocationFormSubmit}/>}
               />
 
               <Route path="/profile-photo" element={<ProfilePhoto />} />
@@ -290,6 +303,7 @@ function App({ handleUserFormSubmit }) {
               path="/additional_resources"
               element={<AdditionalResourcesPage />}
               />
+
             </Routes>
           </Box>
         </Router>
@@ -299,3 +313,4 @@ function App({ handleUserFormSubmit }) {
   );
 }
 export default App;
+
