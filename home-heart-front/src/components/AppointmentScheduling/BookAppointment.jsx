@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import AppointmentConfirmed from "../AppointmentConfirmed/AppointmentConfirmed";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
@@ -14,8 +15,14 @@ import {
   Grid,
   Card,
   CardContent,
-  CardHeader,
-} from "@mui/material";
+  CardHeader, 
+  Box,
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  IconButton
+} from "@material-ui/core";
 import moment from "moment-timezone";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -27,24 +34,83 @@ import { useNavigate } from "react-router-dom";
 const BASE_URL = "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
+  bannerBox2: {
+    backgroundColor: "#768599",
+    padding: "40px",
+    textAlign: "center",
+    fontFamily: "Poppins, sans-serif",
+    marginBottom: "125px",
+  },
+  bannerHeader2: {
+    width: "60%", 
+    color: "#fff", 
+    margin: "0 auto",
+    fontSize: "40px",
+    marginBottom: "20px",
+  }, 
+  bannerSubHeading: {
+    fontSize: "18px", 
+    color: "#fff", 
+    width: "50%",
+    margin: "0 auto",
+  },
   appointmentButtons: {
-    backgroundColor: "red",
-    color: "#111010",
+    backgroundColor: "#7693B0",
+    color: "#fff",
     fontFamily: "Inter, sans-serif",
     fontStyle: "normal",
     fontWeight: 400,
-    fontSize: "18px",
+    fontSize: "16px",
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    },
+  appointmentButtonsActive: {
+    backgroundColor: "red",
+    color: "#fff",
+    fontFamily: "Inter, sans-serif",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: "16px",
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    }, 
+  }, 
   },
+  container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timeGridContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: "20px",
+    fontFamily: "Inter, sans-serif",
+  }, 
   timeGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)", // Adjust the number of columns as needed
-    gap: theme.spacing(1),
+    gridTemplateColumns: "repeat(3, 1fr)", // Adjust the number of columns as needed
+    gap: theme.spacing(2),
+    
   },
-  // appointmentForm: {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   alignItems: "center",
-  // },
+  mainContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    width: 300,
+    height: 400,
+    // margin: "0 auto",
+  },
+  dialog: {
+    "& .MuiPaper-root": {
+      maxWidth: "min-content", 
+      height: "min-content",
+
+    }
+}
 }));
 
 export default function BookAppointment() {
@@ -54,6 +120,14 @@ export default function BookAppointment() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   // state to store the user selected time
   const [selectedTimeStart, setSelectedTimeStart] = useState(null);
+
+  // state to determine if a button was clicked or not
+  const [timeSlotPicked, setTimeSlotPicked] = useState(false);
+  
+  // state to determine if the dialog is open or not (the appointment confirmed pop up)
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const [appointmentData, setAppointmentData] = useState({});
 
   // const [selectedTimeEnd, setSelectedTimeEnd] = useState(null);
 
@@ -82,6 +156,11 @@ export default function BookAppointment() {
     setError("");
   };
 
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+  
+
   // Function to convert "hh:mm AM/PM" format to "hh:mm:ss" format
   // this is to so I can format the time when we make the post request
   const convertToTimeFormat = (timeStr) => {
@@ -91,16 +170,33 @@ export default function BookAppointment() {
     return parsedTime.format("HH:mm:ss");
   };
 
+  const findDayOfWeek = (day, availabilityData) => {
+    for (let i = 0; i < availabilityData.length; i++) {
+      if (parseInt(availabilityData[i].day_of_week) === parseInt(day)) {
+        // console.log("found day of week");
+        return i;
+      }
+    }
+  }
+
   // This function generates the available appointment times for the selected date
   // the intervals are 30 minutes each (we can change this later)
   const generateAppointmentIntervals = () => {
-    const doctorAvailabilityMap = [];
-    const dayOfWeek = selectedDate?.day().toString();
 
-    // base case: if the user hasn't selected a date yet, return an empty array
-    if (!dayOfWeek || !availability[dayOfWeek]) {
+    if (!availability) {
       return [];
     }
+
+    const doctorAvailabilityMap = [];
+    const dayID = selectedDate?.day().toString();
+
+    const dayOfWeek = findDayOfWeek(dayID, availability);
+      
+    if (!availability[dayOfWeek]) {
+      return [];
+    }
+  
+    const dayOfWeek = selectedDate?.day().toString();
 
     // get the shift start and end times for the selected day of the week from the doctor's availability
     const { start_time, end_time } = availability[dayOfWeek];
@@ -118,7 +214,7 @@ export default function BookAppointment() {
     const endTime = new Date(0, 0, 0, endHours, endMinutes, endSeconds);
 
     // while the current time is less than the end time, add 30 minutes to the current time
-    while (currTime <= endTime) {
+    while (currTime < endTime) {
       // format the current time to "hh:mm A" using moment.js
       const formattedTime = moment(currTime).format("hh:mm A");
       // add the formatted time to the doctor availability map
@@ -130,8 +226,16 @@ export default function BookAppointment() {
     // done
     return doctorAvailabilityMap;
   };
+  
+  let availableTimes; 
 
-  const availableTimes = generateAppointmentIntervals();
+  if (availability.length > 0) {
+    availableTimes = generateAppointmentIntervals();
+  } else {
+    availableTimes = [];
+  }
+
+  // availableTimes = generateAppointmentIntervals();
 
   useEffect(() => {
     // Fetch the professional's availability when the component mounts
@@ -167,7 +271,8 @@ export default function BookAppointment() {
       .then((response) => {
         // redirect the user to the upcoming appointments page
         // and we pass the appointment data to the page
-        navigate("/appointment_confirmed", { state: response.data });
+        setDialogOpen(true); 
+        setAppointmentData(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -187,6 +292,23 @@ export default function BookAppointment() {
   };
 
   return (
+   <div>
+      <Box className={classes.bannerBox2}>
+        <Box>
+          <Typography gutterBottom className={classes.bannerHeader2}>
+            Book an Appointment
+          </Typography>
+          <Typography variant="body1" gutterBottom className={classes.bannerSubHeading}>
+            Select a Date and Time to Schedule your Appointment
+          </Typography>
+        </Box>
+      </Box>
+     <Grid container direction="column" alignItems="center" spacing={4}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {error && <Typography color="error" gutterBottom>{error}</Typography>}
+        <Grid container item alignItems="center" justifyContent="center" spacing={10} className={classes.textContainr} >
+          <Grid item>
+            <Card> 
     <Grid
       container
       direction="column"
@@ -229,6 +351,27 @@ export default function BookAppointment() {
                   </TableHead>
                   <TableBody>
                     {availability.map((avail, index) => {
+                  const startTimeFormatted = moment(
+                    avail.start_time,
+                    "HH:mm:ss"
+                  ).format("hh:mm A");
+                  const endTimeFormatted = moment(
+                    avail.end_time,
+                    "HH:mm:ss"
+                  ).format("hh:mm A");
+
+                  return (
+                    <TableRow key={index}>
+                      <TableCell>{daysOfWeek[avail.day_of_week]}</TableCell>
+                      <TableCell>{startTimeFormatted}</TableCell>
+                      <TableCell>{endTimeFormatted}</TableCell>
+                    </TableRow>
+                  );
+                })}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {availability.map((avail, index) => {
                       const startTimeFormatted = moment(
                         avail.start_time,
                         "HH:mm:ss"
@@ -254,6 +397,48 @@ export default function BookAppointment() {
             </Card>
           </Grid>
           <Grid item>
+            <DateCalendar 
+              disablePast 
+              value={selectedDate} 
+              onChange={handleDataChange} 
+              sx={{ width: 400, height: 400, }}
+              />
+          </Grid>
+          <Grid item>
+            <Grid item className={classes.mainContainer}>
+            {availableTimes?.length > 0 ? (
+              <div className={classes.timeGridContainer}>
+                <Typography variant="h6" gutterBottom>
+                      Select a time for {selectedDate.format("dddd, MMMM D, YYYY")}
+                </Typography>
+                <Grid item className={classes.timeGrid}>
+                    {availableTimes.map((time) => (
+                      <Button
+                        key={time}
+                        variant="contained"
+                        onClick={() => {
+                          setSelectedTimeStart(time);
+                          setError('');
+                          setTimeSlotPicked(true);
+                        }}
+                        className={timeSlotPicked && time === selectedTimeStart ? classes.appointmentButtonsActive : classes.appointmentButtons}
+                      >
+                        {time}
+                      </Button>
+                    ))}
+                </Grid>
+              </div>
+            ) : (
+              <Grid item>
+                <Typography variant="h6" gutterBottom textAlign="center">
+                  No available times for
+                </Typography>
+                <Typography variant="h6" gutterBottom textAlign="center">
+                  {selectedDate.format("dddd, MMMM D, YYYY")}
+                </Typography>
+              </Grid>
+            )}
+            </Grid>
             <DateCalendar
               disablePast
               value={selectedDate}
@@ -279,10 +464,27 @@ export default function BookAppointment() {
         </Grid>
       </LocalizationProvider>
       <form onSubmit={handleSubmit} className={classes.appointmentForm}>
-        <Button type="submit" variant="contained" color="primary">
-          Book Appointment
+        <Button type="submit" variant="contained" 
+          className={classes.appointmentButtons}
+            >
+              Book Appointment
         </Button>
       </form>
     </Grid>
+    <Dialog
+        open={isDialogOpen}
+        onClose={handleCloseDialog}
+        className={classes.dialog}
+    >
+        <DialogContent>
+          <AppointmentConfirmed appointmentData={appointmentData} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} className={classes.appointmentButtons}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }

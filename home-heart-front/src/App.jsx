@@ -48,6 +48,14 @@ export default function App({ handleUserFormSubmit }) {
 
   const theme = createTheme({
     direction: "rtl",
+    palette: {
+      primary_color: {
+        main: "#7693B0",
+      },
+      secondary_color: {
+        main: "#3f474f",
+      }
+    }
   });
 
   useEffect(() => {
