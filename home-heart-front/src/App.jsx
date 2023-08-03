@@ -30,14 +30,19 @@ import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentC
 import AdditionalResourcesPage from "./components/AdditionalResourcesPage/AdditionalResourcesPage";
 import PrivateRoute from "./PageContainer";
 
-function App({ handleUserFormSubmit }) {
+
+export default function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+
+
+  const [userData, setUserData] = useState({});
+
   const [logginError, setLoginError] = useState("");
 
   const id = localStorage.getItem("userId");
   const professionalId = useParams();
-  // console.log("USER id FROM APP", id);
+  console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
 
@@ -48,14 +53,19 @@ function App({ handleUserFormSubmit }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
+    const userData = localStorage.getItem("userData");
     if (token && user) {
       setLoggedIn(true);
-      const userData = user ? JSON.parse(user) : null;
-      setUser(userData);
+      const userDataFromStorage = userData ? JSON.parse(userData) : null;
+      setUser(JSON.parse(user));
+      setUserData(userDataFromStorage);
+      localStorage.setItem("userLoggedInBefore", "true");
     }
   }, []);
 
-  // Register User when signup button is clicked
+  const handleLocationFormSubmit = (data) => {
+    setUserData(data);
+  };
 
   return (
     <>
@@ -81,7 +91,7 @@ function App({ handleUserFormSubmit }) {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} />
+                    <AuthenticatedLandingPage user={user} userData={userData}/>
                   ) : (
                     <LandingPage />
                   )
@@ -91,7 +101,7 @@ function App({ handleUserFormSubmit }) {
                 path="/register"
                 element={
                   loggedIn ? (
-                    <Navigate to="/home" />
+                    <Navigate to="/" />
                   ) : (
                     <RegistrationForm
                       setUser={setUser}
@@ -229,6 +239,7 @@ function App({ handleUserFormSubmit }) {
                 }
               />
               <Route path="/resources" element={<AdditionalResourcesPage />} />
+
             </Routes>
           </Box>
         </Router>
@@ -237,4 +248,5 @@ function App({ handleUserFormSubmit }) {
     </>
   );
 }
-export default App;
+
+

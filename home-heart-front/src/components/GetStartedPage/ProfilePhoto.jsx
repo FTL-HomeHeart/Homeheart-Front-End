@@ -28,25 +28,25 @@ const ProfilePhoto = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <MovingComponent
+          type="spin"
+          duration="1200ms"
+          delay="0s"
+          direction="normal"
+          timing="ease"
+          iteration="1"
+          fillMode="none"
         >
-            <MovingComponent
-            type="spin"
-            duration="1200ms"
-            delay="0s"
-            direction="normal"
-            timing="ease"
-            iteration="1"
-            fillMode="none"
-          >
           <Card
             variant="outlined"
             sx={{
@@ -68,7 +68,7 @@ const ProfilePhoto = () => {
           >
             <Avatar
               onClick={handleAvatarClick}
-              src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+              src={profilePhoto ? URL.createObjectURL(profilePhoto) : "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"}
               alt="Avatar"
               sx={{
                 m: 1,
@@ -85,7 +85,7 @@ const ProfilePhoto = () => {
             </Typography>
 
             <Typography component="h1" variant="h6" color="white" style={{ marginTop: '40px', fontStyle: 'italic' }}  >
-            Click the icon to add a profile photo, and personalize your account to help others recognize you!
+              Click the icon to add a profile photo, and personalize your account to help others recognize you!
             </Typography>
             <Box component="form" noValidate sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -95,50 +95,57 @@ const ProfilePhoto = () => {
                     id="profilePhotoInput"
                     name="profilePhoto"
                     accept="image/*"
-                    onChange={(e) => setProfilePhoto(e.target.files[0])}
+                    onChange={(e) => {
+                      setProfilePhoto(e.target.files[0]);
+                      // Revoke the previous URL, if any
+                      if (e.target.files[0]) {
+                        URL.revokeObjectURL(profilePhoto);
+                      }
+                    }}
                     style={{ display: 'none' }}
                   />
                 </Grid>
               </Grid>
             </Box>
           </Card>
-          </MovingComponent>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Link to="/current-location" style={{ textDecoration: "none" }}>
-                <Button
-                  type="submit"
-                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Previous
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item xs={6}>
-              <Link
-                to={`/recommendations/${id}`}
-                style={{ textDecoration: "none" }}
+        </MovingComponent>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Link to="/current-location" style={{ textDecoration: "none" }}>
+              <Button
+                type="submit"
+                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
               >
-                <Button
-                  type="submit"
-                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {profilePhoto ? "Submit and Finish" : "Skip"}
-                </Button>
-              </Link>
-            </Grid>
+                Previous
+              </Button>
+            </Link>
           </Grid>
-        </Box>
-      </Container>
-    </ThemeProvider>
+          <Grid item xs={6}>
+            <Link
+              to={`/recommendations/${id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                type="submit"
+                style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {profilePhoto ? "Submit and Finish" : "Skip"}
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
+  </ThemeProvider>
   );
 };
 
 export default ProfilePhoto;
+
 

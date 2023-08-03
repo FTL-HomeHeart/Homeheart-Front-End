@@ -51,7 +51,7 @@ export default function MedicalProfessionalCard({
   const findIfProfessionalIsFavorited = () => {
     // check if the professional is in the userSavedMedicalProfessionals array
     // if it is, then set the isFavorited state to true
-    const foundProfessional = userSavedMedicalProfessionals.find((professional) => professional.professional_id === professional_id)
+    const foundProfessional = userSavedMedicalProfessionals?.find((professional) => professional.professional_id === professional_id)
     if (foundProfessional) {
       setIsFavorited(true)
     }
@@ -61,9 +61,6 @@ export default function MedicalProfessionalCard({
     findIfProfessionalIsFavorited()
   })
 
-
-
-  console.log("user saved professionals:", userSavedMedicalProfessionals[0])
     const classes = useStyles();
     const id = localStorage.getItem("userId");
   // TODO: Implement this
