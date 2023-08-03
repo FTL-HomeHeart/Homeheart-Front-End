@@ -14,10 +14,18 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import { useNavigate } from "react-router-dom";
+const BASE_URL = "http://localhost:3001";
+import jwtDecode from "jwt-decode";
 const defaultTheme = createTheme();
 
-export default function RegistrationForm({ handleRegistrationSubmit }) {
+export default function RegistrationForm({
+  setLoggedIn,
+  setUser,
+  setLoginError,
+  loggedIn,
+  user,
+}) {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -31,17 +39,57 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
 
   const defaultTheme = createTheme();
 
-  const CopyRight = () => {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center">
-        {"Copyright © "}
-        <Link color="inherit" href="">
-          HomeHeart
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    );
+  const handleRegistrationSubmit = async ({
+    username,
+    email,
+    password,
+    firstName,
+    lastName,
+    navigate,
+  }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          firstName,
+          lastName,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const token = data.token;
+        const decodedToken = jwtDecode(token);
+        const userData = {
+          ...decodedToken,
+          username: decodedToken.username, // Assuming these fields are in the decoded token
+          email: decodedToken.email,
+          fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
+        };
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", decodedToken.userId);
+        console.log("user Data:", userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
+
+        setLoggedIn(true);
+        setLoginError("");
+        navigate("/");
+        console.log(data.message);
+      } else {
+        setLoginError(data.message);
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.error("Error is:", error);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -85,7 +133,7 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
       }));
       return;
     }
-    
+
     // Perform registration logic
     handleRegistrationSubmit({
       username,
@@ -96,7 +144,6 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
     });
     setErrors({});
   };
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -191,7 +238,6 @@ export default function RegistrationForm({ handleRegistrationSubmit }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel

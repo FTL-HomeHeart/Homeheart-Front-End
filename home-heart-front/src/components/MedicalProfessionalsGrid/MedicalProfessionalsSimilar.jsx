@@ -18,21 +18,15 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
 const useStyles = makeStyles((theme) => ({
+  // Other styles...
   mainContainer: {
-    padding: theme.spacing(2),
-    // backgroundColor: "red",
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(20),
+    padding: theme.spacing(4),
   },
-  // carouselContainer: {
-  //   position: "relative",
-  // },
-  // carousel: {
-  //   margin: "0 auto",
-  //   width: "80%", // Adjust the width as per your requirement
-  //   position: "relative",
-  //   // Add padding for arrow buttons
-  //   paddingLeft: "40px",
-  //   paddingRight: "40px",
-  // },
+  carouselContainer: {
+    position: "relative",
+  },
   arrowButtons: {
     display: "flex",
     alignItems: "center",
@@ -41,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     transform: "translateY(-50%)",
     width: "100%",
-    // Adjust the left and right positioning
     left: 0,
     right: 0,
   },
@@ -49,15 +42,24 @@ const useStyles = makeStyles((theme) => ({
     background: "transparent",
     border: "none",
     cursor: "pointer",
+    padding: 0,
   },
   // Additional styles to position the arrow buttons
   prevArrow: {
-    left: 0,
+    left: "0", // Adjust the left position here
     zIndex: 1,
+    top: "50%",
+    transform: "translateY(-50%)",
+    position: "absolute",
+    padding: 0,
   },
   nextArrow: {
-    right: 0,
+    position: "absolute",
+    right: "0", // Adjust the right position here
+    top: "50%",
+    transform: "translateY(-50%)",
     zIndex: 1,
+    padding: 0,
   },
 }));
 
@@ -96,17 +98,9 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
     }
   }, [professionals, currentProfessionalID]);
 
-  const handlePrevious = () => {
-    sliderRef.current.slickPrev();
-  };
-
-  const handleNext = () => {
-    sliderRef.current.slickNext();
-  };
-
   // Custom components for arrow buttons
   const PrevArrow = ({ onClick }) => (
-    <div style={{ left: "0 !important" }}>
+    <div className={classes.prevArrow}>
       <IconButton onClick={onClick} className={classes.arrowButton}>
         <ArrowBackIosIcon />
       </IconButton>
@@ -125,7 +119,7 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 600,
+    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
@@ -135,18 +129,23 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
   const sliderRef = React.createRef();
 
   return (
-    <Container align="center" className={classes.mainContainer}>
-      <Typography variant="h5">Similar Medical Professionals</Typography>
-      <div className={classes.carouselContainer}>
-        <Slider ref={sliderRef} {...settings}>
-          {filteredProfessionals.map((professional) => (
-            <MedicalProfessionalCard
-              key={professional.professional_id}
-              professional={professional}
-            />
-          ))}
-        </Slider>
-      </div>
+    <Container>
+      <Container align="center" className={classes.mainContainer}>
+        <Typography variant="h5" gutterBottom>
+          Similar Medical Professionals
+        </Typography>
+        <div className={classes.carouselContainer}>
+          <Slider ref={sliderRef} {...settings}>
+            {filteredProfessionals.map((professional) => (
+              <MedicalProfessionalCard
+                key={professional.professional_id}
+                professional={professional}
+              />
+            ))}
+          </Slider>
+        </div>
+      </Container>
+      {/* <NextArrow onClick={handleNext} className={classes.nextArrow} /> */}
     </Container>
   );
 }

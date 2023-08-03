@@ -1,6 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid, Typography, Button } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Paper,
+} from "@material-ui/core";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
@@ -87,6 +96,25 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#4777b8",
     },
   },
+  detailsCard: {
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[3],
+    // Customize the width and padding to make the cards smaller
+    width: 130, // Adjust this value based on your design requirements
+    padding: theme.spacing(1), // Adjust this value based on your design requirements
+  },
+  detailsCardContent: {
+    padding: theme.spacing(1), // Adjust this value based on your design requirements
+  },
+  banner: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(3),
+    backgroundColor: "#7693B0", // Customize the background color as per your design
+    color: "#FFF", // Customize the text color as per your design
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export default function MedicalProfessionalDetailedView() {
@@ -96,19 +124,6 @@ export default function MedicalProfessionalDetailedView() {
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-
-  // fetching function for the dummy data
-  //   useEffect(() => {
-  //     axios
-  //       .get(`${BASE_URL}/api/recommendations/${id}`)
-  //       .then((response) => {
-  //         setSimilarProfessionals(response.data);
-  //       })
-  //       .catch((error) => {
-  //         setProfessionals(MedicalProfessionalsDummyData[0]);
-  //         console.log(error);
-  //       });
-  //   }, [id]);
 
   // the fetching function from the backend medical professionals table
   const handleFetchMedicalProfessionalData = () => {
@@ -126,7 +141,7 @@ export default function MedicalProfessionalDetailedView() {
       })
       .catch((error) => {
         // This is just so that I can still view the detailed view page without the backend running -Ethan
-        // setProfessionals(MedicalProfessionalsDummyData[0]);
+        setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log("PROFESSIONALS", professionals);
         console.log(error);
       });
@@ -178,10 +193,21 @@ export default function MedicalProfessionalDetailedView() {
       <Grid container spacing={3}>
         {/* Left Half: Medical Professional Image and Name */}
         <Grid item xs={12} md={6}>
+          <Paper className={classes.banner}>
+            {/* Add the banner content here */}
+            <Typography variant="h4">
+              Learn More about Dr. {last_name}
+            </Typography>
+          </Paper>
           <img
             src={image || professionals.image}
             alt={`A picture of ${first_name}`}
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "8px",
+              marginBottom: "1.5rem",
+            }}
           />
           <div
             style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
@@ -217,37 +243,104 @@ export default function MedicalProfessionalDetailedView() {
           <Typography variant="body1" className={classes.autobiography}>
             {bio}
           </Typography>
-          <div className={classes.details5Section}>
-            <Typography variant="h6" className={classes.details5}>
-              Country: {country}
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Languages: {language_proficiency}
-            </Typography>
-            {/* @Nathnaelc I will work on this a bit more like time formatting and stuff */}
-            <Typography variant="h6" className={classes.details5}>
-              Availability: {availability_start_time} - {availability_end_time}
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Timezone: {time_zone}
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Years of Experience: {years_of_experience} years
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Specialization: {specialization}
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Qualification: {qualification}
-            </Typography>
-            <Typography variant="h6" className={classes.details5}>
-              Monthly Price: ${price}
-            </Typography>
-            {/* you may move the rating to the left underneath their name or next to the price */}
-            <Typography variant="h6" className={classes.details5}>
-              Rating: {rating}
-            </Typography>
-          </div>
+          <Grid container spacing={5}>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Country
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {country}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Languages
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {language_proficiency}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Year of Experince
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {years_of_experience}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Specialization
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {specialization}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Rating
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {rating}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Qualification
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {qualification}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Start Time
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {availability_start_time}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={3}>
+              <Card className={classes.detailsCard}>
+                <CardContent className={classes.detailsCardContent}>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    End Time
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {availability_end_time}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
       {/* get rid of this and replace it with recommended professionals */}

@@ -8,7 +8,7 @@ import {
   makeStyles,
   Avatar,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -58,10 +58,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({ loggedIn, handleLogout, user }) => {
+const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
   const classes = useStyles();
   const id = localStorage.getItem("userId");
+  const navigate = useNavigate();
   // console.log("user id in nav", id);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLoggedIn(false);
+    setUser(null);
+    setLoginError("");
+    navigate("/");
+  };
 
   return (
     <AppBar position="static" className={classes.appBar} elevation={0}>

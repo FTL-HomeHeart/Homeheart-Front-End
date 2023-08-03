@@ -26,12 +26,14 @@ import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/Sa
 import BookAppointment from "./components/AppointmentScheduling/BookAppointment";
 import { Box } from "@mui/material";
 import UpcomingAppointments from "./components/AppointmentConfirmed/UpcomingAppointment";
+import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentConfirmed";
+import AdditionalResourcesPage from "./components/AdditionalResourcesPage/AdditionalResourcesPage";
+import PrivateRoute from "./PageContainer";
 
 function App({ handleUserFormSubmit }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
-  // const [welcomeUserMsg, setWelcomeUserMsg] = useState("");
 
   const id = localStorage.getItem("userId");
   const professionalId = useParams();
@@ -53,123 +55,20 @@ function App({ handleUserFormSubmit }) {
     }
   }, []);
 
-  // Login User when login button is clicked
-  const handleLoginSubmit = async ({ identifier, password, navigate }) => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          identifier,
-          password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const token = data.token;
-        const decodedToken = jwtDecode(token);
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", decodedToken.userId);
-        const userData = {
-          ...decodedToken,
-          username: decodedToken.username,
-          email: decodedToken.email,
-          fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
-        };
-        console.log("userData:", userData);
-
-        localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
-
-        //Successful Login
-        setLoggedIn(true);
-        setLoginError("");
-        navigate("/home");
-        console.log("data message", data.message);
-        console.log(loggedIn);
-      } else {
-        //Login failed
-        setLoginError(data.message);
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   // Register User when signup button is clicked
-  const handleRegistrationSubmit = async ({
-    username,
-    email,
-    password,
-    firstName,
-    lastName,
-    navigate,
-  }) => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          firstName,
-          lastName,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const token = data.token;
-        const decodedToken = jwtDecode(token);
-        const userData = {
-          ...decodedToken,
-          username: decodedToken.username, // Assuming these fields are in the decoded token
-          email: decodedToken.email,
-          fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
-        };
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", decodedToken.userId);
-        console.log("user Data:", userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
-
-        setLoggedIn(true);
-        setLoginError("");
-        navigate("/");
-        console.log(data.message);
-      } else {
-        setLoginError(data.message);
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error("Error is:", error);
-    }
-  };
-
-  const handleLogout = (navigate) => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setLoggedIn(false);
-    setUser(null);
-    setLoginError("");
-    navigate("/");
-  };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Router>
           {/* Have to be outside of Routes as it should render regardless */}
-          <NavBar handleLogout={handleLogout} loggedIn={loggedIn} user={user} />
+          <NavBar
+            loggedIn={loggedIn}
+            user={user}
+            setLoggedIn={setLoggedIn}
+            setUser={setUser}
+            setLoginError={setLoginError}
+          />
           <Box
             style={{
               display: "flex",
@@ -188,7 +87,6 @@ function App({ handleUserFormSubmit }) {
                   )
                 }
               />
-
               <Route
                 path="/register"
                 element={
@@ -196,7 +94,10 @@ function App({ handleUserFormSubmit }) {
                     <Navigate to="/home" />
                   ) : (
                     <RegistrationForm
-                      handleRegistrationSubmit={handleRegistrationSubmit}
+                      setUser={setUser}
+                      user={user}
+                      setLoginError={setLoginError}
+                      setLoggedIn={setLoggedIn}
                     />
                   )
                 }
@@ -207,80 +108,127 @@ function App({ handleUserFormSubmit }) {
                   loggedIn ? (
                     <Navigate to="/" />
                   ) : (
-                    <LoginForm handleLoginSubmit={handleLoginSubmit} />
+                    <LoginForm
+                      setUser={setUser}
+                      user={user}
+                      setLoginError={setLoginError}
+                      setLoggedIn={setLoggedIn}
+                    />
                   )
                 }
               />
-
-              {loggedIn ? (
-                <Route
-                  path="/home"
-                  element={<AuthenticatedLandingPage user={user} />}
-                />
-              ) : (
-                <Route path="/login" element={<LoginForm />} />
-              )}
-
-              <Route path="/user-form" element={<UserForm />} />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <AuthenticatedLandingPage user={user} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/user-form"
+                element={
+                  <PrivateRoute>
+                    <UserForm />
+                  </PrivateRoute>
+                }
+              />
               <Route
                 path="/current-location"
-                element={<CurrentLocationForm />}
+                element={
+                  <PrivateRoute>
+                    <CurrentLocationForm />
+                  </PrivateRoute>
+                }
               />
-
-              <Route path="/profile-photo" element={<ProfilePhoto />} />
+              <Route
+                path="/profile-photo"
+                element={
+                  <PrivateRoute>
+                    <ProfilePhoto />
+                  </PrivateRoute>
+                }
+              />
               <Route
                 path="/recommended_professionals/:id"
                 element={
-                  <MedicalProfessionalsGrid
-                    userSavedMedicalProfessionals={
-                      userSavedMedicalProfessionals
-                    }
-                    setUserSavedMedicalProfessionals={
-                      setUserSavedMedicalProfessionals
-                    }
-                    user={user}
-                  />
+                  <PrivateRoute>
+                    <MedicalProfessionalsGrid
+                      userSavedMedicalProfessionals={
+                        userSavedMedicalProfessionals
+                      }
+                      setUserSavedMedicalProfessionals={
+                        setUserSavedMedicalProfessionals
+                      }
+                      user={user}
+                    />
+                  </PrivateRoute>
                 }
               />
               <Route
                 path="/saved_medical_professionals/:id"
-                element={<SavedMedicalProfessionals />}
+                element={
+                  <PrivateRoute>
+                    <SavedMedicalProfessionals />
+                  </PrivateRoute>
+                }
               />
               <Route
                 path="/professional_details/:id"
                 element={
-                  <MedicalProfessionalDetailedView
-                    userSavedMedicalProfessionals={
-                      userSavedMedicalProfessionals
-                    }
-                    setUserSavedMedicalProfessionals={
-                      setUserSavedMedicalProfessionals
-                    }
-                    user={user}
-                  />
+                  <PrivateRoute>
+                    <MedicalProfessionalDetailedView
+                      userSavedMedicalProfessionals={
+                        userSavedMedicalProfessionals
+                      }
+                      setUserSavedMedicalProfessionals={
+                        setUserSavedMedicalProfessionals
+                      }
+                      user={user}
+                    />
+                  </PrivateRoute>
                 }
               />
               <Route
                 path="/recommendations/:id"
                 element={
-                  <MedicalProfessionalsGrid
-                    userSavedMedicalProfessionals={
-                      userSavedMedicalProfessionals
-                    }
-                    setUserSavedMedicalProfessionals={
-                      setUserSavedMedicalProfessionals
-                    }
-                  />
+                  <PrivateRoute>
+                    <MedicalProfessionalsGrid
+                      userSavedMedicalProfessionals={
+                        userSavedMedicalProfessionals
+                      }
+                      setUserSavedMedicalProfessionals={
+                        setUserSavedMedicalProfessionals
+                      }
+                    />
+                  </PrivateRoute>
                 }
               />
               <Route
                 path="/book_appointment/:professionalId"
-                element={<BookAppointment />}
+                element={
+                  <PrivateRoute>
+                    <BookAppointment />
+                  </PrivateRoute>
+                }
               />
               <Route
                 path="/upcoming_appointments/:id"
-                element={<UpcomingAppointments />}
+                element={
+                  <PrivateRoute>
+                    <UpcomingAppointments />
+                  </PrivateRoute>
+                }
               />
+              <Route
+                path="/appointment_confirmed"
+                element={
+                  <PrivateRoute>
+                    <AppointmentConfirmed />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/resources" element={<AdditionalResourcesPage />} />
             </Routes>
           </Box>
         </Router>
