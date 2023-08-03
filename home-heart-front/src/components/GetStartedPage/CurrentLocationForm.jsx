@@ -28,6 +28,7 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
   const navigate = useNavigate();
   const user_id = localStorage.getItem("userId");
 
+
   const [userData, setUserData] = useState({
     country: null,
     city: "",
@@ -50,6 +51,8 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
         (response) => {
           console.log("response:", response);
           navigate("/profile-photo");
+          handleLocationFormSubmit(userData);
+          localStorage.setItem("userData", JSON.stringify(userData));
         }
       )
     } catch (error) {
@@ -241,3 +244,4 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
 };
 
 export default CurrentLocationForm;
+

@@ -23,7 +23,6 @@ import {
   DialogActions, 
   IconButton
 } from "@material-ui/core";
-import CloseIcon from '@material-ui/icons/Close';
 import moment from "moment-timezone";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -114,7 +113,6 @@ const useStyles = makeStyles((theme) => ({
 }
 }));
 
-
 export default function BookAppointment() {
   // state to store the professional's availability
   const [availability, setAvailability] = useState([]);
@@ -131,7 +129,9 @@ export default function BookAppointment() {
 
   const [appointmentData, setAppointmentData] = useState({});
 
-  const [error, setError] = useState(''); 
+  // const [selectedTimeEnd, setSelectedTimeEnd] = useState(null);
+
+  const [error, setError] = useState("");
 
   const classes = useStyles();
   // useHistory is used to redirect the user to a different page once the the appointment is booked
@@ -151,8 +151,9 @@ export default function BookAppointment() {
 
   // handles when users clicks a new date in the DateCalendar
   const handleDataChange = (newValue) => {
+    const dayOfWeek = (newValue.day() + 6) % 7;
     setSelectedDate(newValue);
-    setError(""); 
+    setError("");
   };
 
   const handleCloseDialog = () => {
@@ -178,7 +179,6 @@ export default function BookAppointment() {
     }
   }
 
-
   // This function generates the available appointment times for the selected date
   // the intervals are 30 minutes each (we can change this later)
   const generateAppointmentIntervals = () => {
@@ -196,20 +196,23 @@ export default function BookAppointment() {
       return [];
     }
   
+    const dayOfWeek = selectedDate?.day().toString();
 
     // get the shift start and end times for the selected day of the week from the doctor's availability
     const { start_time, end_time } = availability[dayOfWeek];
     // set the start and end times for the appointment
-    const [startHours, startMinutes, startSeconds] = start_time.split(":").map(Number);
+    const [startHours, startMinutes, startSeconds] = start_time
+      .split(":")
+      .map(Number);
     // set the start and end times for the appointment
     const [endHours, endMinutes, endSeconds] = end_time.split(":").map(Number);
-  
+
     // create a new date object with the start time
     let currTime = new Date(0, 0, 0, startHours, startMinutes, startSeconds);
-  
+
     // create a new date object with the end time
     const endTime = new Date(0, 0, 0, endHours, endMinutes, endSeconds);
-  
+
     // while the current time is less than the end time, add 30 minutes to the current time
     while (currTime < endTime) {
       // format the current time to "hh:mm A" using moment.js
@@ -219,7 +222,7 @@ export default function BookAppointment() {
       // add 30 minutes to the current time
       currTime.setMinutes(currTime.getMinutes() + 30);
     }
-  
+
     // done
     return doctorAvailabilityMap;
   };
@@ -252,7 +255,9 @@ export default function BookAppointment() {
     const selectedDateFormatted = selectedDate.format("YYYY-MM-DD");
     const formattedStartTime = convertToTimeFormat(selectedTimeStart);
     // calculate the end time (add 30 minutes to seledtedTimeStart)
-    const formattedEndTime = moment(formattedStartTime, "HH:mm:ss").add(30, "minutes").format("HH:mm:ss");
+    const formattedEndTime = moment(formattedStartTime, "HH:mm:ss")
+      .add(30, "minutes")
+      .format("HH:mm:ss");
 
     // Send a POST request to create the appointment
     axios
@@ -274,7 +279,7 @@ export default function BookAppointment() {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           console.log("Error data:", error.response.data.message);
-          setError(error.response.data.message)
+          setError(error.response.data.message);
         } else if (error.request) {
           // The request was made but no response was received
           console.log("No response received:", error.request);
@@ -304,6 +309,36 @@ export default function BookAppointment() {
         <Grid container item alignItems="center" justifyContent="center" spacing={10} className={classes.textContainr} >
           <Grid item>
             <Card> 
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      spacing={2}
+    >
+      <Grid item>
+        <Typography variant="h4" gutterBottom marginBottom={4}>
+          Book an appointment
+        </Typography>
+      </Grid>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Typography variant="h6" gutterBottom>
+          Select a date and time
+        </Typography>
+        {error && (
+          <Typography color="error" gutterBottom>
+            {error}
+          </Typography>
+        )}
+        <Grid
+          container
+          item
+          alignItems="center"
+          justifyContent="center"
+          spacing={10}
+        >
+          <Grid item>
+            <Card>
               <CardHeader title="Availability Time Table" />
               <CardContent>
                 <Table>
@@ -333,6 +368,29 @@ export default function BookAppointment() {
                     </TableRow>
                   );
                 })}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {availability.map((avail, index) => {
+                      const startTimeFormatted = moment(
+                        avail.start_time,
+                        "HH:mm:ss"
+                      ).format("hh:mm A");
+                      const endTimeFormatted = moment(
+                        avail.end_time,
+                        "HH:mm:ss"
+                      ).format("hh:mm A");
+
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>
+                            {daysOfWeek[(avail.day_of_week + 6) % 7]}
+                          </TableCell>
+                          <TableCell>{startTimeFormatted}</TableCell>
+                          <TableCell>{endTimeFormatted}</TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -381,6 +439,27 @@ export default function BookAppointment() {
               </Grid>
             )}
             </Grid>
+            <DateCalendar
+              disablePast
+              value={selectedDate}
+              onChange={handleDataChange}
+            />
+          </Grid>
+          <Grid item className={classes.timeGrid}>
+            {availableTimes.map((time) => (
+              <Button
+                key={time}
+                variant="contained"
+                className={classes.appointmentButtons}
+                onClick={() => {
+                  setSelectedTimeStart(time);
+                  setError("");
+                }}
+                size="medium"
+              >
+                {time}
+              </Button>
+            ))}
           </Grid>
         </Grid>
       </LocalizationProvider>

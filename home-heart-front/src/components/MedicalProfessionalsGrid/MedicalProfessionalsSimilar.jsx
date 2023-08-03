@@ -5,7 +5,7 @@ import { Container, Button } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
-import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(20),
     padding: theme.spacing(4),
-  }, 
+  },
   carouselContainer: {
     position: "relative",
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     transform: "translateY(-50%)",
     position: "absolute",
-    padding : 0,
+    padding: 0,
   },
   nextArrow: {
     position: "absolute",
@@ -59,10 +59,9 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     transform: "translateY(-50%)",
     zIndex: 1,
-    padding : 0,
+    padding: 0,
   },
 }));
-
 
 export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
   const [professionals, setProfessionals] = useState([]);
@@ -118,7 +117,7 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
 
   // react-slick settings with navigation arrows
   const settings = {
-    dots: false, 
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -128,22 +127,23 @@ export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
   };
 
   const sliderRef = React.createRef();
-  
 
   return (
     <Container>
-      <Container align="center"   className={classes.mainContainer}>
-      <Typography variant="h5" gutterBottom>Similar Medical Professionals</Typography>
-      <div className={classes.carouselContainer}>
-        <Slider ref={sliderRef} {...settings}>
-          {filteredProfessionals.map((professional) => (
-            <MedicalProfessionalCard
-              key={professional.professional_id}
-              professional={professional}
-            />
-          ))}
-        </Slider>
-      </div>
+      <Container align="center" className={classes.mainContainer}>
+        <Typography variant="h5" gutterBottom>
+          Similar Medical Professionals
+        </Typography>
+        <div className={classes.carouselContainer}>
+          <Slider ref={sliderRef} {...settings}>
+            {filteredProfessionals.map((professional) => (
+              <MedicalProfessionalCard
+                key={professional.professional_id}
+                professional={professional}
+              />
+            ))}
+          </Slider>
+        </div>
       </Container>
       {/* <NextArrow onClick={handleNext} className={classes.nextArrow} /> */}
     </Container>

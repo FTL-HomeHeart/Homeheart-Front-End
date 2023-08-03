@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { CssBaseline } from "@mui/material";
@@ -8,22 +8,80 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import Text from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ImageCard from "../LandingPage/Hero";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+const BASE_URL = "http://localhost:3001";
 
-const LoginForm = ({ handleLoginSubmit }) => {
+import { useState, useEffect } from "react";
+
+
+export default function LoginForm({
+  user,
+  setUser,
+  setLoggedIn,
+  setLoginError,
+}) {
   const defaultTheme = createTheme();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const navigate = useNavigate();
+
+  // Login User when login button is clicked
+  const handleLoginSubmit = async ({ identifier, password }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const token = data.token;
+        const decodedToken = jwtDecode(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", decodedToken.userId);
+        const userData = {
+          ...decodedToken,
+          username: decodedToken.username,
+          email: decodedToken.email,
+          fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
+        };
+        console.log("userData:", userData);
+
+        localStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
+
+        //Successful Login
+        setLoggedIn(true);
+        setLoginError("");
+        navigate("/home");
+        console.log("data message", data.message);
+        console.log(loggedIn);
+      } else {
+        //Login failed
+        setLoginError(data.message);
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -32,14 +90,15 @@ const LoginForm = ({ handleLoginSubmit }) => {
       identifier: email,
       password,
     });
- 
-        if (password !== "correctPassword") {
-          setPasswordError(true);
-          return;
-        } else {
-          setPasswordError(false);
-          handleSignIn({ email, password });
-        }
+    
+
+    if (password !== "correctPassword") {
+      setPasswordError(true);
+      return;
+    } else {
+      setPasswordError(false);
+      handleSignIn({ email, password });
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -119,6 +178,4 @@ const LoginForm = ({ handleLoginSubmit }) => {
       </Container>
     </ThemeProvider>
   );
-};
-
-export default LoginForm;
+}
