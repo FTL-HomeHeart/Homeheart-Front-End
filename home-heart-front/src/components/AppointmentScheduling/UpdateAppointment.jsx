@@ -1,17 +1,43 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
-import moment from "moment-timezone";
+import {
+  makeStyles,
+  Snackbar,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField,
+  IconButton,
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { useState } from "react";
+
+const useStyles = makeStyles({
+  dialog: {
+    backgroundColor: "#f5f5f5",
+    borderRadius: "15px",
+  },
+  button: {
+    color: "#7693B0",
+  },
+  saveButton: {
+    color: "green",
+  },
+  closeButton: {
+    position: "absolute",
+    right: "5px",
+    top: "5px",
+    color: "#7693B0",
+  },
+});
 
 export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [start, setStart] = useState(appointment.appointment_start);
-  const [end, setEnd] = useState(appointment.appointment_end);
+  const [duration, setDuration] = useState(30); // default duration is 30 minutes
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,29 +48,46 @@ export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
   };
 
   const handleSave = () => {
+    const end = new Date(start);
+    end.setMinutes(end.getMinutes() + duration);
     onUpdate({
       ...appointment,
       appointment_start: start,
-      appointment_end: end,
+      appointment_end: end.toISOString(),
     });
-    handleClose();
+    setOpen(false);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        className={classes.button}
+        onClick={handleClickOpen}
+      >
         Update
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        className={classes.dialog}
       >
-        <DialogTitle id="form-dialog-title">Update Appointment</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          Update Appointment
+          <IconButton className={classes.closeButton} onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To update this appointment, please enter the new start and end
-            times.
+            To update this appointment, please enter the new start time and the
+            duration of the appointment.
           </DialogContentText>
           <TextField
             autoFocus
@@ -58,23 +101,36 @@ export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
           />
           <TextField
             margin="dense"
-            id="end"
-            label="End Time"
-            type="datetime-local"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
+            id="duration"
+            label="Duration (minutes)"
+            type="number"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button className={classes.saveButton} onClick={handleSave}>
             Save
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Appointment updated successfully"
+        action={
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </div>
   );
 }

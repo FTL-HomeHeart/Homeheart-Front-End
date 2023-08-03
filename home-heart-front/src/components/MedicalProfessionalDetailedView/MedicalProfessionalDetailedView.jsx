@@ -1,6 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid, Typography, Button, Card, CardContent, CardHeader, Paper, } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Paper,
+} from "@material-ui/core";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MedicalProfessionalCard from "../MedicalProfessionalsGrid/MedicalProfessionalCard";
@@ -9,7 +18,7 @@ import MedicalProfessionalSimilar from "../MedicalProfessionalsGrid/MedicalProfe
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 const BASE_URL = "http://localhost:3001";
 const useStyles = makeStyles((theme) => ({
@@ -185,13 +194,20 @@ export default function MedicalProfessionalDetailedView() {
         {/* Left Half: Medical Professional Image and Name */}
         <Grid item xs={12} md={6}>
           <Paper className={classes.banner}>
-        {/* Add the banner content here */}
-          <Typography variant="h4">Learn More about Dr. {last_name}</Typography>
-        </Paper>
+            {/* Add the banner content here */}
+            <Typography variant="h4">
+              Learn More about Dr. {last_name}
+            </Typography>
+          </Paper>
           <img
             src={image || professionals.image}
             alt={`A picture of ${first_name}`}
-            style={{ width: "100%", height: "auto", borderRadius: "8px", marginBottom: "1.5rem" }}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "8px",
+              marginBottom: "1.5rem",
+            }}
           />
           <div
             style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
@@ -231,64 +247,96 @@ export default function MedicalProfessionalDetailedView() {
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Country</Typography>
-                  <Typography variant="body2" color="textPrimary">{country}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Country
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {country}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Languages</Typography>
-                  <Typography variant="body2" color="textPrimary">{language_proficiency}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Languages
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {language_proficiency}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Year of Experince</Typography>
-                  <Typography variant="body2" color="textPrimary">{years_of_experience}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Year of Experince
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {years_of_experience}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Specialization</Typography>
-                  <Typography variant="body2" color="textPrimary">{specialization}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Specialization
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {specialization}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Rating</Typography>
-                  <Typography variant="body2" color="textPrimary">{rating}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Rating
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {rating}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Qualification</Typography>
-                  <Typography variant="body2" color="textPrimary">{qualification}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Qualification
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {qualification}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">Start Time</Typography>
-                  <Typography variant="body2" color="textPrimary">{availability_start_time}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Start Time
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {availability_start_time}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card className={classes.detailsCard}>
                 <CardContent className={classes.detailsCardContent}>
-                  <Typography variant="subtitle2" color="textSecondary">End Time</Typography>
-                  <Typography variant="body2" color="textPrimary">{availability_end_time}</Typography>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    End Time
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary">
+                    {availability_end_time}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
