@@ -19,6 +19,9 @@ import jwtDecode from "jwt-decode";
 const BASE_URL = "http://localhost:3001";
 import { signInWithGoogle } from "../../firebase";
 
+import { useState, useEffect } from "react";
+
+
 export default function LoginForm({
   user,
   setUser,
@@ -94,6 +97,7 @@ export default function LoginForm({
       identifier: email,
       password,
     });
+    
 
     if (password !== "correctPassword") {
       setPasswordError(true);

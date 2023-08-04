@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -46,8 +47,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ImageCardGetStarted({ user }) {
   const classes = useStyles();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Fetch globalUserData here (if needed)
+    const globalUserData = JSON.parse(localStorage.getItem("userData"));
+    setUserData(globalUserData);
+    console.log(globalUserData);
+  }, []);
+
+  const showGetStartedButton = userData !== null 
+  console.log(showGetStartedButton, userData);
+
 
   return (
+
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
@@ -68,6 +82,8 @@ export default function ImageCardGetStarted({ user }) {
             Welcome {user.firstName}!
           </MovingComponent>
         </Typography>
+        {!showGetStartedButton ? (
+        // Show the "Get Started" button when showGetStartedButton is true
         <RouterLink to="/user-form">
           <Button
             variant="contained"
@@ -77,7 +93,19 @@ export default function ImageCardGetStarted({ user }) {
             Get Started!
           </Button>
         </RouterLink>
+      ) : (
+        <RouterLink to='/recommended_professionals/${id}'>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+            className={classes.button}
+          >
+            See Mental Health Professionals
+          </Button>
+        </RouterLink>
+      )}
       </div>
     </Card>
   );
 }
+
