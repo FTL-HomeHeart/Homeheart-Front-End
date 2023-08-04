@@ -6,7 +6,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 const BASE_URL = "http://localhost:3001";
-const FLASK_URL = "http://127.0.0.1:5000";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
@@ -64,7 +63,7 @@ export default function MedicalProfessionalsGrid({
       })
       .catch((error) => {
         // This is just so that I can still view the page without the backend running -Ethan
-        setProfessionals(MedicalProfessionalsDummyData);
+        // setProfessionals(MedicalProfessionalsDummyData);
         if (error.response) {
           // The request was made and the server responded with a status code
           console.log(error.response.data);
@@ -83,12 +82,12 @@ export default function MedicalProfessionalsGrid({
 
   // @Ethan take this out to the new file created named MedicalProfessionalSaved
   const handleGetAllSavedMedicalProfessionals = () => {
-    console.log("user in med prof GRID:", user);
-    console.log("id in med prof GRID:", id);
+    // console.log("user in med prof GRID:", user);
+    // console.log("id in med prof GRID:", id);
     axios
       .get(`http://localhost:3001/api/saved_professionals/getAllSaved/${id}`)
       .then((response) => {
-        console.log("RESPONSE in GRID", response.data.result);
+        // console.log("RESPONSE in GRID", response.data.result);
         setUserSavedMedicalProfessionals(response.data.result);
       })
       .catch((error) => {

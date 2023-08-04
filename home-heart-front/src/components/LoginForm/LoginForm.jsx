@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { CssBaseline } from "@mui/material";
@@ -17,11 +17,13 @@ import ImageCard from "../LandingPage/Hero";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 const BASE_URL = "http://localhost:3001";
+import { signInWithGoogle } from "../../firebase";
 
 export default function LoginForm({
   user,
   setUser,
   setLoggedIn,
+  loggedIn,
   setLoginError,
 }) {
   const defaultTheme = createTheme();
@@ -30,6 +32,7 @@ export default function LoginForm({
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [uiConfig, setUiConfig] = useState(null);
   const navigate = useNavigate();
 
   // Login User when login button is clicked
@@ -80,6 +83,10 @@ export default function LoginForm({
     }
   };
 
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle({ setLoggedIn, navigate, loggedIn, setUser });
+  };
+
   const handleSignIn = (e) => {
     e.preventDefault();
     handleLoginSubmit({
@@ -97,10 +104,6 @@ export default function LoginForm({
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Redirect the user to the Google login page
-    window.location.href = "http://localhost:3001/auth/google";
-  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -162,7 +165,7 @@ export default function LoginForm({
               variant="contained"
               style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mb: 4 }}
-              onClick={handleGoogleLogin}
+              onClick={handleSignInWithGoogle}
             >
               Sign In with Google
             </Button>

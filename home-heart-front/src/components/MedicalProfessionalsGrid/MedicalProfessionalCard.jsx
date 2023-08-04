@@ -1,5 +1,5 @@
-import React from "react"; 
-import { useState, useEffect } from "react"; 
+import React from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MedicalProfessionalCard({
   professional,
-  user, 
-  userSavedMedicalProfessionals, 
+  user,
+  userSavedMedicalProfessionals,
   setUserSavedMedicalProfessionals,
   handleGetAllSavedMedicalProfessionals,
 }) {
@@ -46,26 +46,34 @@ export default function MedicalProfessionalCard({
     image,
     professional_id,
   } = professional;
-  const [isFavorited, setIsFavorited] = useState(false);  
+  const [isFavorited, setIsFavorited] = useState(false);
+  console.log("the prop USMP in card is:", userSavedMedicalProfessionals);
 
   const findIfProfessionalIsFavorited = () => {
     // check if the professional is in the userSavedMedicalProfessionals array
     // if it is, then set the isFavorited state to true
-    const foundProfessional = userSavedMedicalProfessionals.find((professional) => professional.professional_id === professional_id)
-    if (foundProfessional) {
-      setIsFavorited(true)
+    console.log(
+      "userSavedMedicalProfessionals:",
+      userSavedMedicalProfessionals
+    );
+    if (userSavedMedicalProfessionals) {
+      const foundProfessional = userSavedMedicalProfessionals.find(
+        (professional) => professional.professional_id === professional_id
+      );
+
+      if (foundProfessional) {
+        setIsFavorited(true);
+      }
     }
-  }
+  };
 
   useEffect(() => {
-    findIfProfessionalIsFavorited()
-  })
+    findIfProfessionalIsFavorited();
+  });
 
-
-
-  console.log("user saved professionals:", userSavedMedicalProfessionals[0])
-    const classes = useStyles();
-    const id = localStorage.getItem("userId");
+  // console.log("user saved professionals:", userSavedMedicalProfessionals[0])
+  const classes = useStyles();
+  const id = localStorage.getItem("userId");
   // TODO: Implement this
   const handleMedicalProfessionalBookmarked = () => {
     // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
