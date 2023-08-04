@@ -1,6 +1,6 @@
 import React from "react"; 
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Button } from "@material-ui/core"; 
+import { Container, Typography, Button, Dialog } from "@material-ui/core"; 
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,9 +10,6 @@ import { useLocation } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(8),
-    border: "1px solid #000", 
-    backgroundColor: "rgba(0,0,0,0.36)", 
-    backdropFilter: "blur(17px)", 
     borderRadius: 8,
     width: 850,
     height: 700, 
@@ -30,49 +27,52 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "center",
     marginBottom: theme.spacing(5),
-    color: "#FFFFFF", 
+    color: "black", 
     fontSize: "48px", 
+    fontWeight: 500,
+    fontFamily: 'Inter, sans-serif', 
   },
   messageContainer: {
     display: "flex",
     flexDirection: "column",
     width: 650,
     margin: "0 auto",
-    color: "#FFFFFF", 
+    color: "black", 
+    fontFamily: 'Inter, sans-serif',
   },
   message: {
     marginBottom: theme.spacing(4),
     fontFamily: 'Inter, sans-serif',
   },
-    buttonContainer: {
-        display: "flex",
-        justifyContent: "center",
-
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     },
   button: {
     marginTop: theme.spacing(2),
     backgroundColor: "#7693B0", 
     fontFamily: 'Inter, sans-serif',
+    backgroundColor: "#7693B0",
+    color: "#fff",
+    fontFamily: "Inter, sans-serif",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: "16px",
+    "&:hover": {
+      backgroundColor: "#4777b8",
+    },
+    width: "350px",
   },
 }));
 
 const AppointmetConfirmedPage = ({appointmentData}) => {
 
-    // get the appointment data from the previous page
-    const { state } = useLocation();
-    const { professional_id, appointment_start, appointment_end } = state;
+    const { professional_id, appointment_start, appointment_end } = appointmentData;
 
     const [medProfFirstName, setMedProfFirstName] = useState("");
     const [medProfLastName, setMedProfLastName] = useState("");
-
-    // Appointment booked successfully: {
-    //   appointment_id: 16,
-    //   user_id: 8,
-    //   professional_id: 76,
-    //   appointment_start: 2023-08-04T02:00:00.000Z,
-    //   appointment_end: 2023-08-04T02:30:00.000Z,
-    //   status: 'pending'
-    // }
 
     // Function to format date and time
   function formatDateTime(dateTimeString) {
@@ -119,40 +119,50 @@ const AppointmetConfirmedPage = ({appointmentData}) => {
     const classes = useStyles();
 
   return (
-    <Container className={classes.container}>
-        <div className={classes.iconContainer}>
-          <CheckCircleOutlineIcon className={classes.icon} />
+      <Container className={classes.container}>
+          <div className={classes.iconContainer}>
+            <CheckCircleOutlineIcon className={classes.icon} />
+          </div>
+        <Typography variant="h4" className={classes.title}>
+          Appointment Confirmed!
+        </Typography>
+        <div className={classes.messageContainer}>
+          <Typography variant="body1" className={classes.message}>
+          Dear {user.fullName || "NOT FOUND"},
+          </Typography>
+          <Typography className={classes.message}>
+              We are pleased to inform you that your appointment has been successfully scheduled with Dr. {medProfFirstName + " " +  medProfLastName || "NOT FOUND"}.
+          </Typography>
+          <Typography className={classes.message}>
+              We appreciate your trust in our services and look forward to supporting you on your journey towards a healthier life and better mental well-being
+          </Typography>
+          <Typography className={classes.message}>
+              Appointment Details: {formattedAppointmentTime || "NOT FOUND"}
+          </Typography>
         </div>
-      <Typography variant="h4" className={classes.title}>
-        Appointment Confirmed!
-      </Typography>
-      <div className={classes.messageContainer}>
-        <Typography variant="body1" className={classes.message}>
-        Dear {user.fullName || "NOT FOUND"},
-        </Typography>
-        <Typography className={classes.message}>
-            We are pleased to inform you that your appointment has been successfully scheduled with Dr. {medProfFirstName + " " +  medProfLastName || "NOT FOUND"}.
-        </Typography>
-        <Typography className={classes.message}>
-            We appreciate your trust in our services and look forward to supporting you on your journey towards a healthier life and better mental well-being
-        </Typography>
-        <Typography className={classes.message}>
-            Appointment Details: {formattedAppointmentTime || "NOT FOUND"}
-        </Typography>
-      </div>
-      <div className={classes.buttonContainer}>
-              <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        onClick={() => {
-            navigate("/");
-        }}
-      >
-        Back to Home
-      </Button>
-      </div>
-    </Container>
+        <div className={classes.buttonContainer}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Back to Home
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={() => {
+              navigate(`/upcoming_appointments/${user.userId}`);
+          }}
+        >
+          View Upcoming Appointments
+        </Button>
+        </div>
+      </Container>
   );
 };
 

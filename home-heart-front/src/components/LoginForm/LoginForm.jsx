@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Paper } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -18,14 +18,15 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 const BASE_URL = "http://localhost:3001";
 
-import { useState, useEffect } from "react";
-
+const backgroundImageUrl = "https://images.unsplash.com/photo-1634712282287-14ed57b9cc89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2706&q=80";
 
 export default function LoginForm({
   user,
   setUser,
   setLoggedIn,
   setLoginError,
+  setUserData, 
+  // setUserData, //userData prop
 }) {
   const defaultTheme = createTheme();
 
@@ -34,6 +35,22 @@ export default function LoginForm({
   const [username, setUsername] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
+
+  // const [user, setUser] = useState(null);
+  // const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    // const userData = localStorage.getItem("userData");
+    if (token && user) {
+      setLoggedIn(true);
+      // const userDataFromStorage = userData ? JSON.parse(userData) : null;
+      setUser(JSON.parse(user));
+      // setUserData(userDataFromStorage);
+      // localStorage.setItem("userLoggedInBefore", "true");
+    }
+  }, []);
 
   // Login User when login button is clicked
   const handleLoginSubmit = async ({ identifier, password }) => {
@@ -65,8 +82,12 @@ export default function LoginForm({
         console.log("userData:", userData);
 
         localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
+        // localStorage.setItem("token", token);
+        // localStorage.setItem("userId", decodedToken.userId);
+        // localStorage.setItem("userData", JSON.stringify(userData)); // Save userData to local storage
+        setUserData(userData);
 
+        console.log(userData);
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
@@ -83,6 +104,7 @@ export default function LoginForm({
     }
   };
 
+
   const handleSignIn = (e) => {
     e.preventDefault();
     handleLoginSubmit({
@@ -91,14 +113,16 @@ export default function LoginForm({
       password,
     });
     
+useEffect(() => {
+  if (password !== "correctPassword") {
+    setPasswordError(true);
+    return;
+  } else {
+    setPasswordError(false);
+    handleSignIn({ email, password });
+  }
+});
 
-    if (password !== "correctPassword") {
-      setPasswordError(true);
-      return;
-    } else {
-      setPasswordError(false);
-      handleSignIn({ email, password });
-    }
   };
 
   const handleGoogleLogin = () => {
@@ -106,8 +130,37 @@ export default function LoginForm({
     window.location.href = "http://localhost:3001/auth/google";
   };
   return (
+    <Paper
+      elevation={0} // Set elevation to 0 to remove the shadow
+      sx={{
+        p: 4,
+        mt: 8,
+        backgroundImage: `url(${backgroundImageUrl})`, // Use the URL as the background image
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "", // This will make the image fixed and cover the whole screen
+        height: "100vh", // Set the height to full viewport height
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "1vh",
+      }}
+    >
+    
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+      <Paper
+            elevation={20} // Set elevation to 0 to remove the shadow
+            sx={{
+              p: 4,
+              mt: 8,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#ffffff",
+              marginTop: "-23vh",
+            }}
+          >
         <Box
           sx={{
             marginTop: 8,
@@ -175,7 +228,9 @@ export default function LoginForm({
             Don't have an account? <Link href="/register">Register</Link>
           </Text>
         </Box>
+        </Paper>
       </Container>
     </ThemeProvider>
+   </Paper>
   );
 }

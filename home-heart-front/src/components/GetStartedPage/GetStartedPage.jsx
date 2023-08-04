@@ -48,15 +48,15 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageCardGetStarted({ user }) {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
-
+  console.log("USER:", user)
   useEffect(() => {
     // Fetch globalUserData here (if needed)
     const globalUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(globalUserData);
-    console.log(globalUserData);
+    console.log("goalalUserData:", globalUserData);
   }, []);
 
-  const showGetStartedButton = userData !== null 
+  const showGetStartedButton = userData !== null  
   console.log(showGetStartedButton, userData);
 
 

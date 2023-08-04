@@ -51,14 +51,14 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
         (response) => {
           console.log("response:", response);
           navigate("/profile-photo");
-          handleLocationFormSubmit(userData);
-          localStorage.setItem("userData", JSON.stringify(userData));
+          // handleLocationFormSubmit(userData);
+          localStorage.setItem("userData", JSON.stringify(userData))
+          console.log("IM HEREEEE");
         }
       )
     } catch (error) {
       console.log("error:", error)
     }
-
   };
 
   const handleUserFormTextInputChange = (event) => {

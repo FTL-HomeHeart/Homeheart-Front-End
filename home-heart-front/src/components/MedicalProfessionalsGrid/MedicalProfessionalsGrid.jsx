@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const BASE_URL = "http://localhost:3001";
 const FLASK_URL = "http://127.0.0.1:5000";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
-// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
