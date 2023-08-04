@@ -20,10 +20,11 @@ import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLand
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
+// import MedicalProfessionalCard from "./components/MedicalProfessionalsGrid/MedicalProfessionalCard";
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
 import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
-import BookAppointment from "./components/AppointmentScheduling/BookAppointment";
+import BookAppointment from "./components/AppointmentConfirmed/AppointmentScheduling/BookAppointment";
 import { Box } from "@mui/material";
 import UpcomingAppointments from "./components/AppointmentConfirmed/UpcomingAppointment";
 import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentConfirmed";
@@ -60,7 +61,9 @@ export default function App({ handleUserFormSubmit }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     const user = localStorage.getItem("user");
+
     const userData = localStorage.getItem("userData");
     if (token && user) {
       setLoggedIn(true);
@@ -207,6 +210,7 @@ export default function App({ handleUserFormSubmit }) {
                   </PrivateRoute>
                 }
               />
+
               <Route
                 path="/recommendations/:id"
                 element={

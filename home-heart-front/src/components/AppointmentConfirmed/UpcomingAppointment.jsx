@@ -13,7 +13,7 @@ import {
   Box,
 } from "@material-ui/core";
 import moment from "moment-timezone";
-import UpdateAppointmentDialog from "../AppointmentScheduling/UpdateAppointment";
+import UpdateAppointmentDialog from "./AppointmentScheduling/UpdateAppointment";
 import { makeStyles } from "@material-ui/core/styles";
 import PendingIcon from "@material-ui/icons/AccessTime";
 import {

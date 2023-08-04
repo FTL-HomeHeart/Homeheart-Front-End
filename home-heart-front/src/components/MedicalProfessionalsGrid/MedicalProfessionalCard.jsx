@@ -1,5 +1,5 @@
-import React from "react"; 
-import { useState, useEffect } from "react"; 
+import React from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MedicalProfessionalCard({
   professional,
-  user, 
-  userSavedMedicalProfessionals, 
+  user,
+  userSavedMedicalProfessionals,
   setUserSavedMedicalProfessionals,
   handleGetAllSavedMedicalProfessionals,
 }) {
@@ -46,7 +46,8 @@ export default function MedicalProfessionalCard({
     image,
     professional_id,
   } = professional;
-  const [isFavorited, setIsFavorited] = useState(false);  
+  const [isFavorited, setIsFavorited] = useState(false);
+  console.log("the prop USMP in card is:", userSavedMedicalProfessionals);
 
   const findIfProfessionalIsFavorited = () => {
     // check if the professional is in the userSavedMedicalProfessionals array
@@ -55,11 +56,11 @@ export default function MedicalProfessionalCard({
     if (foundProfessional) {
       setIsFavorited(true)
     }
-  }
+  };
 
   useEffect(() => {
-    findIfProfessionalIsFavorited()
-  })
+    findIfProfessionalIsFavorited();
+  });
 
     const classes = useStyles();
     const id = localStorage.getItem("userId");
