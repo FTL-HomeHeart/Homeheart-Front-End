@@ -16,7 +16,8 @@ import Container from "@mui/material/Container";
 import ImageCard from "../LandingPage/Hero";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
+
 import { signInWithGoogle } from "../../firebase";
 
 export default function LoginForm({

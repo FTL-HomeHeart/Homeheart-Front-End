@@ -13,7 +13,7 @@ import {
   Box,
 } from "@material-ui/core";
 import moment from "moment-timezone";
-import UpdateAppointmentDialog from "./AppointmentScheduling/UpdateAppointment";
+import UpdateAppointmentDialog from "../AppointmentScheduling/UpdateAppointment";
 import { makeStyles } from "@material-ui/core/styles";
 import PendingIcon from "@material-ui/icons/AccessTime";
 import {
@@ -24,7 +24,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles({
   table: {

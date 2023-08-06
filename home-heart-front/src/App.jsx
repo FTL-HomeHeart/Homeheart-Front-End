@@ -14,30 +14,28 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import LoginForm from "./components/LoginForm/LoginForm";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
-const BASE_URL = "http://localhost:3001";
-import jwtDecode from "jwt-decode";
 import AuthenticatedLandingPage from "./components/LandingPage/AuthenticatedLandingPage";
 import UserForm from "./components/GetStartedPage/UserForm";
 import CurrentLocationForm from "./components/GetStartedPage/CurrentLocationForm";
 import MedicalProfessionalsGrid from "./components/MedicalProfessionalsGrid/MedicalProfessionalsGrid";
-// import MedicalProfessionalCard from "./components/MedicalProfessionalsGrid/MedicalProfessionalCard";
 import ProfilePhoto from "./components/GetStartedPage/ProfilePhoto";
 import MedicalProfessionalDetailedView from "./components/MedicalProfessionalDetailedView/MedicalProfessionalDetailedView";
 import SavedMedicalProfessionals from "./components/SavedMedicalProfessionals/SavedMedicalProfessionals";
-import BookAppointment from "./components/AppointmentConfirmed/AppointmentScheduling/BookAppointment";
+import BookAppointment from "./components/AppointmentScheduling/BookAppointment";
 import { Box } from "@mui/material";
 import UpcomingAppointments from "./components/AppointmentConfirmed/UpcomingAppointment";
 import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentConfirmed";
 import AdditionalResourcesPage from "./components/AdditionalResourcesPage/AdditionalResourcesPage";
 import PrivateRoute from "./PageContainer";
+import AboutUs from "./components/AboutUs/AboutUs";
 
-function App({ handleUserFormSubmit }) {
+export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [logginError, setLoginError] = useState("");
 
-  const id = localStorage.getItem("userId");
-  const professionalId = useParams();
+  // const id = localStorage.getItem("userId");
+  // const professionalId = useParams();
   // console.log("USER id FROM APP", id);
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
@@ -48,7 +46,6 @@ function App({ handleUserFormSubmit }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     const user = localStorage.getItem("user");
 
     if (token && user) {
@@ -58,13 +55,10 @@ function App({ handleUserFormSubmit }) {
     }
   }, []);
 
-  // Register User when signup button is clicked
-
   return (
     <>
       <ThemeProvider theme={theme}>
         <Router>
-          {/* Have to be outside of Routes as it should render regardless */}
           <NavBar
             loggedIn={loggedIn}
             user={user}
@@ -233,6 +227,8 @@ function App({ handleUserFormSubmit }) {
                 }
               />
               <Route path="/resources" element={<AdditionalResourcesPage />} />
+              <Route path="*" element={<h1>Not Found</h1>} />
+              <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>
           </Box>
         </Router>
@@ -241,4 +237,3 @@ function App({ handleUserFormSubmit }) {
     </>
   );
 }
-export default App;

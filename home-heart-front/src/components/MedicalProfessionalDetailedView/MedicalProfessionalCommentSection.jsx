@@ -4,6 +4,7 @@ import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
   commentSectionContainer: {
@@ -110,10 +111,7 @@ const MedicalProfessionalCommentSection = ({
       };
       console.log("newCommentWithId", newCommentWithId);
       axios
-        .post(
-          `http://localhost:3001/api/post_comment/createUserComment`,
-          newCommentWithId
-        )
+        .post(`${BASE_URL}/post_comment/createUserComment`, newCommentWithId)
         .then((response) => {
           console.log("RESPONSE", response);
           handleFetchMedicalProfessionalComments();
