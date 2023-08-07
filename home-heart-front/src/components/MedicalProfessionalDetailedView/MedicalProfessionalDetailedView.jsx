@@ -120,36 +120,44 @@ const useStyles = makeStyles((theme) => ({
 export default function MedicalProfessionalDetailedView() {
   const classes = useStyles();
   const { id } = useParams();
-  const [professionals, setProfessionals] = useState([]);
+  const [professionals, setProfessionals] = useState(null);
   const [comments, setComments] = useState([]);
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // the fetching function from the backend medical professionals table
   const handleFetchMedicalProfessionalData = () => {
     axios
-      .get(`http://localhost:3001/api/professional_details/${id}`)
+      .get(`${BASE_URL}/api/professional_details/${id}`)
       .then((response) => {
-        // Assuming that the API response data is an array of professionals
-        const foundProfessional = response.data.find(
-          (professional) => professional.professional_id === parseInt(id)
-        );
+        if (response.data && Array.isArray(response.data)) {
+          const foundProfessional = response.data.find(
+            (professional) => professional.professional_id === parseInt(id)
+          );
 
-        if (foundProfessional) {
-          setProfessionals(foundProfessional);
+          if (foundProfessional) {
+            setProfessionals(foundProfessional);
+            setLoading(false);
+          }
+        } else {
+          console.error(
+            "response.data is not an array or is undefined:",
+            response.data
+          );
         }
       })
       .catch((error) => {
-        // This is just so that I can still view the detailed view page without the backend running -Ethan
-        setProfessionals(MedicalProfessionalsDummyData[0]);
         console.log("PROFESSIONALS", professionals);
         console.log(error);
+        setLoading(false); // Also set loading to false if there's an error
       });
   };
 
+  // the fetching function from the backend medical professionals comments table
   const handleFetchMedicalProfessionalComments = () => {
     axios
-      .get(`http://localhost:3001/api/medical_professional/comments/${id}`)
+      .get(`${BASE_URL}/api/medical_professional/comments/${id}`)
       .then((response) => {
         console.log("response in fetching prof comments", response.data.result);
         setComments(response.data.result);
@@ -169,6 +177,10 @@ export default function MedicalProfessionalDetailedView() {
       setUserData(userData2.userId);
     }
   }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const {
     first_name,

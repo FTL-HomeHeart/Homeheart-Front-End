@@ -12,10 +12,11 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useState } from "react";
+import { FormControl, InputLabel, Input } from "@material-ui/core";
 
 const useStyles = makeStyles({
   dialog: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "transparent",
     borderRadius: "15px",
   },
   button: {
@@ -36,7 +37,6 @@ export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [start, setStart] = useState(appointment.appointment_start);
-  const [duration, setDuration] = useState(30); // default duration is 30 minutes
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -49,7 +49,7 @@ export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
 
   const handleSave = () => {
     const end = new Date(start);
-    end.setMinutes(end.getMinutes() + duration);
+    end.setMinutes(end.getMinutes() + 30); // duration is always 30 minutes
     onUpdate({
       ...appointment,
       appointment_start: start,
@@ -86,28 +86,21 @@ export default function UpdateAppointmentDialog({ appointment, onUpdate }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To update this appointment, please enter the new start time and the
-            duration of the appointment.
+            To update this appointment, please enter the new start time.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="start"
-            label="Start Time"
-            type="datetime-local"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="duration"
-            label="Duration (minutes)"
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            fullWidth
-          />
+
+          <FormControl fullWidth>
+            <TextField
+              id="start-time"
+              label="Start Time"
+              type="datetime-local"
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button className={classes.saveButton} onClick={handleSave}>

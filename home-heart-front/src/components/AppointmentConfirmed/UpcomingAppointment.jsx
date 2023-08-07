@@ -24,7 +24,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles({
   table: {

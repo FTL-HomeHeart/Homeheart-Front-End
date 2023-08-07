@@ -18,13 +18,18 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Select from "react-select";
 import { getNames } from "country-list";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
+console.log("BASE_URL in userform:", BASE_URL);
 
 const defaultTheme = createTheme();
 const countryNames = getNames();
-const options = getNames().map((name) => ({ value: name, label: name, name: "country" }));
+const options = getNames().map((name) => ({
+  value: name,
+  label: name,
+  name: "country",
+}));
 
 const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
-
   const navigate = useNavigate();
   const user_id = localStorage.getItem("userId");
 
@@ -34,30 +39,27 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
     city: "",
     state: "",
     streetAddress: "",
-    timezone: "", 
-    postalCode: "", 
-    user_id: user_id
+    timezone: "",
+    postalCode: "",
+    user_id: user_id,
   });
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      "handleSubmit userData :", userData
-    ); 
+    console.log("handleSubmit userData :", userData);
 
     try {
-      axios.put(`http://localhost:3001/api/update_user_information/second_form/${user_id}`, userData).then(
-        (response) => {
+      axios
+        .put(
+          `${BASE_URL}/api/update_user_information/second_form/${user_id}`,
+          userData
+        )
+        .then((response) => {
           console.log("response:", response);
           navigate("/profile-photo");
-          // handleLocationFormSubmit(userData);
-          localStorage.setItem("userData", JSON.stringify(userData))
-          console.log("IM HEREEEE");
-        }
-      )
+        });
     } catch (error) {
-      console.log("error:", error)
+      console.log("error:", error);
     }
   };
 
@@ -69,7 +71,7 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
       [name]: value,
     });
 
-    console.log("userdata changed:", userData)
+    console.log("userdata changed:", userData);
   };
 
   const handlePreviousClick = () => {
@@ -78,30 +80,27 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
     // For this example, I'll just log a message to the console.
     // console.log("Previous button clicked");
   };
-  
 
   const handleSelectInputChange = (event) => {
-
-    console.log(event); 
-    const { name, value } = event; 
+    console.log(event);
+    const { name, value } = event;
     setUserData({
       ...userData,
       [name]: value,
-    }); 
+    });
 
-    console.log("userdata changed:", userData)
-  }
+    console.log("userdata changed:", userData);
+  };
 
   const handleTimeZoneSelectInputChange = (event) => {
-    const { label } = event; 
+    const { label } = event;
     setUserData({
       ...userData,
-      timezone: label
-    })
+      timezone: label,
+    });
 
-    console.log("userdata changed:", userData)
-
-  }
+    console.log("userdata changed:", userData);
+  };
 
   const timezoneOptions = [
     { value: "UTC", label: "Coordinated Universal Time (UTC)" },
@@ -128,7 +127,12 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
           <Typography component="h1" variant="h5">
             Current Location
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3, zIndex:100 }} onSubmit={handleSubmit}>
+          <Box
+            component="form"
+            noValidate
+            sx={{ mt: 3, zIndex: 100 }}
+            onSubmit={handleSubmit}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} zIndex="100">
                 <Select
@@ -139,7 +143,10 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                   // label="Country"
                   name="country"
                   options={options}
-                  value={{ label: userData.country  || "Current Country", value: userData.country}}
+                  value={{
+                    label: userData.country || "Current Country",
+                    value: userData.country,
+                  }}
                   onChange={handleSelectInputChange}
                 >
                   <MenuItem value="">Select a Country</MenuItem>
@@ -201,41 +208,44 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-            <FormControl fullWidth>
-              <TimezoneSelect
-                value={{ label: userData.timezone, value: userData.timezone }}
-                onChange={handleTimeZoneSelectInputChange}
-                placeholder="Select a Timezone"
-              />
-            </FormControl>
-          </Grid>
+                <FormControl fullWidth>
+                  <TimezoneSelect
+                    value={{
+                      label: userData.timezone,
+                      value: userData.timezone,
+                    }}
+                    onChange={handleTimeZoneSelectInputChange}
+                    placeholder="Select a Timezone"
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
             <Grid container spacing={4} marginTop={1}>
-            <Grid item xs={6}>
-              <Link to="/user-form" style={{ textDecoration: 'none' }}>
+              <Grid item xs={6}>
+                <Link to="/user-form" style={{ textDecoration: "none" }}>
+                  <Button
+                    type="submit"
+                    style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Previous
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item xs={6}>
                 <Button
                   type="submit"
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Previous
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item xs={6}>
-                <Button
-                  type="submit"
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Next
                 </Button>
+              </Grid>
             </Grid>
-          </Grid>
           </Box>
         </Box>
       </Container>

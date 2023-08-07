@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MedicalProfessionalsSimilar({ currentProfessionalID }) {
   const [professionals, setProfessionals] = useState([]);
   const [filteredProfessionals, setFilteredProfessionals] = useState([]);
-  const BASE_URL = "http://localhost:3001"; // replace with your base URL
+  const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
   const classes = useStyles();
 

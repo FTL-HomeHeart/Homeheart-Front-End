@@ -9,6 +9,7 @@ import {
   Avatar,
 } from "@material-ui/core";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(0, 2),
       fontWeight: "bold",
-      color: "#666",
+      color: "#668",
     },
   },
   navLinks: {
@@ -62,11 +63,23 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
   const classes = useStyles();
   const id = localStorage.getItem("userId");
   const navigate = useNavigate();
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const storedUser = localStorage.getItem("user");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      // console.log("the avatar is", user.avatar);
+      setAvatarUrl(user.avatar);
+    }
+  }, []);
   // console.log("user id in nav", id);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("userId");
     setLoggedIn(false);
     setUser(null);
     setLoginError("");
@@ -91,8 +104,12 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
           <Button className={classes.navLinks} component={Link} to="/AboutUs">
             About Us
           </Button>
-          <Button className={classes.navLinks} component={Link} to="/ContactUs">
-            Contact Us
+          <Button
+            className={classes.navLinks}
+            component={Link}
+            to={`/recommendations/${id}`}
+          >
+            Matches
           </Button>
           <Button
             className={classes.navLinks}
@@ -102,7 +119,7 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
             Appointments
           </Button>
 
-          <Button className={classes.navLinks} component={Link} to="/additional_resources">
+          <Button className={classes.navLinks} component={Link} to="/resources">
             Resources
           </Button>
         </div>
@@ -116,7 +133,7 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
               Logout
             </Button>
             <IconButton color="inherit" aria-label="User Account">
-              <Avatar></Avatar>
+              <Avatar src={avatarUrl}></Avatar>
             </IconButton>
           </>
         ) : (

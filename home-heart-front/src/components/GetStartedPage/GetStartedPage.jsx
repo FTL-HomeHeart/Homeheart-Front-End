@@ -48,15 +48,15 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageCardGetStarted({ user }) {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
-  console.log("USER:", user)
+
   useEffect(() => {
     // Fetch globalUserData here (if needed)
     const globalUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(globalUserData);
-    console.log("goalalUserData:", globalUserData);
+    console.log(globalUserData);
   }, []);
 
-  const showGetStartedButton = userData !== null  
+  const showGetStartedButton = userData !== null 
   console.log(showGetStartedButton, userData);
 
 
@@ -108,4 +108,3 @@ export default function ImageCardGetStarted({ user }) {
     </Card>
   );
 }
-

@@ -13,9 +13,12 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useNavigate } from "react-router-dom";
-const BASE_URL = "http://localhost:3001";
+
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import { useNavigate } from "react-router-dom";
+
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
+
 import jwtDecode from "jwt-decode";
 const defaultTheme = createTheme();
 
@@ -23,7 +26,6 @@ export default function RegistrationForm({
   setLoggedIn,
   setUser,
   setLoginError,
-  loggedIn,
   user,
 }) {
   const [username, setUsername] = useState("");
@@ -33,9 +35,6 @@ export default function RegistrationForm({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
-  // const [passwordError, setPasswordError] = useState(false);
-  // const [emailError, setEmailError] = useState(false);
-  // const [numericError, setNumericError] = useState(false);
 
   const defaultTheme = createTheme();
 

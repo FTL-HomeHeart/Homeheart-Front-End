@@ -16,7 +16,9 @@ import Container from "@mui/material/Container";
 import ImageCard from "../LandingPage/Hero";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
+
+import { signInWithGoogle } from "../../firebase";
 
 const backgroundImageUrl = "https://images.unsplash.com/photo-1634712282287-14ed57b9cc89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2706&q=80";
 
@@ -24,6 +26,7 @@ export default function LoginForm({
   user,
   setUser,
   setLoggedIn,
+  loggedIn,
   setLoginError,
   setUserData, 
   // setUserData, //userData prop
@@ -34,6 +37,7 @@ export default function LoginForm({
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [uiConfig, setUiConfig] = useState(null);
   const navigate = useNavigate();
 
   // const [user, setUser] = useState(null);
@@ -91,7 +95,7 @@ export default function LoginForm({
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
-        navigate("/home");
+        navigate("/");
         console.log("data message", data.message);
         console.log(loggedIn);
       } else {
@@ -104,6 +108,9 @@ export default function LoginForm({
     }
   };
 
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle({ setLoggedIn, navigate, loggedIn, setUser });
+  };
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -125,10 +132,6 @@ useEffect(() => {
 
   };
 
-  const handleGoogleLogin = () => {
-    // Redirect the user to the Google login page
-    window.location.href = "http://localhost:3001/auth/google";
-  };
   return (
     <Paper
       elevation={0} // Set elevation to 0 to remove the shadow
@@ -219,7 +222,7 @@ useEffect(() => {
               variant="contained"
               style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
               sx={{ mb: 4 }}
-              onClick={handleGoogleLogin}
+              onClick={handleSignInWithGoogle}
             >
               Sign In with Google
             </Button>

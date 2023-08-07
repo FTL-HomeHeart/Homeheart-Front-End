@@ -1,5 +1,5 @@
-import React from "react"; 
-import { useState, useEffect } from "react"; 
+import React from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
   learnMore: {
@@ -29,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MedicalProfessionalCard({
   professional,
-  user, 
-  userSavedMedicalProfessionals, 
+  user,
+  userSavedMedicalProfessionals,
   setUserSavedMedicalProfessionals,
   handleGetAllSavedMedicalProfessionals,
 }) {
@@ -46,7 +47,8 @@ export default function MedicalProfessionalCard({
     image,
     professional_id,
   } = professional;
-  const [isFavorited, setIsFavorited] = useState(false);  
+  const [isFavorited, setIsFavorited] = useState(false);
+  console.log("the prop USMP in card is:", userSavedMedicalProfessionals);
 
   const findIfProfessionalIsFavorited = () => {
     // check if the professional is in the userSavedMedicalProfessionals array
@@ -55,11 +57,11 @@ export default function MedicalProfessionalCard({
     if (foundProfessional) {
       setIsFavorited(true)
     }
-  }
+  };
 
   useEffect(() => {
-    findIfProfessionalIsFavorited()
-  })
+    findIfProfessionalIsFavorited();
+  });
 
     const classes = useStyles();
     const id = localStorage.getItem("userId");
@@ -68,14 +70,11 @@ export default function MedicalProfessionalCard({
     // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
 
     axios
-      .post(
-        "http://localhost:3001/api/saved_professionals/addSavedProfessional",
-        {
-          professional_id: professional_id,
-          user_id: id,
-          saved_status: "saved",
-        }
-      )
+      .post(`${BASE_URL}/api/saved_professionals/addSavedProfessional`, {
+        professional_id: professional_id,
+        user_id: id,
+        saved_status: "saved",
+      })
       .then((response) => {
         // copy over the previous medical professionals and add the new one
         setUserSavedMedicalProfessionals((prev) => [
@@ -117,7 +116,7 @@ export default function MedicalProfessionalCard({
         <IconButton
           aria-label="add to favorites"
           onClick={handleMedicalProfessionalBookmarked}
-          style={{ color: isFavorited ? "#768599" : "#585858" }}
+          style={{ color: isFavorited ? "#FF0000" : "#585858" }}
         >
           <FavoriteIcon />
         </IconButton>
