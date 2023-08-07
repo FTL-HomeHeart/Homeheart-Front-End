@@ -28,6 +28,7 @@ import AppointmentConfirmed from "./components/AppointmentConfirmed/AppointmentC
 import AdditionalResourcesPage from "./components/AdditionalResourcesPage/AdditionalResourcesPage";
 import PrivateRoute from "./PageContainer";
 import AboutUs from "./components/AboutUs/AboutUs";
+import NotFound from "./components/NotFound/NotFound";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -244,7 +245,7 @@ export default function App() {
                 }
               />
               <Route path="/additional_resources" element={<AdditionalResourcesPage />} />
-              <Route path="*" element={<h1>Not Found</h1>} />
+              <Route path="*" element={<NotFound />} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>
           </Box>

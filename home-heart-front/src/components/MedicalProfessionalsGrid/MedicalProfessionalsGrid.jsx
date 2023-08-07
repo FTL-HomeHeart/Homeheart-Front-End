@@ -32,16 +32,20 @@ const BannerComponent = () => {
           fontFamily: "Inter, sans-serif",
         }}
       >
-        <Typography gutterBottom sx={{ fontSize: "40px" }}>
-          Welcome {firstName} to your personalized reccomendations
-        </Typography>
-        <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
-          With our matching process, we hope that you are able to find the right
-          professionals to help you with your mental health. Feel free to save
-          any professionals that you are interested in and book an appointment
-          with them. Wanna see more details about a specific professinal? Click
-          on the "Learn More" button!
-        </Typography>
+        <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+          <Typography gutterBottom sx={{ fontSize: "40px" }}>
+            Welcome {firstName} to your personalized reccomendations
+          </Typography>
+          <div style={{width:"60%"}}>
+            <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
+            With our matching process, we hope that you are able to find the right 
+            professionals to help you with your mental health. Feel free to save 
+            any professionals that you are interested in and book an appointment 
+            with them. Wanna see more details about a specific professional? 
+            Click on the "Learn More" button!
+            </Typography>
+          </div>
+        </div>
       </Box>
     </Box>
   );
@@ -100,6 +104,9 @@ export default function MedicalProfessionalsGrid({
     handleGetAllSavedMedicalProfessionals();
   }, []);
 
+
+
+  
   return (
     <div>
       <BannerComponent />
