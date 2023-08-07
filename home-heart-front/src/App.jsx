@@ -32,28 +32,45 @@ import AboutUs from "./components/AboutUs/AboutUs";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+
+
+  const [userData, setUserData] = useState({});
+
   const [logginError, setLoginError] = useState("");
 
-  // const id = localStorage.getItem("userId");
-  // const professionalId = useParams();
-  // console.log("USER id FROM APP", id);
+  const id = localStorage.getItem("userId");
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
 
   const theme = createTheme({
     direction: "rtl",
+    palette: {
+      primary_color: {
+        main: "#7693B0",
+      },
+      secondary_color: {
+        main: "#3f474f",
+      }
+    }
   });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
 
+    const userData = localStorage.getItem("userData");
     if (token && user) {
       setLoggedIn(true);
-      const userData = user ? JSON.parse(user) : null;
-      setUser(userData);
+      const userDataFromStorage = userData ? JSON.parse(userData) : null;
+      setUser(JSON.parse(user));
+      setUserData(userDataFromStorage);
+      localStorage.setItem("userLoggedInBefore", "true");
     }
   }, []);
+
+  const handleLocationFormSubmit = (data) => {
+    setUserData(data);
+  };
 
   return (
     <>
@@ -78,7 +95,7 @@ export default function App() {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} />
+                    <AuthenticatedLandingPage user={user} userData={userData}/>
                   ) : (
                     <LandingPage />
                   )
@@ -88,7 +105,7 @@ export default function App() {
                 path="/register"
                 element={
                   loggedIn ? (
-                    <Navigate to="/home" />
+                    <Navigate to="/" />
                   ) : (
                     <RegistrationForm
                       setUser={setUser}

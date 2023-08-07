@@ -115,7 +115,7 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
             Appointments
           </Button>
 
-          <Button className={classes.navLinks} component={Link} to="/Resources">
+          <Button className={classes.navLinks} component={Link} to="/additional_resources">
             Resources
           </Button>
         </div>

@@ -53,18 +53,9 @@ export default function MedicalProfessionalCard({
   const findIfProfessionalIsFavorited = () => {
     // check if the professional is in the userSavedMedicalProfessionals array
     // if it is, then set the isFavorited state to true
-    console.log(
-      "userSavedMedicalProfessionals:",
-      userSavedMedicalProfessionals
-    );
-    if (userSavedMedicalProfessionals) {
-      const foundProfessional = userSavedMedicalProfessionals.find(
-        (professional) => professional.professional_id === professional_id
-      );
-
-      if (foundProfessional) {
-        setIsFavorited(true);
-      }
+    const foundProfessional = userSavedMedicalProfessionals?.find((professional) => professional.professional_id === professional_id)
+    if (foundProfessional) {
+      setIsFavorited(true)
     }
   };
 
@@ -72,9 +63,8 @@ export default function MedicalProfessionalCard({
     findIfProfessionalIsFavorited();
   });
 
-  // console.log("user saved professionals:", userSavedMedicalProfessionals[0])
-  const classes = useStyles();
-  const id = localStorage.getItem("userId");
+    const classes = useStyles();
+    const id = localStorage.getItem("userId");
   // TODO: Implement this
   const handleMedicalProfessionalBookmarked = () => {
     // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
