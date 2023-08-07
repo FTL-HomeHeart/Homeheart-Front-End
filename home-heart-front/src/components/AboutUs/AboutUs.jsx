@@ -73,20 +73,22 @@ export default function AboutUs() {
         "https://media.licdn.com/dms/image/D5603AQHvxaxwt5LvDQ/profile-displayphoto-shrink_400_400/0/1675878409843?e=1696464000&v=beta&t=Yg7KiYZsJvMTUczkldAlJ0PFZiCCWo6B2xt25N2EQjw",
     },
     {
-      name: "Richard Akondo",
-      github: "https://github.com/",
-      linkedin: "https://linkedin.com",
+      name: "Richmond Akondo",
+      github: "https://github.com/Richmondo17",
+      linkedin: "https://linkedin.com/in/richmond-akondo/",
       description:
-        "Rising Junior at Minerva University, Computer Science and Economics Major",
-      picture: "",
+        "Rising Junior at University of Maryland, College Park, BS in Information Science.",
+      picture:
+        "https://media.licdn.com/dms/image/C5603AQHnZJ-9g0bf7g/profile-displayphoto-shrink_400_400/0/1650327378443?e=1697068800&v=beta&t=GrvRArjXEpchKAkLIakHEc_GHZwfJJKhKYYwsL1up4s",
     },
     {
-      name: "Nathnael Mekonnen",
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
+      name: "Ethan Pineda (he/él/they)",
+      github: "https://github.com/ethanpaneraa",
+      linkedin: "https://www.linkedin.com/in/ethanpineda/",
       description:
-        "Rising Junior at Minerva University, Computer Science and Economics Major",
-      picture: "",
+        "Rising Junior at Northwestern University, BA/MS in Computer Science. Learn more about me here: https://ethanpaneraa.github.io/Ethan/: ",
+      picture:
+        "https://media.licdn.com/dms/image/C4D03AQHWdEnSs1czbg/profile-displayphoto-shrink_800_800/0/1628815121721?e=1697068800&v=beta&t=W7bwH4XQWPzPxi5hjUdg4ofxrqerW6vcx7KyzEidI7s",
     },
   ];
 
