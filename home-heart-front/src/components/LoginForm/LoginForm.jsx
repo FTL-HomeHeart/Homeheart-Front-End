@@ -90,14 +90,10 @@ export default function LoginForm({
         // localStorage.setItem("userId", decodedToken.userId);
         // localStorage.setItem("userData", JSON.stringify(userData)); // Save userData to local storage
         setUserData(userData);
-
-        console.log(userData);
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
         navigate("/");
-        console.log("data message", data.message);
-        console.log(loggedIn);
       } else {
         //Login failed
         setLoginError(data.message);
