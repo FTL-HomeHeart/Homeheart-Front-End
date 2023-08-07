@@ -20,7 +20,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
+
 const useStyles = makeStyles((theme) => ({
   doctorName: {
     fontFamily: "Inter, sans-serif",
@@ -148,8 +149,7 @@ export default function MedicalProfessionalDetailedView() {
         }
       })
       .catch((error) => {
-        console.log("PROFESSIONALS", professionals);
-        console.log(error);
+        console.log("Error:", error);
         setLoading(false); // Also set loading to false if there's an error
       });
   };
@@ -159,11 +159,10 @@ export default function MedicalProfessionalDetailedView() {
     axios
       .get(`${BASE_URL}/api/medical_professional/comments/${id}`)
       .then((response) => {
-        console.log("response in fetching prof comments", response.data.result);
         setComments(response.data.result);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Error:", err);
       });
   };
 
@@ -198,7 +197,6 @@ export default function MedicalProfessionalDetailedView() {
     price,
     time_zone,
   } = professionals;
-  console.log("professional is ", professionals);
 
   return (
     <Container>
