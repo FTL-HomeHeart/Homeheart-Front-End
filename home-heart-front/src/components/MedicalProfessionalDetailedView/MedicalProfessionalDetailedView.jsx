@@ -157,7 +157,7 @@ export default function MedicalProfessionalDetailedView() {
   // the fetching function from the backend medical professionals comments table
   const handleFetchMedicalProfessionalComments = () => {
     axios
-      .get(`http://localhost:3001/api/medical_professional/comments/${id}`)
+      .get(`${BASE_URL}/api/medical_professional/comments/${id}`)
       .then((response) => {
         console.log("response in fetching prof comments", response.data.result);
         setComments(response.data.result);

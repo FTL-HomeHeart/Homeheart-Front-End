@@ -10,6 +10,7 @@ import {
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -79,15 +80,12 @@ const SavedMedicalProfessionalsCard = ({
   // TODO: Implement this
   const handleRemoveMedicalProfessional = () => {
     axios
-      .delete(
-        "http://localhost:3001/api/saved_professionals/deleteSavedProfessional",
-        {
-          data: {
-            professional_id: professional.professional_id,
-            user_id: id,
-          },
-        }
-      )
+      .delete(`${BASE_URL}/api/saved_professionals/deleteSavedProfessional`, {
+        data: {
+          professional_id: professional.professional_id,
+          user_id: id,
+        },
+      })
       .then((response) => {
         console.log(
           "RESPONSE IN MED PROF CARD",

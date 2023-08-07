@@ -18,16 +18,18 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Select from "react-select";
 import { getNames } from "country-list";
-import axios from "axios"; 
-import { useNavigate } from "react-router-dom"; 
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 const countryNames = getNames();
-const options = getNames().map((name) => ({ value: name, label: name, name:"countryOfOrigin" }));
+const options = getNames().map((name) => ({
+  value: name,
+  label: name,
+  name: "countryOfOrigin",
+}));
 const UserForm = ({ handleUserFormSubmit }) => {
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const user_id = localStorage.getItem("userId");
 
   const [userData, setUserData] = useState({
@@ -35,9 +37,8 @@ const UserForm = ({ handleUserFormSubmit }) => {
     languagePreference: "",
     birthdate: "",
     gender: "",
-    user_id: user_id
+    user_id: user_id,
   });
-
 
   const handleUserFormTextInputChange = (event) => {
     // console.log("EVENT:", event)
@@ -56,24 +57,21 @@ const UserForm = ({ handleUserFormSubmit }) => {
     // For this example, I'll just log a message to the console.
     // console.log("Previous button clicked");
   };
-  
 
   const handleSelectInputChange = (event) => {
-    const { name, value } = event; 
+    const { name, value } = event;
     setUserData({
       ...userData,
       [name]: value,
-    }); 
+    });
 
     // console.log("userdata changed:", userData)
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     try {
-  
-
       // console.log(
       //   "userData:",
       //   userData
@@ -83,10 +81,15 @@ const UserForm = ({ handleUserFormSubmit }) => {
 
       // console.log("data from user:", userData);
       // Make a PUT request to the backend API to update the user data
-      const response = axios.put(`http://localhost:3001/api/update_user_information/first_form/${user_id}`, userData).then((response) => {
-        // console.log("Response from backend:", response.data);
-        navigate("/current-location");
-      })
+      const response = axios
+        .put(
+          `http://localhost:3001/api/update_user_information/first_form/${user_id}`,
+          userData
+        )
+        .then((response) => {
+          // console.log("Response from backend:", response.data);
+          navigate("/current-location");
+        });
       // Move to the next step
       // handleUserFormSubmit(userData);
     } catch (error) {
@@ -113,33 +116,41 @@ const UserForm = ({ handleUserFormSubmit }) => {
           <Typography component="h1" variant="h5">
             User Information
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} zIndex="200">
-              <div style={{ backgroundColor: "white", zIndex: 100 }}>
-                <Select
-                  required
-                  fullWidth
-                  id="countryOfOrigin"
-                  placeholder="Country of Origin"
-                  name="countryOfOrigin"
-                  options={options}
-                  value={{ label: userData.countryOfOrigin || "Country of Origin", value: userData.countryOfOrigin }}
-                  onChange={handleSelectInputChange}
-                  // Custom styles for the react-select component
-                  styles={{
-                    // To set a fixed width for the control (main input field)
-                    control: (provided) => ({
-                      ...provided,
-                      minWidth: 200, // Adjust the value according to your needs
-                    }),
-                    // To set a fixed width for the dropdown menu
-                    menu: (provided) => ({
-                      ...provided,
-                      minWidth: 200, // Adjust the value according to your needs
-                    }),
-                  }}
-                />
+          <Box
+            component="form"
+            noValidate
+            sx={{ mt: 3 }}
+            onSubmit={handleSubmit}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} zIndex="200">
+                <div style={{ backgroundColor: "white", zIndex: 100 }}>
+                  <Select
+                    required
+                    fullWidth
+                    id="countryOfOrigin"
+                    placeholder="Country of Origin"
+                    name="countryOfOrigin"
+                    options={options}
+                    value={{
+                      label: userData.countryOfOrigin || "Country of Origin",
+                      value: userData.countryOfOrigin,
+                    }}
+                    onChange={handleSelectInputChange}
+                    // Custom styles for the react-select component
+                    styles={{
+                      // To set a fixed width for the control (main input field)
+                      control: (provided) => ({
+                        ...provided,
+                        minWidth: 200, // Adjust the value according to your needs
+                      }),
+                      // To set a fixed width for the dropdown menu
+                      menu: (provided) => ({
+                        ...provided,
+                        minWidth: 200, // Adjust the value according to your needs
+                      }),
+                    }}
+                  />
                 </div>
               </Grid>
               <Grid item xs={12}>
@@ -185,36 +196,35 @@ const UserForm = ({ handleUserFormSubmit }) => {
                   </TextField>
                 </FormControl>
               </Grid>
-
             </Grid>
 
             <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Link to="/" style={{ textDecoration: 'none' }}>
-                <Button
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Previous
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item xs={6}>
-              {/* <Link to="/current-location" style={{ textDecoration: 'none' }}> */}
+              <Grid item xs={6}>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Button
+                    style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Previous
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item xs={6}>
+                {/* <Link to="/current-location" style={{ textDecoration: 'none' }}> */}
                 <Button
                   type="submit"
-                  style={{ backgroundColor: '#7E9BB6', color: '#ffffff' }}
+                  style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Next
                 </Button>
-              {/* </Link> */}
+                {/* </Link> */}
+              </Grid>
             </Grid>
-          </Grid>
           </Box>
         </Box>
       </Container>

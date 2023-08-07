@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
-// import "firebase/auth";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRopIlNCvlc1pNAI4n8E0444hcGLJU26s",
@@ -26,7 +25,7 @@ export const signInWithGoogle = ({ setLoggedIn, setUser }) => {
       const GoogleAvatar = result.user.photoURL;
 
       // Send the user data to the backend
-      fetch("http://localhost:3001/api/auth/googleauth", {
+      fetch(`${BASE_URL}/api/auth/googleauth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

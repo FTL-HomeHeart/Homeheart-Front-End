@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
   learnMore: {
@@ -69,14 +70,11 @@ export default function MedicalProfessionalCard({
     // make an axios post request to localhost:3001/api/addSavedProfessional" and send the professional data as a json file
 
     axios
-      .post(
-        "http://localhost:3001/api/saved_professionals/addSavedProfessional",
-        {
-          professional_id: professional_id,
-          user_id: id,
-          saved_status: "saved",
-        }
-      )
+      .post(`${BASE_URL}/api/saved_professionals/addSavedProfessional`, {
+        professional_id: professional_id,
+        user_id: id,
+        saved_status: "saved",
+      })
       .then((response) => {
         // copy over the previous medical professionals and add the new one
         setUserSavedMedicalProfessionals((prev) => [
@@ -118,7 +116,7 @@ export default function MedicalProfessionalCard({
         <IconButton
           aria-label="add to favorites"
           onClick={handleMedicalProfessionalBookmarked}
-          style={{ color: isFavorited ? "#768599" : "#585858" }}
+          style={{ color: isFavorited ? "#FF0000" : "#585858" }}
         >
           <FavoriteIcon />
         </IconButton>

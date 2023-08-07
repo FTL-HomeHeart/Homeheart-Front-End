@@ -5,6 +5,7 @@ import SavedMedicalProfessionalsCard from "./SavedMedicalProfessionalCard";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,7 +30,7 @@ const SavedMedicalProfessionals = () => {
 
   const handleFetchAllSavedMedicalProfessionals = () => {
     axios
-      .get(`http://localhost:3001/api/saved_professionals/getAllSaved/${id}`)
+      .get(`${BASE_URL}/api/saved_professionals/getAllSaved/${id}`)
       .then((response) => {
         console.log("response.data:", response.data.result);
         setSavedMedicalProfessionals(response.data.result);
