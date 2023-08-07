@@ -5,9 +5,8 @@ import MedicalProfessionalCard from "./MedicalProfessionalCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
-// import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
