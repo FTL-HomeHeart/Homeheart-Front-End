@@ -243,7 +243,7 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/resources" element={<AdditionalResourcesPage />} />
+              <Route path="/additional_resources" element={<AdditionalResourcesPage />} />
               <Route path="*" element={<h1>Not Found</h1>} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>

@@ -20,7 +20,6 @@ const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 import { signInWithGoogle } from "../../firebase";
 
-import { useState, useEffect } from "react";
 
 
 export default function LoginForm({
