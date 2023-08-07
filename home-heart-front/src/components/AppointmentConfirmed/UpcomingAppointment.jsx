@@ -11,6 +11,7 @@ import {
   Paper,
   Button,
   Box,
+  Typography,
 } from "@material-ui/core";
 import moment from "moment-timezone";
 import UpdateAppointmentDialog from "../AppointmentScheduling/UpdateAppointment";
@@ -128,6 +129,26 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     border: "1px solid red",
   },
+  bannerBackground: {
+    backgroundColor: "#768599",
+    padding: "40px",
+    textAlign: "center",
+    fontFamily: "Poppins, sans-serif",
+    marginBottom: "50px",
+  }, 
+  innerBannerBox: {
+    width: "60%",
+    color: "#fff",
+    margin: "0 auto",
+    fontFamily: "Inter, sans-serif",
+  },
+  bannerHeader: {
+    width: "60%",
+    color: "#fff",
+    margin: "0 auto",
+    fontSize: "40px",
+    marginBottom: "20px",
+  },
 });
 
 export default function UpcomingAppointments() {
@@ -191,7 +212,18 @@ export default function UpcomingAppointments() {
   };
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
+    <div>
+    <Box className={classes.bannerBackground}>
+      <Box className={classes.innerBannerBox}>
+        <Typography gutterBottom className={classes.bannerHeader}>
+          Upcoming Appointments
+        </Typography>
+        <Typography variant="body1" gutterBottom className={classes.bannerInnerText}>
+          View your upcoming appointments and cancel or reschedule if needed.
+        </Typography>
+      </Box>
+    </Box>
+          <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table}>
         <TableHead className={classes.tableHead}>
           <TableRow>
@@ -300,5 +332,6 @@ export default function UpcomingAppointments() {
         </Button>
       </Box>
     </TableContainer>
+    </div>
   );
 }

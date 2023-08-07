@@ -67,13 +67,7 @@ const MedicalProfessionalCommentSection = ({
   let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
   let currentYear = date.getFullYear();
   let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-  console.log("currentDate", currentDate);
 
-  console.log("userData in comment section", userData);
-  console.log(
-    "medicalProfessionalId in comment section",
-    medicalProfessionalId
-  );
   const classes = useStyles();
   const [commentsList, setCommentsList] = useState(comments || []);
   const [newComment, setNewComment] = useState({
@@ -96,7 +90,6 @@ const MedicalProfessionalCommentSection = ({
       ...prevComment,
       [name]: value,
     }));
-    console.log("newComment", newComment);
   };
 
   const handleFormSubmit = (event) => {
@@ -109,15 +102,12 @@ const MedicalProfessionalCommentSection = ({
         professional_id: medicalProfessionalId,
         date_post: currentDate,
       };
-      console.log("newCommentWithId", newCommentWithId);
       axios
-        .post(`${BASE_URL}/post_comment/createUserComment`, newCommentWithId)
+        .post(`${BASE_URL}/api/post_comment/createUserComment`, newCommentWithId)
         .then((response) => {
-          console.log("RESPONSE", response);
           handleFetchMedicalProfessionalComments();
         })
         .catch((error) => {
-          console.log(error);
         });
 
       setNewComment({
@@ -133,7 +123,6 @@ const MedicalProfessionalCommentSection = ({
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
-    console.log("showForm", showForm);
   };
 
   return (
