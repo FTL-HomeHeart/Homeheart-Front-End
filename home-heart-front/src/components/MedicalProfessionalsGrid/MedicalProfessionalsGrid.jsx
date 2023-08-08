@@ -9,6 +9,9 @@ import { useParams } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
 
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+
+
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
   // get the user data so we can display their name in the banner
@@ -67,7 +70,7 @@ export default function MedicalProfessionalsGrid({
       })
       .catch((error) => {
         // This is just so that I can still view the page without the backend running -Ethan
-        // setProfessionals(MedicalProfessionalsDummyData);
+        setProfessionals(MedicalProfessionalsDummyData);
         if (error.response) {
           // The request was made and the server responded with a status code
           console.log(error.response.data);

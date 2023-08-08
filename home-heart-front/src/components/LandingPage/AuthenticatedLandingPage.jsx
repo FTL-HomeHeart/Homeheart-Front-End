@@ -6,7 +6,8 @@ import HowItWorks from "./HowItWorks";
 import HowItWorksAuth from "./HowItWorksAuth";
 
 export default function AuthenticatedLandingPage({user, userData}) {
-  console.log(user.userId)
+  // console.log(user.userId)
+  console.log("USER IN AUTH:", user); 
   return (
     <div>
       <ImageCardGetStarted user={user} userData={userData} />
