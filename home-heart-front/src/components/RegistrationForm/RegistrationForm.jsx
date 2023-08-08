@@ -78,8 +78,8 @@ export default function RegistrationForm({
         localStorage.setItem("userId", decodedToken.userId);
         console.log("user Data:", userData);
         localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("userData", ""); 
         localStorage.setItem("userLoggedInBefore", "true");
-        localStorage.setItem("userData", JSON.stringify(null));
         setUser(userData);
 
         setLoggedIn(true);

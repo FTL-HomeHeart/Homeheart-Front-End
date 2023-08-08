@@ -84,7 +84,7 @@ export default function LoginForm({
           fullName: `${decodedToken.firstName} ${decodedToken.lastName}`,
         };
         console.log("userData:", userData);
-
+        
         localStorage.setItem("user", JSON.stringify(userData));
         // localStorage.setItem("token", token);
         // localStorage.setItem("userId", decodedToken.userId);
