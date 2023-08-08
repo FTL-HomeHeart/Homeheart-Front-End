@@ -57,6 +57,8 @@ const CurrentLocationForm = ({ handleLocationFormSubmit }) => {
         .then((response) => {
           console.log("response:", response);
           navigate("/profile-photo");
+          localStorage.setItem("userData", JSON.stringify(userData)); 
+          console.log(localStorage.getItem("userData"))
         });
     } catch (error) {
       console.log("error:", error);

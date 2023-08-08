@@ -239,56 +239,65 @@ export default function UpcomingAppointments() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointments.map((appointment) => {
-            const appointmentStart = moment(appointment.appointment_start)
-              .tz("America/Los_Angeles")
-              .format("hh:mm A");
-            const appointmentEnd = moment(appointment.appointment_end)
-              .tz("America/Los_Angeles")
-              .format("hh:mm A");
-            const appointmentDate = moment(appointment.appointment_start)
-              .tz("America/Los_Angeles")
-              .format("MM-DD-YYYY");
-            return (
-              <TableRow key={appointment.appointment_id}>
-                <TableCell className={classes.tableCell}>
-                  {appointmentDate}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {appointmentStart}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {appointmentEnd}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <div className={classes.statusPending}>
-                    {appointment.status === "pending" && (
-                      <PendingIcon className={classes.pendingIcon} />
-                    )}
-                    {appointment.status}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className={classes.actionButtons}>
-                    <UpdateAppointmentDialog
-                      appointment={appointment}
-                      onUpdate={handleUpdate}
-                      className={classes.updateButton}
-                    />
-                    <Button
-                      variant="contained"
-                      className={classes.cancelButton}
-                      onClick={() =>
-                        handleCancelClick(appointment.appointment_id)
-                      }
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {appointments.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} className={classes.tableCell}>
+                You have no upcoming appointments.
+              </TableCell>
+            </TableRow>
+
+          ) : (
+            appointments.map((appointment) => {
+              const appointmentStart = moment(appointment.appointment_start)
+                .tz("America/Los_Angeles")
+                .format("hh:mm A");
+              const appointmentEnd = moment(appointment.appointment_end)
+                .tz("America/Los_Angeles")
+                .format("hh:mm A");
+              const appointmentDate = moment(appointment.appointment_start)
+                .tz("America/Los_Angeles")
+                .format("MM-DD-YYYY");
+              return (
+                <TableRow key={appointment.appointment_id}>
+                  <TableCell className={classes.tableCell}>
+                    {appointmentDate}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {appointmentStart}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {appointmentEnd}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <div className={classes.statusPending}>
+                      {appointment.status === "pending" && (
+                        <PendingIcon className={classes.pendingIcon} />
+                      )}
+                      {appointment.status}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className={classes.actionButtons}>
+                      <UpdateAppointmentDialog
+                        appointment={appointment}
+                        onUpdate={handleUpdate}
+                        className={classes.updateButton}
+                      />
+                      <Button
+                        variant="contained"
+                        className={classes.cancelButton}
+                        onClick={() =>
+                          handleCancelClick(appointment.appointment_id)
+                        }
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          )}
         </TableBody>
         <Dialog
           open={dialogOpen}
@@ -321,7 +330,8 @@ export default function UpcomingAppointments() {
         </Dialog>
       </Table>
       <Box display="flex" justifyContent="center">
-        <Button
+        {appointments.length > 0 && (
+          <Button
           variant="contained"
           className={classes.bookButton}
           onClick={() => {
@@ -330,6 +340,7 @@ export default function UpcomingAppointments() {
         >
           Book New Appointment
         </Button>
+        )}
       </Box>
     </TableContainer>
     </div>

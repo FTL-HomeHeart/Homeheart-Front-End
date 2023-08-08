@@ -9,6 +9,9 @@ import { useParams } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
 
+import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+
+
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
   // get the user data so we can display their name in the banner
@@ -32,16 +35,20 @@ const BannerComponent = () => {
           fontFamily: "Inter, sans-serif",
         }}
       >
-        <Typography gutterBottom sx={{ fontSize: "40px" }}>
-          Welcome {firstName} to your personalized reccomendations
-        </Typography>
-        <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
-          With our matching process, we hope that you are able to find the right
-          professionals to help you with your mental health. Feel free to save
-          any professionals that you are interested in and book an appointment
-          with them. Wanna see more details about a specific professinal? Click
-          on the "Learn More" button!
-        </Typography>
+        <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+          <Typography gutterBottom sx={{ fontSize: "40px" }}>
+            Welcome {firstName} to your personalized reccomendations
+          </Typography>
+          <div style={{width:"60%"}}>
+            <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
+            With our matching process, we hope that you are able to find the right 
+            professionals to help you with your mental health. Feel free to save 
+            any professionals that you are interested in and book an appointment 
+            with them. Wanna see more details about a specific professional? 
+            Click on the "Learn More" button!
+            </Typography>
+          </div>
+        </div>
       </Box>
     </Box>
   );
@@ -63,7 +70,7 @@ export default function MedicalProfessionalsGrid({
       })
       .catch((error) => {
         // This is just so that I can still view the page without the backend running -Ethan
-        // setProfessionals(MedicalProfessionalsDummyData);
+        setProfessionals(MedicalProfessionalsDummyData);
         if (error.response) {
           // The request was made and the server responded with a status code
           console.log(error.response.data);
@@ -100,6 +107,9 @@ export default function MedicalProfessionalsGrid({
     handleGetAllSavedMedicalProfessionals();
   }, []);
 
+
+
+  
   return (
     <div>
       <BannerComponent />
