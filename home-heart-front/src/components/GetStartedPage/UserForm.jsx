@@ -20,7 +20,7 @@ import Select from "react-select";
 import { getNames } from "country-list";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 const defaultTheme = createTheme();
 const countryNames = getNames();
 const options = getNames().map((name) => ({
@@ -83,7 +83,7 @@ const UserForm = ({ handleUserFormSubmit }) => {
       // Make a PUT request to the backend API to update the user data
       const response = axios
         .put(
-          `http://localhost:3001/api/update_user_information/first_form/${user_id}`,
+          `${BASE_URL}/api/update_user_information/first_form/${user_id}`,
           userData
         )
         .then((response) => {
