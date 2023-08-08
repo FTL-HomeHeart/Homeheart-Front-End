@@ -43,6 +43,7 @@ export default function App() {
       setUserData(newUserData);
     };
 
+
   const id = localStorage.getItem("userId");
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
@@ -55,8 +56,8 @@ export default function App() {
       },
       secondary_color: {
         main: "#3f474f",
-      }
-    }
+      },
+    },
   });
 
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function App() {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} />
+                    <AuthenticatedLandingPage user={user} userData={userData} />
                   ) : (
                     <LandingPage />
                   )
@@ -245,7 +246,8 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/additional_resources" element={<AdditionalResourcesPage />} />
+
+              <Route path="/resources" element={<AdditionalResourcesPage />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>
