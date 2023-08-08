@@ -63,9 +63,12 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [userDataID, setUserDataID] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    const userID = localStorage.getItem("userId");
+    setUserDataID(userID);
     if (storedUser) {
       const user = JSON.parse(storedUser);
       // console.log("the avatar is", user.avatar);
@@ -105,14 +108,14 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
           <Button
             className={classes.navLinks}
             component={Link}
-            to={`/recommendations/${user.userId}`}
+            to={`/recommendations/${userDataID}`}
           >
             Matches
           </Button>
           <Button
             className={classes.navLinks}
             component={Link}
-            to={`/upcoming_appointments/${user.userId}`}
+            to={`/upcoming_appointments/${userDataID}`}
           >
             Appointments
           </Button>
