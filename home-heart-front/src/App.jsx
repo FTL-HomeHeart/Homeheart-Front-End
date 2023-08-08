@@ -44,7 +44,6 @@ export default function App() {
     };
 
 
-  const id = localStorage.getItem("userId");
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
     useState([]);
 
