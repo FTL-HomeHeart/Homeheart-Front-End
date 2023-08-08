@@ -169,8 +169,8 @@ const AppointmetConfirmedPage = ({ appointmentData }) => {
         >
           View Upcoming Appointments
         </Button>
-        </div>
-      </Container>
+      </div>
+    </Container>
   );
 };
 

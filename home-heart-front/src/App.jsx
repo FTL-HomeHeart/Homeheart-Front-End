@@ -33,11 +33,16 @@ import NotFound from "./components/NotFound/NotFound";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-
-
-  const [userData, setUserData] = useState({});
-
   const [logginError, setLoginError] = useState("");
+
+    // State for userData
+    const [userData, setUserData] = useState({});
+
+    // Function to update userData state
+    const handleUserDataUpdate = (newUserData) => {
+      setUserData(newUserData);
+    };
+
 
   const id = localStorage.getItem("userId");
   const [userSavedMedicalProfessionals, setUserSavedMedicalProfessionals] =
@@ -51,8 +56,8 @@ export default function App() {
       },
       secondary_color: {
         main: "#3f474f",
-      }
-    }
+      },
+    },
   });
 
   useEffect(() => {
@@ -62,16 +67,12 @@ export default function App() {
     const userData = localStorage.getItem("userData");
     if (token && user) {
       setLoggedIn(true);
-      const userDataFromStorage = userData ? JSON.parse(userData) : null;
-      setUser(JSON.parse(user));
-      setUserData(userDataFromStorage);
-      localStorage.setItem("userLoggedInBefore", "true");
+      const userData = user ? JSON.parse(user) : null;
+      setUser(userData);
     }
   }, []);
 
-  const handleLocationFormSubmit = (data) => {
-    setUserData(data);
-  };
+  // Register User when signup button is clicked
 
   return (
     <>
@@ -96,7 +97,7 @@ export default function App() {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} userData={userData}/>
+                    <AuthenticatedLandingPage user={user} userData={userData} />
                   ) : (
                     <LandingPage />
                   )
@@ -106,7 +107,7 @@ export default function App() {
                 path="/register"
                 element={
                   loggedIn ? (
-                    <Navigate to="/" />
+                    <Navigate to="/home" />
                   ) : (
                     <RegistrationForm
                       setUser={setUser}
@@ -128,6 +129,7 @@ export default function App() {
                       user={user}
                       setLoginError={setLoginError}
                       setLoggedIn={setLoggedIn}
+                      setUserData={handleUserDataUpdate} // Pass the function to LoginForm
                     />
                   )
                 }
@@ -244,7 +246,8 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/additional_resources" element={<AdditionalResourcesPage />} />
+
+              <Route path="/resources" element={<AdditionalResourcesPage />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>

@@ -58,8 +58,8 @@ export default function ImageCardGetStarted({ user }) {
 
   const showGetStartedButton = userData !== null 
   console.log(showGetStartedButton, userData);
-
-
+  const id = localStorage.getItem("userId");
+  
   return (
 
     <Card className={classes.root}>
@@ -94,7 +94,7 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to='/recommended_professionals/${id}'>
+        <RouterLink to={`/recommendations/${id}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
@@ -108,4 +108,3 @@ export default function ImageCardGetStarted({ user }) {
     </Card>
   );
 }
-

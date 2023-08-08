@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Paper } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Avatar,
@@ -37,6 +37,8 @@ export default function RegistrationForm({
   const [errors, setErrors] = useState({});
 
   const defaultTheme = createTheme();
+
+  const backgroundImageUrl = "https://images.unsplash.com/photo-1634712282287-14ed57b9cc89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2706&q=80";
 
   const handleRegistrationSubmit = async ({
     username,
@@ -76,7 +78,8 @@ export default function RegistrationForm({
         localStorage.setItem("userId", decodedToken.userId);
         console.log("user Data:", userData);
         localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("userData", JSON.stringify(null)); 
+        localStorage.setItem("userData", ""); 
+        localStorage.setItem("userLoggedInBefore", "true");
         setUser(userData);
 
         setLoggedIn(true);
@@ -146,8 +149,41 @@ export default function RegistrationForm({
   };
 
   return (
+    <Paper
+    elevation={0} // Set elevation to 0 to remove the shadow
+    sx={{
+      p: 4,
+      mt: 8,
+      backgroundImage: `url(${backgroundImageUrl})`, // Use the URL as the background image
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "", // This will make the image fixed and cover the whole screen
+      height: "100vh", // Set the height to full viewport height
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: "1vh",
+    }}
+  >
+
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+      <Paper
+           elevation={20}
+           sx={{
+             position: "absolute",
+             top: "50%",
+             left: "50%",
+             transform: "translate(-50%, -50%)",
+             p: 4,
+             backgroundSize: "cover",
+             backgroundPosition: "center",
+             backgroundColor: "#FFFFFF",
+             width: "30%",
+             marginTop: "4vh",
+           }}
+          >
         <CssBaseline />
         <Box
           sx={{
@@ -283,7 +319,9 @@ export default function RegistrationForm({
             </Grid>
           </Box>
         </Box>
+        </Paper>
       </Container>
     </ThemeProvider>
+    </Paper>
   );
 }

@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
+import MovingComponent from "react-moving-text";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     display: "flex",
     justifyContent: "center",
+    marginBottom: 100
   },
 }));
 
@@ -116,6 +118,7 @@ export default function AboutUs() {
         className={classes.developersGrid}
       >
         {developers.map((developer, index) => (
+                  <div style={{ display: "flex", flexDirection: "row" }}>
           <Grid item key={index}>
             <Card className={classes.root}>
               <CardContent>
@@ -152,7 +155,9 @@ export default function AboutUs() {
               </CardActions>
             </Card>
           </Grid>
+        </div>
         ))}
+
         <Grid container className={classes.partnersGrid}>
           {partners.map((partner, index) => (
             <Grid
