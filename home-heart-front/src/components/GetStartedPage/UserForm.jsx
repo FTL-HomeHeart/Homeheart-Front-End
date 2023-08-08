@@ -172,7 +172,6 @@ const UserForm = ({ handleUserFormSubmit }) => {
                   label="Birthdate" // Provide the "Birthdate" label here
                   name="birthdate"
                   type="date"
-                  
                   value={userData.birthdate}
                   onChange={handleUserFormTextInputChange}
                   InputLabelProps={{
