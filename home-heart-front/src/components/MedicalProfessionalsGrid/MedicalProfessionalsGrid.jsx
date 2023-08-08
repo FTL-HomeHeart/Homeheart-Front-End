@@ -97,7 +97,7 @@ export default function MedicalProfessionalsGrid({
     // console.log("user in med prof GRID:", user);
     // console.log("id in med prof GRID:", id);
     axios
-      .get(`http://localhost:3001/api/saved_professionals/getAllSaved/${id}`)
+      .get(`${BASE_URL}/api/saved_professionals/getAllSaved/${id}`)
       .then((response) => {
         // console.log("RESPONSE in GRID", response.data.result);
         setUserSavedMedicalProfessionals(response.data.result);
