@@ -103,12 +103,14 @@ const MedicalProfessionalCommentSection = ({
         date_post: currentDate,
       };
       axios
-        .post(`${BASE_URL}/api/post_comment/createUserComment`, newCommentWithId)
+        .post(
+          `${BASE_URL}/api/post_comment/createUserComment`,
+          newCommentWithId
+        )
         .then((response) => {
           handleFetchMedicalProfessionalComments();
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
 
       setNewComment({
         name: "",

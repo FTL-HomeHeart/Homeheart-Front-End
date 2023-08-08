@@ -33,7 +33,6 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-
   const [userData, setUserData] = useState({});
 
   const [logginError, setLoginError] = useState("");
@@ -50,8 +49,8 @@ export default function App() {
       },
       secondary_color: {
         main: "#3f474f",
-      }
-    }
+      },
+    },
   });
 
   useEffect(() => {
@@ -95,7 +94,7 @@ export default function App() {
                 path="/"
                 element={
                   loggedIn ? (
-                    <AuthenticatedLandingPage user={user} userData={userData}/>
+                    <AuthenticatedLandingPage user={user} userData={userData} />
                   ) : (
                     <LandingPage />
                   )
@@ -243,7 +242,7 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/additional_resources" element={<AdditionalResourcesPage />} />
+              <Route path="/resources" element={<AdditionalResourcesPage />} />
               <Route path="*" element={<h1>Not Found</h1>} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>

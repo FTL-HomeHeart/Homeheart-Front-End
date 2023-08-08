@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Container, Box, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom";  
+import { Link } from "react-router-dom";
 import MedicalProfessionalCard from "./MedicalProfessionalCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -113,40 +113,45 @@ export default function MedicalProfessionalsGrid({
         >
           {/* The index is so that I don't have to render all 200+ entries with the dummy data - Ethan */}
           {professionals.length === 0 ? (
-            <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-              <Typography variant="h4" gutterBottom sx={{color: "#7693B0"}}>
-                Sorry! We weren't able to find any doctor matches based on your provided information. We are still working on finding the right professionals for you.
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h4" gutterBottom sx={{ color: "#7693B0" }}>
+                Sorry! We weren't able to find any doctor matches based on your
+                provided information. We are still working on finding the right
+                professionals for you.
               </Typography>
-              <Button variant="contained" component={Link}  to="/">
+              <Button variant="contained" component={Link} to="/">
                 Back to Home
               </Button>
             </div>
           ) : (
-          professionals.map(
-            (professional, index) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  key={professional.professional_id}
-                >
-                  <MedicalProfessionalCard
-                    professional={professional}
-                    setUserSavedMedicalProfessionals={
-                      setUserSavedMedicalProfessionals
-                    }
-                    userSavedMedicalProfessionals={
-                      userSavedMedicalProfessionals
-                    }
-                    handleGetAllSavedMedicalProfessionals={
-                      handleGetAllSavedMedicalProfessionals
-                    }
-                    userID={id}
-                  />
-                </Grid>
-              ))
-                  )} 
+            professionals.map((professional, index) => (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                key={professional.professional_id}
+              >
+                <MedicalProfessionalCard
+                  professional={professional}
+                  setUserSavedMedicalProfessionals={
+                    setUserSavedMedicalProfessionals
+                  }
+                  userSavedMedicalProfessionals={userSavedMedicalProfessionals}
+                  handleGetAllSavedMedicalProfessionals={
+                    handleGetAllSavedMedicalProfessionals
+                  }
+                  userID={id}
+                />
+              </Grid>
+            ))
+          )}
         </Grid>
       </Container>
     </div>
