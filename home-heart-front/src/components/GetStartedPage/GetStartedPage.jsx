@@ -52,13 +52,12 @@ export default function ImageCardGetStarted({ user }) {
   useEffect(() => {
     // Fetch globalUserData here (if needed)
     const globalUserData = JSON.parse(localStorage.getItem("userData"));
+  
     setUserData(globalUserData);
     console.log(globalUserData);
   }, []);
 
   const showGetStartedButton = userData !== null 
-  console.log(showGetStartedButton, userData);
-  const id = localStorage.getItem("userId");
   
   return (
 
@@ -94,7 +93,7 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to={`/recommendations/${id}`}>
+        <RouterLink to={`/recommendations/${userData.userId}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}

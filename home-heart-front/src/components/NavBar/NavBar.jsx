@@ -61,10 +61,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
   const classes = useStyles();
-  const id = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [avatarUrl, setAvatarUrl] = useState("");
-  const storedUser = localStorage.getItem("user");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -107,14 +105,14 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
           <Button
             className={classes.navLinks}
             component={Link}
-            to={`/recommendations/${id}`}
+            to={`/recommendations/${user.userId}`}
           >
             Matches
           </Button>
           <Button
             className={classes.navLinks}
             component={Link}
-            to={`/upcoming_appointments/${id}`}
+            to={`/upcoming_appointments/${user.userId}`}
           >
             Appointments
           </Button>
