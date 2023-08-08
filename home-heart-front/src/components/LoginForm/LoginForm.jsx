@@ -115,18 +115,18 @@ export default function LoginForm({
       identifier: email,
       password,
     });
-    
-useEffect(() => {
-  if (password !== "correctPassword") {
-    setPasswordError(true);
-    return;
-  } else {
-    setPasswordError(false);
-    handleSignIn({ email, password });
-  }
-});
-
+    ;
   };
+
+  useEffect(() => {
+    if (password !== "correctPassword") {
+      setPasswordError(true);
+      return;
+    } else {
+      setPasswordError(false);
+      handleSignIn({ email, password });
+    }
+  })
 
   return (
     <Paper

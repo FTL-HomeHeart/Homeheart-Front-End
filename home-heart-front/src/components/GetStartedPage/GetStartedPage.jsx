@@ -52,14 +52,15 @@ export default function ImageCardGetStarted({ user }) {
 
   useEffect(() => {
     // Fetch globalUserData here (if needed)
-    const globalUserData = JSON.parse(localStorage.getItem("userData"));
+    const globalUserData = localStorage.getItem("userData"); 
     const userID = localStorage.getItem('userId');
     setUserDataID(userID);
     setUserData(globalUserData);
     console.log(globalUserData);
   }, []);
 
-  const showGetStartedButton = userData !== null 
+  console.log("userData:", userData)
+  const showGetStartedButton = userData ? true : false;
   
   return (
 
