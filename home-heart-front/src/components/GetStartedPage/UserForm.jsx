@@ -21,7 +21,6 @@ import { getNames } from "country-list";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
-
 const defaultTheme = createTheme();
 const countryNames = getNames();
 const options = getNames().map((name) => ({
