@@ -93,17 +93,27 @@ export default function LoginForm({
         //Successful Login
         setLoggedIn(true);
         setLoginError("");
-        navigate("/");
+        window.location.href = "/"; 
       } else {
         //Login failed
         setLoginError(data.message);
+        setPasswordError(true); 
         console.log(data.message);
       }
     } catch (error) {
-      setPasswordError(true); 
       console.error("Error:", error);
     }
   };
+
+  const handlePasswordChange = (event) =>  {
+
+    if (passwordError === true) {
+      setPasswordError(false);
+    }; 
+
+    setPassword(event.target.value);
+
+  }
 
   const handleSignInWithGoogle = () => {
     signInWithGoogle({ setLoggedIn, navigate, loggedIn, setUser });
@@ -121,7 +131,7 @@ export default function LoginForm({
 
   useEffect(() => {
     if (password !== "correctPassword") {
-      setPasswordError(true);
+      // setPasswordError(true);
       return;
     } else {
       handleSignIn({ email, password });
@@ -198,9 +208,9 @@ export default function LoginForm({
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => handlePasswordChange(e)}
             />
-            {passwordError &&  (
+            {passwordError === true &&  (
               <Typography color="error">Incorrect password!</Typography>
             )}
             <Button
