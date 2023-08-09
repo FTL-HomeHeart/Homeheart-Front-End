@@ -100,6 +100,7 @@ export default function LoginForm({
         console.log(data.message);
       }
     } catch (error) {
+      setPasswordError(true); 
       console.error("Error:", error);
     }
   };
@@ -123,7 +124,6 @@ export default function LoginForm({
       setPasswordError(true);
       return;
     } else {
-      setPasswordError(false);
       handleSignIn({ email, password });
     }
   })
@@ -200,7 +200,7 @@ export default function LoginForm({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {passwordError && (
+            {passwordError &&  (
               <Typography color="error">Incorrect password!</Typography>
             )}
             <Button
