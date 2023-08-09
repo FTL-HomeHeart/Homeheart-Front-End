@@ -100,6 +100,7 @@ export default function LoginForm({
         console.log(data.message);
       }
     } catch (error) {
+      setPasswordError(true); 
       console.error("Error:", error);
     }
   };
@@ -115,18 +116,17 @@ export default function LoginForm({
       identifier: email,
       password,
     });
-    
-useEffect(() => {
-  if (password !== "correctPassword") {
-    setPasswordError(true);
-    return;
-  } else {
-    setPasswordError(false);
-    handleSignIn({ email, password });
-  }
-});
-
+    ;
   };
+
+  useEffect(() => {
+    if (password !== "correctPassword") {
+      setPasswordError(true);
+      return;
+    } else {
+      handleSignIn({ email, password });
+    }
+  })
 
   return (
     <Paper
@@ -200,7 +200,7 @@ useEffect(() => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {passwordError && (
+            {passwordError &&  (
               <Typography color="error">Incorrect password!</Typography>
             )}
             <Button

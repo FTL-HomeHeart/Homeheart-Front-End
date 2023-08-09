@@ -48,16 +48,19 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageCardGetStarted({ user }) {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
+  const [userDataID, setUserDataID] = useState(null);
 
   useEffect(() => {
     // Fetch globalUserData here (if needed)
-    const globalUserData = JSON.parse(localStorage.getItem("userData"));
-  
+    const globalUserData = localStorage.getItem("userData"); 
+    const userID = localStorage.getItem('userId');
+    setUserDataID(userID);
     setUserData(globalUserData);
     console.log(globalUserData);
   }, []);
 
-  const showGetStartedButton = userData !== null 
+  console.log("userData:", userData)
+  const showGetStartedButton = userData ? true : false;
   
   return (
 
@@ -93,7 +96,7 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to={`/recommendations/${userData.userId}`}>
+        <RouterLink to={`/recommendations/${userDataID}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
