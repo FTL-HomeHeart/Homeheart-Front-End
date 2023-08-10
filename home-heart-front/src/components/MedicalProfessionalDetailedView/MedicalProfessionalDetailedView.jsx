@@ -9,6 +9,7 @@ import {
   CardContent,
   CardHeader,
   Paper,
+  CircularProgress,
 } from "@material-ui/core";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -178,7 +179,14 @@ export default function MedicalProfessionalDetailedView() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return  (
+      <div style={{display: "flex", flexDirection:"column", alignItems: "center", justifyContent: "center", gap: "20px"}}>
+        <CircularProgress color="primary" />
+        <Typography variant="h5">
+          Loading...
+        </Typography>
+      </div>
+      )
   }
 
   const {
