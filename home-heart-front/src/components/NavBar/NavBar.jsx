@@ -119,7 +119,13 @@ const NavBar = ({ loggedIn, user, setUser, setLoggedIn, setLoginError }) => {
           >
             Appointments
           </Button>
-
+          <Button
+            className={classes.navLinks}
+            component={Link}
+            to={`/saved_medical_professionals/${userDataID}`}
+          >
+            Saved Doctors
+          </Button>
           <Button className={classes.navLinks} component={Link} to="/resources">
             Resources
           </Button>

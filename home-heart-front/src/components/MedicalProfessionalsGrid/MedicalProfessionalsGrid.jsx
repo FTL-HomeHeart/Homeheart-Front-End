@@ -11,6 +11,7 @@ import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedical
 
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
 
+
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
   // get the user data so we can display their name in the banner
