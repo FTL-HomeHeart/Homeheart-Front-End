@@ -59,6 +59,10 @@ export default function ImageCardGetStarted({ user }) {
     console.log(globalUserData);
   }, []);
 
+  const handleNavigateToMedicalProfessionals = () => {
+    window.location.href = `/medical-professionals/${userDataID}`;
+  }
+
   console.log("userData:", userData)
   const showGetStartedButton = userData ? true : false;
   
@@ -96,15 +100,14 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to={`/recommendations/${userDataID}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
             className={classes.button}
+            onClick={handleNavigateToMedicalProfessionals}
           >
             See Mental Health Professionals
           </Button>
-        </RouterLink>
       )}
       </div>
     </Card>
