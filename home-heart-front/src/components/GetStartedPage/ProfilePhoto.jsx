@@ -124,9 +124,13 @@ const ProfilePhoto = () => {
             </Link>
           </Grid>
           <Grid item xs={6}>
+            <Link
+              to={`/recommendations/${id}`}
+              style={{ textDecoration: "none" }}
+              onClick={() => window.location.reload()} 
+            >
               <Button
                 type="submit"
-                onClick={() => {window.location.href = `/recommended_professionals/${id}`}}
                 style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
                 fullWidth
                 variant="contained"
@@ -134,6 +138,7 @@ const ProfilePhoto = () => {
               >
                 {profilePhoto ? "Submit and Finish" : "Skip"}
               </Button>
+            </Link>
           </Grid>
         </Grid>
       </Box>
