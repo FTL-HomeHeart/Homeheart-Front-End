@@ -43,7 +43,7 @@ const BannerComponent = () => {
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "40px" }}>
-            Welcome {firstName} to your personalized reccomendations
+            Welcome {firstName} to Your Personalized Recommendations
           </Typography>
           <div style={{ width: "60%" }}>
             <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
