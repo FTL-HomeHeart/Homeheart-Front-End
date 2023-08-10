@@ -100,7 +100,7 @@ export default function ImageCardGetStarted({ user }) {
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
             className={classes.button}
-            component={Link}
+            component={RouterLink}
             to={`/recommendations/${userDataID}`}
           >
             See Mental Health Professionals
