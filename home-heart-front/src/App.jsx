@@ -76,7 +76,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router forceRefresh={true}>
           <NavBar
             loggedIn={loggedIn}
             user={user}
