@@ -96,7 +96,7 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to={`/recommendations/${userDataID}`} onClick={() => window.location.reload()}>
+        <RouterLink to={`/recommendations/${userDataID}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}

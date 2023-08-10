@@ -47,7 +47,7 @@ const BannerComponent = () => {
           <div style={{ width: "60%" }}>
             <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
               We have found the following medical professionals that match your
-              needs. Please review the list below and click on the heart icon
+              needs. Please review the list below and click on the
               to save the medical professional to your profile.
             </Typography>
           </div>
