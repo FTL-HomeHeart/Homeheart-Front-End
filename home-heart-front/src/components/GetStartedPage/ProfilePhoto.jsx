@@ -127,6 +127,7 @@ const ProfilePhoto = () => {
             <Link
               to={`/recommendations/${id}`}
               style={{ textDecoration: "none" }}
+              onClick={() => window.location.reload()} 
             >
               <Button
                 type="submit"

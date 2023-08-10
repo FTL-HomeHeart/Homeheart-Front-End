@@ -96,15 +96,15 @@ export default function ImageCardGetStarted({ user }) {
           </Button>
         </RouterLink>
       ) : (
-        <RouterLink to={`/recommendations/${userDataID}`}>
           <Button
             variant="contained"
             style={{ backgroundColor: "#7E9BB6", color: "#ffffff" }}
             className={classes.button}
+            component={RouterLink}
+            to={`/recommendations/${userDataID}`}
           >
             See Mental Health Professionals
           </Button>
-        </RouterLink>
       )}
       </div>
     </Card>

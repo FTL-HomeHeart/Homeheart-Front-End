@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Container, Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import MedicalProfessionalCard from "./MedicalProfessionalCard";
 import axios from "axios";
@@ -10,6 +10,7 @@ const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 import SavedMedicalProfessionals from "../SavedMedicalProfessionals/SavedMedicalProfessionals";
 
 // import MedicalProfessionalsDummyData from "../../../data/medical_professionals_with_bios.json";
+
 
 // this is the banner component that displays on the top of the page
 const BannerComponent = () => {
@@ -46,11 +47,9 @@ const BannerComponent = () => {
           </Typography>
           <div style={{ width: "60%" }}>
             <Typography variant="body1" gutterBottom sx={{ fontSize: "18px" }}>
-              With our matching process, we hope that you are able to find the
-              right professionals to help you with your mental health. Feel free
-              to save any professionals that you are interested in and book an
-              appointment with them. Wanna see more details about a specific
-              professional? Click on the "Learn More" button!
+              We have found the following medical professionals that match your
+              needs. Please review the list below and click on the
+              to save the medical professional to your profile.
             </Typography>
           </div>
         </div>
@@ -65,6 +64,7 @@ export default function MedicalProfessionalsGrid({
   user,
 }) {
   const [professionals, setProfessionals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
@@ -72,12 +72,14 @@ export default function MedicalProfessionalsGrid({
       .get(`${BASE_URL}/api/recommendations/${id}`)
       .then((response) => {
         setProfessionals(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         // This is just so that I can still view the page without the backend running -Ethan
         // setProfessionals(MedicalProfessionalsDummyData);
         if (error.response) {
           // The request was made and the server responded with a status code
+          setIsLoading(false);
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
@@ -123,47 +125,55 @@ export default function MedicalProfessionalsGrid({
           justifyContent="center"
           style={{ display: "flex" }}
         >
-          {/* The index is so that I don't have to render all 200+ entries with the dummy data - Ethan */}
-          {professionals.length === 0 ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h4" gutterBottom sx={{ color: "#7693B0" }}>
-                Sorry! We weren't able to find any doctor matches based on your
-                provided information. We are still working on finding the right
-                professionals for you.
+          {isLoading === true ? (
+            <div style={{display:"flex", flexDirection: "column", alignItems: "center", gap: "20px"}}>
+              <CircularProgress color="primary" />
+              <Typography variant="h5" color="primary_color">
+                Loading your personalized recommendations...
               </Typography>
-              <Button variant="contained" component={Link} to="/">
-                Back to Home
-              </Button>
             </div>
-          ) : (
-            professionals.map((professional, index) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                key={professional.professional_id}
-              >
-                <MedicalProfessionalCard
-                  professional={professional}
-                  setUserSavedMedicalProfessionals={
-                    setUserSavedMedicalProfessionals
-                  }
-                  userSavedMedicalProfessionals={userSavedMedicalProfessionals}
-                  handleGetAllSavedMedicalProfessionals={
-                    handleGetAllSavedMedicalProfessionals
-                  }
-                  userID={id}
-                />
-              </Grid>
-            ))
-          )}
+          ): (
+            isLoading === false && professionals.length === 0 ? 
+              (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="h4" gutterBottom sx={{ color: "#7693B0" }}>
+                    Sorry! We weren't able to find any doctor matches based on your
+                    provided information. We are still working on finding the right
+                    professionals for you.
+                  </Typography>
+                  <Button variant="contained" component={Link} to="/">
+                    Back to Home
+                  </Button>
+                </div>
+              ) : ( 
+              professionals.map((professional, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={professional.professional_id}
+                >
+                  <MedicalProfessionalCard
+                    professional={professional}
+                    setUserSavedMedicalProfessionals={
+                      setUserSavedMedicalProfessionals
+                    }
+                    userSavedMedicalProfessionals={userSavedMedicalProfessionals}
+                    handleGetAllSavedMedicalProfessionals={
+                      handleGetAllSavedMedicalProfessionals
+                    }
+                    userID={id}
+                  />
+                </Grid>
+              )))
+            )}
         </Grid>
       </Container>
     </div>
