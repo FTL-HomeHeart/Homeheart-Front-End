@@ -3,13 +3,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL || "http://localhost:3001";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCRopIlNCvlc1pNAI4n8E0444hcGLJU26s",
-  authDomain: "homeheartauth.firebaseapp.com",
-  projectId: "homeheartauth",
-  storageBucket: "homeheartauth.appspot.com",
-  messagingSenderId: "598318748633",
-  appId: "1:598318748633:web:bb588d8b5b742642227fc8",
-  measurementId: "G-CYKB82DKW7",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 
